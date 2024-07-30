@@ -1,0 +1,398 @@
+/* Variables */
+:root {
+    --dropdownMethodWidth: 150px;
+    --dropdownMethodHeight: 43px;
+    --dropdownMethodFontSize: 14px;
+    --dropdownMethodLineHeight: 21px; /* arrow position */
+    --dropdownMethodPadding: 10px;
+    --dropdownMethodBorderRadius: 8px;
+    --dropdownGeneralWidth: 135px;
+    --dropdownGeneralHeight: 35px;
+    --dropdownGeneralFontSize: 12px;
+    --dropdownGeneralLineHeight: 19px; /* arrow position */
+    --dropdownGeneralPadding: 7px;
+    --dropdownGeneralBorderRadius: 6px;
+    --buttonGeneralPadding: 5px 7px 7px 7px;
+    --buttonGeneralHeight: 35px;
+    --buttonGeneralBorderRadius: 6px;
+    --buttonGeneralFontSize: 12px;
+    --buttonPrimaryPadding: 8px 24px;
+    --buttonPrimaryBorderRadius: 6px;
+    --buttonPrimaryFontSize: 85%;
+}
+
+@media (prefers-reduced-motion: reduce), (prefers-reduced-motion: no-preference) {
+    i {
+        animation-duration: 1000ms !important;
+        animation-iteration-count: 10 !important;
+    }
+}
+
+/* Layout */
+div.layout-container { scrollbar-width: auto; scrollbar-color: var(--layoutContainerScrollbarColour); }
+div.json-container { font-family: menlo, consolas, monospace; font-style: normal; font-weight: normal; font-size: 1.0rem; }
+input.placeholder-sans::-webkit-input-placeholder { font-family: sans-serif; }
+
+/* Borders */
+div.borderVertical { display: flex; flex-direction: row; }
+div.borderVerticalLeft { width: 8px; }
+div.borderVerticalRight { width: 9px; border-left: 1px solid var(--borderColour); }
+div.borderVerticalHover:hover { cursor: col-resize; }
+div.borderVerticalHover:hover > div.borderVerticalLeft { z-index: 10; border-right: 1px solid var(--borderDragColour); }
+div.borderVerticalHover:hover > div.borderVerticalRight { z-index: 10; border-left: 2px solid var(--borderDragColour); }
+div.borderVerticalLeftDrag { border-right: 1px solid var(--borderDragColour); }
+div.borderVerticalRightDrag { border-left: 2px solid var(--borderDragColour); }
+div.borderHorizontal { display: flex; flex-direction: column; margin-left: -8px; }
+div.borderHorizontalTop { height: 8px; }
+div.borderHorizontalBottom { height: 9px; border-top: 1px solid var(--borderColour); }
+div.borderHorizontalHover:hover { cursor: row-resize; }
+div.borderHorizontalHover:hover > div.borderHorizontalTop { z-index: 10; border-bottom: 1px solid var(--borderDragColour); }
+div.borderHorizontalHover:hover > div.borderHorizontalBottom { z-index: 10; border-top: 2px solid var(--borderDragColour); }
+div.borderHorizontalTopDrag { border-bottom: 1px solid var(--borderDragColour); }
+div.borderHorizontalBottomDrag { border-top: 2px solid var(--borderDragColour); }
+
+/* var-dumper */
+pre.sf-dump { z-index: 10 !important; width: 600px; padding: 5px !important; margin: 5px 0 5px 0; }
+
+/* Tables */
+tr.dragRow { background-color: var(--tableDragRowColour); }
+table.variables tr:hover button { visibility: visible; }
+
+/* Tabs */
+ul.tabs { display: flex; flex-direction: row; list-style: none; font-size: 14px; font-weight: 600; }
+ul.tabs li { display: flex; margin-right: 10px; padding: 8px 8px; color: var(--tabsInactiveTabTextColour); justify-content: center; cursor: pointer; }
+ul.tabs li:hover { border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom: 2px solid var(--tabsInactiveTabHoverBorder); background: var(--tabsInactiveTabHoverBackground); }
+ul.tabs li.current { border-bottom: 2px solid var(--tabsActiveTabBorderColour); color: var(--tabsActiveTabTextColour); }
+div.tab-content { display: none; }
+div.tab-content.current { display: flex; flex-direction: column; }
+div.tab-subcontent { display: none; }
+div.tab-subcontent.current { display: flex; flex-direction: column; }
+div.tab-header { display: none; }
+div.tab-header.current { display: flex; flex-direction: column; }
+div.tab-footer { display: none; }
+div.tab-footer.current { display: flex; }
+
+/* Modal */
+section.modal { display: flex; flex-direction: column; position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); min-width: 500px; z-index: 51; background-color: var(--modalBackground); border: 1px solid var(--modalBorder); border-radius: 8px; }
+section.hidden { display: none; }
+div.modal-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 15px 20px 5px 20px; border-bottom: 1px solid var(--modalDivision); }
+div.modal-body { padding: 20px; }
+div.modal-footer { display: flex; justify-content: space-between; padding: 15px 20px 15px 20px; border-top: 1px solid var(--modalDivision); }
+button.modal-close { transform: translate(10px, -4px); padding: 4px 10px; border-radius: 8px; color: var(--modalButtonCloseColour); }
+button.modal-close:hover { background: var(--modalButtonCloseHoverBackground); color: var(--modalButtonCloseHoverColour); }
+button.modal-close:disabled { color: var(--modalButtonCloseDisabledColour); cursor: not-allowed; }
+div.overlay { position: fixed; top: 0; bottom: 0; left: 0; right: 0; width: 100%; height: 100%; background: var(--modalOverlay); backdrop-filter: blur(3px); z-index: 50; }
+
+/* Dropdowns */
+.dropdown-method { display: inline-block; position: relative; outline: none !important; width: var(--dropdownMethodWidth); height: var(--dropdownMethodHeight); background-color: var(--dropdownMethodBackgroundButton); color: var(--dropdownMethodTextListGeneral); border: var(--dropdownMethodBorder); border-radius: var(--dropdownMethodBorderRadius) 0 0 var(--dropdownMethodBorderRadius); font-size: var(--dropdownMethodFontSize); font-weight: 700; text-align: left; transition: all 0s ease; }
+.dropdown-method .dropdown-method-button { display: block; padding: var(--dropdownMethodPadding); cursor: pointer; }
+.dropdown-method .dropdown-method-button > i { color: var(--dropdownMethodTextListButtonArrow); font-size: var(--dropdownMethodFontSize); line-height: var(--dropdownMethodLineHeight); cursor: pointer; float: right; transition: all .15s ease-in-out; }
+.dropdown-method:hover { background-color: var(--dropdownMethodBackgroundButtonHover); }
+.dropdown-method:active { background-color: var(--dropdownMethodBackgroundButtonActive); }
+.dropdown-method.active:hover, .dropdown-method.active { background-color: var(--dropdownMethodBackgroundButtonActive); border-radius: var(--dropdownMethodBorderRadius) 0 0 0; }
+.dropdown-method.active .dropdown-method-button > i { transform: rotate(-90deg); }
+.dropdown-method .dropdown-method-list { margin-left:-1px; display: none; position: absolute; left: 0; overflow: hidden; overflow-y: auto; width: var(--dropdownMethodWidth); margin-top: 0; background-color: var(--dropdownMethodBackgroundList); border: var(--dropdownMethodBorder); border-radius: 0 0 var(--dropdownMethodBorderRadius) var(--dropdownMethodBorderRadius); z-index: 20; }
+.dropdown-method .dropdown-method-list li { padding: var(--dropdownMethodPadding); cursor: pointer; transition: all .2s ease-in-out; }
+.dropdown-method .dropdown-method-list { padding: 0; list-style: none; }
+.dropdown-method .dropdown-method-list li:hover { background-color: var(--dropdownMethodBackgroundListHover); }
+.dropdown-method .dropdown-method-list li:active { background-color: var(--dropdownMethodBackgroundListActive); }
+.dropdown-method-get { color: var(--dropdownMethodTextListGet); }
+.dropdown-method-head { color: var(--dropdownMethodTextListGet); }
+.dropdown-method-post { color: var(--dropdownMethodTextListPost); }
+.dropdown-method-put { color: var(--dropdownMethodTextListPut); }
+.dropdown-method-patch { color: var(--dropdownMethodTextListPut); }
+.dropdown-method-delete { color: var(--dropdownMethodTextListDelete); }
+.dropdown-method-options { color: var(--dropdownMethodTextListOptions); }
+.dropdown-method-value { display: inline-block; }
+.dropdown-method-option-on { background-color: var(--dropdownMethodBackgroundListSelected); }
+.dropdown-method-option-tick { display: inline-block; width: 28px; }
+.dropdown-method-option-tickon { color: var(--dropdownMethodTextListTickOn); }
+.dropdown-method-option-tickoff { color: transparent; }
+.dropdown-general { display: inline-block; position: relative; outline: none !important; width: var(--dropdownGeneralWidth); height: var(--dropdownGeneralHeight); background-color: var(--dropdownGeneralBackgroundButton); color: var(--dropdownGeneralTextListGeneral); border: var(--dropdownGeneralBorder); border-radius: var(--dropdownGeneralBorderRadius); font-size: var(--dropdownGeneralFontSize); font-weight: 700; text-align: left; transition: all 0s ease; }
+.dropdown-general .dropdown-general-button { display: block; padding: var(--dropdownGeneralPadding); cursor: pointer; }
+.dropdown-general .dropdown-general-button > i { color: var(--dropdownGeneralTextListButtonArrow); font-size: var(--dropdownGeneralFontSize); line-height: var(--dropdownGeneralLineHeight); cursor: pointer; float: right; transition: all .15s ease-in-out; }
+.dropdown-general:hover { background-color: var(--dropdownGeneralBackgroundButtonHover); }
+.dropdown-general:active { background-color: var(--dropdownGeneralBackgroundButtonActive); }
+.dropdown-general.active:hover, .dropdown-general.active { background-color: var(--dropdownGeneralBackgroundButtonActive); border-radius: 0 0 var(--dropdownGeneralBorderRadius) var(--dropdownGeneralBorderRadius); }
+.dropdown-general.active .dropdown-general-button > i { transform: rotate(90deg); }
+.dropdown-general .dropdown-general-list { display: none; position: absolute; left: 0; bottom: 100%; overflow: hidden; overflow-y: auto; width: var(--dropdownGeneralWidth); margin-left:-1px; margin-top: 0; background-color: var(--dropdownGeneralBackgroundList); border: var(--dropdownGeneralBorder); border-radius: var(--dropdownGeneralBorderRadius) var(--dropdownGeneralBorderRadius) 0 0; z-index: 20; }
+.dropdown-general .dropdown-general-list li { padding: var(--dropdownGeneralPadding); cursor: pointer; transition: all .2s ease-in-out; }
+.dropdown-general .dropdown-general-list { padding: 0; list-style: none; }
+.dropdown-general .dropdown-general-list li:hover { background-color: var(--dropdownGeneralBackgroundListHover); }
+.dropdown-general .dropdown-general-list li:active { background-color: var(--dropdownGeneralBackgroundListActive); }
+.dropdown-general-value { display: inline-block; }
+.dropdown-general-option-on { background-color: var(--dropdownGeneralBackgroundListSelected); }
+.dropdown-general-option-tick { display: inline-block; width: 24px; }
+.dropdown-general-option-tickon { color: var(--dropdownGeneralTextListTickOn); }
+.dropdown-general-option-tickoff { color: transparent; }
+.dropdown-general-option-text { display: inline-block; }
+
+/* Textarea password style */
+textarea.textarea-password { -webkit-text-security: disc; }
+textarea.textarea-password::placeholder { -webkit-text-security: initial; }
+
+/* Button style */
+button.general { display: flex; padding: var(--buttonGeneralPadding); height: var(--buttonGeneralHeight); background-color: var(--buttonGeneralBackgroundColour); color: var(--buttonGeneralTextColour); border: var(--buttonGeneralBorder); border-radius: var(--buttonGeneralBorderRadius); font-size: var(--buttonGeneralFontSize); font-weight: 700; align-items: center; justify-content: center; }
+button.general:hover { background-color: var(--buttonGeneralBackgroundColourHover); }
+button.general:disabled { color: var(--buttonGeneralDisabledTextColour); cursor: not-allowed; }
+button.primary { display: flex; padding: var(--buttonPrimaryPadding); background-color: var(--buttonPrimaryBackgroundColour); color: var(--buttonPrimaryTextColour); border: var(--buttonPrimaryBorder); border-radius: var(--buttonPrimaryBorderRadius); font-size: var(--buttonPrimaryFontSize); font-weight: 600; align-items: center; justify-content: center; }
+button.primary:hover { background-color: var(--buttonPrimaryBackgroundColourHover); }
+button.primary:disabled { color: var(--buttonPrimaryDisabledTextColour); cursor: not-allowed; }
+button.secondary { display: flex; padding: var(--buttonPrimaryPadding); background-color: var(--buttonSecondaryBackgroundColour); border: var(--buttonSecondaryBorder); border-radius: var(--buttonPrimaryBorderRadius); font-size: var(--buttonPrimaryFontSize); font-weight: 600; align-items: center; justify-content: center; }
+button.secondary:hover { background-color: var(--buttonSecondaryBackgroundColourHover); }
+button.secondary:disabled { color: var(--buttonSecondaryDisabledTextColour); cursor: not-allowed; }
+
+/* File upload */
+.input-file { display: none; }
+.input-file + label { padding: var(--dropdownGeneralPadding); width: var(--dropdownGeneralWidth); height: var(--dropdownGeneralHeight); background-color: var(--dropdownGeneralBackgroundButton); color: var(--dropdownGeneralTextListGeneral); border: var(--dropdownGeneralBorder); border-radius: var(--dropdownGeneralBorderRadius); font-size: var(--dropdownGeneralFontSize); font-weight: 700; text-align: center; cursor: pointer; }
+.input-file:hover + label { background-color: var(--dropdownGeneralBackgroundButtonHover); }
+
+/* Input autofill */
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus { background-color: transparent !important; -webkit-text-fill-color: var(--inputAutofillText); -webkit-box-shadow: 0 0 0 50px var(--inputAutofillBackground) inset; }
+
+/* JSON output */
+a.json-link { text-decoration: none; border-bottom: 1px solid; outline: none; color: var(--jsonLink); }
+a.json-link:hover { background-color: transparent; outline: none; color: var(--jsonLinkHover); }
+/*a.json-link:active { color: var(--jsonLinkHover); }*/
+/*a.json-link:visited { color: var(--jsonLink); }*/
+/*a.json-link:visited:hover { color: var(--jsonLinkHover); }*/
+ol.json-lines { white-space: normal; }
+ol.json-lines >li { counter-increment: item; position: relative; line-height: 1.8rem; white-space: pre-wrap; word-break: break-all; }
+ol.json-lines >li::marker { font-family: system-ui, sans-serif; font-weight: normal; color: var(--jsonLinesNumber); }
+ol.json-lines >li:before { content: counter(item); width: 3.75rem; text-align: right; position: absolute; color: var(--jsonLinesNumber); }
+ol.json-lines >li:hover { background-color: var(--jsonLinesHover); }
+ol.json-lines >li:nth-child(odd)  { }
+ol.json-lines >li:nth-child(even) { }
+span.json-key { color: var(--jsonKey); }
+span.json-string { color: var(--jsonString); }
+span.json-number { color: var(--jsonNumber); }
+span.json-boolean { color: var(--jsonBoolean); }
+span.json-null { color: var(--jsonNull); }
+span.json-mark { color: var(--jsonMark); }
+
+/* Raw output */
+div.raw-container { font-family: menlo, consolas, monospace; font-style: normal; font-weight: normal; font-size: 1.0rem; }
+ol.raw-text >li { counter-increment: item; position: relative; min-height: 1.8rem; line-height: 1.8rem; white-space: pre-wrap; word-break: break-all; }
+ol.raw-text >li::marker { font-family: system-ui, sans-serif; font-weight: normal; color: var(--jsonLinesNumber); }
+ol.raw-text >li:before { content: counter(item); width: 3.75rem; text-align: right; position: absolute; color: var(--jsonLinesNumber); }
+ol.raw-text >li:hover { background-color: var(--jsonLinesHover); }
+
+/* Toggle */
+label.toggle { position: relative; display: inline-block; width: 40px; height: 24px; }
+label.toggle input { display: none; }
+span.toggle { position: absolute; top: 0; left: 0; right: 0; bottom: 0; cursor: pointer; background-color: var(--toggleBackgroundColour); -webkit-transition: .4s; transition: .4s; }
+span.toggle:before { position: absolute; height: 16px; width: 16px; left: 4px; bottom: 4px; content: ""; background-color: var(--toggleForegroundColour); -webkit-transition: .2s; transition: .2s; }
+span.toggle.round { border-radius: 12px; }
+span.toggle.round:before { border-radius: 50%; }
+input:checked + span.toggle { background-color: var(--toggleBackgroundColourOn); }
+input:checked + span.toggle:before { -webkit-transform: translateX(16px); -ms-transform: translateX(16px); transform: translateX(16px); }
+
+/* Password */
+span.password-display { position: relative; margin-left: -30px; margin-right: 4px; margin-top: 2px; margin-bottom: 2px; padding: 11px 4px 0 4px; cursor: pointer; }
+
+/* Autocomplete */
+.ui-autocomplete { max-height: 350px; overflow-x: hidden; overflow-y: auto; color: inherit; background-color: inherit; border-color: var(--borderColour) !important; scrollbar-color: var(--layoutContainerScrollbarColour); font-size: inherit; font-family: inherit; .ui-state-active { background-color: var(--autocompleteHover); border-color: var(--autocompleteHover); } }
+
+/* Light theme */
+html[data-theme="light"] {
+    /* Layout */
+    /* --layoutContainerScrollbarColour: #999999 #eeeeee; */
+    --layoutContainerScrollbarColour: #a1a1aa #f4f4f5;
+
+    /* Inputs */
+    --inputAutofillText: #27272a;                       /* zinc-800 */
+    --inputAutofillBackground: white;
+
+    /* Borders */
+    --borderColour: #d4d4d8;                            /* zinc-300 */
+    /*--borderDragColour: #2563eb;*/                    /* blue-600 */
+    --borderDragColour: #d4d4d8;                        /* zinc-300 */
+
+    /* Tables */
+    --tableDragRowColour: #ecfccb;                      /* lime-100 */
+
+    /* Tabs */
+    --tabsActiveTabTextColour: #27272a;                 /* zinc-800 */
+    --tabsActiveTabBorderColour: #d97706;               /* amber-600 */
+    --tabsInactiveTabTextColour: #a1a1aa;               /* zinc-400 */
+    --tabsInactiveTabHoverBorder: #d4d4d8;              /* zinc-300 */
+    --tabsInactiveTabHoverBackground: #f4f4f5;          /* zinc-100 */
+
+    /* Modal */
+    --modalBackground: white;
+    --modalBorder: #d4d4d8;                             /* zinc-300 */
+    --modalDivision: #e4e4e7;                           /* zinc-200 */
+    --modalButtonCloseColour: #a1a1aa;                  /* zinc-400 */
+    --modalButtonCloseHoverColour: #27272a;             /* zinc-800 */
+    --modalButtonCloseHoverBackground: #f4f4f5;         /* zinc-100 */
+    --modalButtonCloseDisabledColour: #d4d4d8;          /* zinc-300 */
+    --modalOverlay: rgba(0, 0, 0, 0.1);
+
+    /* Dropdown */
+    --dropdownMethodBorder: 1px solid #d4d4d8;          /* zinc-300 */
+    --dropdownMethodBackgroundButton: #f4f4f5;          /* zinc-100 */
+    --dropdownMethodBackgroundButtonHover: #fafafa;     /* zinc-50 */
+    --dropdownMethodBackgroundButtonActive: #fafafa;    /* zinc-50 */
+    --dropdownMethodBackgroundList: #fafafa;            /* zinc-50 */
+    --dropdownMethodBackgroundListHover: #e4e4e7;       /* zinc-200 */
+    --dropdownMethodBackgroundListActive: #d4d4d8;      /* zinc-300 */
+    --dropdownMethodBackgroundListSelected: #d4d4d8;    /* zinc-300 */
+    --dropdownMethodTextListButtonArrow: #27272a;       /* zinc-800 */
+    --dropdownMethodTextListGeneral: #27272a;           /* zinc-800 */
+    --dropdownMethodTextListTickOn: #27272a;            /* zinc-800 */
+    --dropdownMethodTextListGet: #15803d;               /* green-700 */
+    --dropdownMethodTextListPost: #1d4ed8;              /* blue-700 */
+    --dropdownMethodTextListPut: #ea580c;               /* orange-600 */
+    --dropdownMethodTextListDelete: #dc2626;            /* red-600 */
+    --dropdownMethodTextListOptions: #71717a;           /* zinc-500 */
+    --dropdownGeneralBorder: 1px solid #d4d4d8;         /* zinc-300 */
+    --dropdownGeneralBackgroundButton: white;
+    --dropdownGeneralBackgroundButtonHover: #f4f4f5;    /* zinc-100 */
+    --dropdownGeneralBackgroundButtonActive: #f4f4f5;   /* zinc-100 */
+    --dropdownGeneralBackgroundList: white;
+    --dropdownGeneralBackgroundListHover: #f4f4f5;      /* zinc-100 */
+    --dropdownGeneralBackgroundListActive: #e4e4e7;     /* zinc-200 */
+    --dropdownGeneralBackgroundListSelected: #e4e4e7;   /* zinc-200 */
+    --dropdownGeneralTextListButtonArrow: #27272a;      /* zinc-800 */
+    --dropdownGeneralTextListGeneral: #27272a;          /* zinc-800 */
+    --dropdownGeneralTextListTickOn: #27272a;           /* zinc-800 */
+
+    /* Button style */
+    --buttonGeneralBackgroundColour: white;
+    --buttonGeneralBackgroundColourHover: #f4f4f5;      /* zinc-100 */
+    --buttonGeneralTextColour: #27272a;                 /* zinc-800 */
+    --buttonGeneralDisabledTextColour: #a1a1aa;         /* zinc-400 */
+    --buttonGeneralBorder: 1px solid #d4d4d8;           /* zinc-300 */
+    --buttonPrimaryBackgroundColour: #1d4ed8;           /* blue-700 */
+    --buttonPrimaryBackgroundColourHover: #1e40af;      /* blue-800 */
+    --buttonPrimaryTextColour: white;
+    --buttonPrimaryDisabledTextColour: #a1a1aa;         /* zinc-400 */
+    --buttonPrimaryBorder: 1px solid #1e40af;           /* blue-800 */
+    --buttonSecondaryBackgroundColour: white;
+    --buttonSecondaryBackgroundColourHover: #f4f4f5;    /* zinc-100 */
+    --buttonSecondaryDisabledTextColour: #a1a1aa;       /* zinc-400 */
+    --buttonSecondaryBorder: 1px solid #d4d4d8;         /* zinc-300 */
+
+    /* JSON output */
+    --jsonKey: #e51d1d;
+    --jsonString: #000bbb;
+    --jsonNumber: #079f07;
+    --jsonBoolean: #d78c01;
+    --jsonNull: dimgray;
+    --jsonMark: black;
+    --jsonLink: #b601b6;
+    --jsonLinkHover: #ff02ff;
+    --jsonLinesNumber: #a1a1aa;                         /* zinc-400 */
+    --jsonLinesHover: lemonchiffon;
+    --jsonLinesBorder: #d4d4d8;                         /* zinc-300 */
+
+    /* Toggle */
+    --toggleBackgroundColour: #d4d4d8;                  /* zinc-300 */
+    --toggleBackgroundColourOn: #3b82f6;                /* blue-500 */
+    --toggleForegroundColour: white;
+
+    /* Autocomplete */
+    --autocompleteHover: #1d4ed8;                       /* blue-700 */
+}
+
+/* Dark theme */
+html[data-theme="dark"] {
+    /* Layout */
+    /* --layoutContainerScrollbarColour: #555555 #222222; */
+    --layoutContainerScrollbarColour: #52525b #27272a;
+
+    /* Inputs */
+    --inputAutofillText: #e4e4e7;                       /* zinc-200 */
+    --inputAutofillBackground: black;
+
+    /* Borders */
+    --borderColour: #494950;                            /* zinc-650 */
+    /*--borderDragColour: #b91c1c;*/                    /* red-700 */
+    --borderDragColour: #494950;                        /* zinc-650 */
+
+    /* Tables */
+    --tableDragRowColour: #3f6212;                      /* lime-800 */
+
+    /* Tabs */
+    --tabsActiveTabTextColour: #e4e4e7;                 /* zinc-200 */
+    --tabsActiveTabBorderColour: #d97706;               /* amber-600 */
+    --tabsInactiveTabTextColour: #a1a1aa;               /* zinc-400 */
+    --tabsInactiveTabHoverBorder: #71717a;              /* zinc-500 */
+    --tabsInactiveTabHoverBackground: #27272a;          /* zinc-800 */
+
+    /* Modal */
+    --modalBackground: black;
+    --modalBorder: #52525b;                             /* zinc-600 */
+    --modalDivision: #3f3f46;                           /* zinc-700 */
+    --modalButtonCloseColour: #a1a1aa;                  /* zinc-400 */
+    --modalButtonCloseHoverColour: #e4e4e7;             /* zinc-200 */
+    --modalButtonCloseHoverBackground: #3f3f46;         /* zinc-700 */
+    --modalButtonCloseDisabledColour: #71717a;          /* zinc-500 */
+    --modalOverlay: rgba(113, 113, 122, 0.3);
+
+    /* Dropdown */
+    --dropdownMethodBorder: 1px solid #494950;          /* zinc-650 */
+    --dropdownMethodBackgroundButton: #27272a;          /* zinc-800 */
+    --dropdownMethodBackgroundButtonHover: #18181b;     /* zinc-900 */
+    --dropdownMethodBackgroundButtonActive: #18181b;    /* zinc-900 */
+    --dropdownMethodBackgroundList: #18181b;            /* zinc-900 */
+    --dropdownMethodBackgroundListHover: #3f3f46;       /* zinc-700 */
+    --dropdownMethodBackgroundListActive: #52525b;      /* zinc-600 */
+    --dropdownMethodBackgroundListSelected: #52525b;    /* zinc-600 */
+    --dropdownMethodTextListButtonArrow: #e4e4e7;       /* zinc-200 */
+    --dropdownMethodTextListGeneral: #e4e4e7;           /* zinc-200 */
+    --dropdownMethodTextListTickOn: #e4e4e7;            /* zinc-200 */
+    --dropdownMethodTextListGet: #65a30d;               /* lime-600 */
+    --dropdownMethodTextListPost: #3b82f6;              /* blue-500 */
+    --dropdownMethodTextListPut: #d97706;               /* amber-500 */
+    --dropdownMethodTextListDelete: #dc2626;            /* red-600 */
+    --dropdownMethodTextListOptions: #a1a1aa;           /* zinc-400 */
+    --dropdownGeneralBorder: 1px solid #52525b;         /* zinc-600 */
+    --dropdownGeneralBackgroundButton: black;
+    --dropdownGeneralBackgroundButtonHover: #27272a;    /* zinc-800 */
+    --dropdownGeneralBackgroundButtonActive: #27272a;   /* zinc-800 */
+    --dropdownGeneralBackgroundList: black;
+    --dropdownGeneralBackgroundListHover: #27272a;      /* zinc-800 */
+    --dropdownGeneralBackgroundListActive: #3f3f46;     /* zinc-700 */
+    --dropdownGeneralBackgroundListSelected: #3f3f46;   /* zinc-700 */
+    --dropdownGeneralTextListButtonArrow: #e4e4e7;      /* zinc-200 */
+    --dropdownGeneralTextListGeneral: #e4e4e7;          /* zinc-200 */
+    --dropdownGeneralTextListTickOn: #e4e4e7;           /* zinc-200 */
+
+    /* Button style */
+    --buttonGeneralBackgroundColour: black;
+    --buttonGeneralBackgroundColourHover: #27272a;      /* zinc-800 */
+    --buttonGeneralTextColour: #e4e4e7;                 /* zinc-200 */
+    --buttonGeneralDisabledTextColour: #71717a;         /* zinc-500 */
+    --buttonGeneralBorder: 1px solid #494950;           /* zinc-650 */
+    --buttonPrimaryBackgroundColour: #1e40af;           /* blue-800 */
+    --buttonPrimaryBackgroundColourHover: #2563eb;      /* blue-600 */
+    --buttonPrimaryTextColour: white;
+    --buttonPrimaryDisabledTextColour: #a1a1aa;         /* zinc-400 */
+    --buttonPrimaryBorder: 1px solid #1d4ed8;           /* blue-700 */
+    --buttonSecondaryBackgroundColour: black;
+    --buttonSecondaryBackgroundColourHover: #27272a;    /* zinc-800 */
+    --buttonSecondaryDisabledTextColour: #71717a;       /* zinc-500 */
+    --buttonSecondaryBorder: 1px solid #52525b;         /* zinc-600 */
+
+    /* JSON output */
+    --jsonKey: indianred;
+    --jsonString: #3399ff;
+    --jsonNumber: #00ff22;
+    --jsonBoolean: #ffa500;
+    --jsonNull: #949494;
+    --jsonMark: white;
+    --jsonLink: #cc33ff;
+    --jsonLinkHover: violet;
+    --jsonLinesNumber: #71717a;                         /* zinc-500 */
+    --jsonLinesHover: #222222;
+    --jsonLinesBorder: #494950;                         /* zinc-650 */
+
+    /* Toggle */
+    --toggleBackgroundColour: #71717a;                  /* zinc-500 */
+    --toggleBackgroundColourOn: #60a5fa;                /* blue-400 */
+    --toggleForegroundColour: black;
+
+    /* Autocomplete */
+    --autocompleteHover: #1d4ed8;                       /* blue-700 */
+}

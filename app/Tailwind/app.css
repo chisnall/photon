@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .body-text { @apply select-none font-sans font-normal text-zinc-800 dark:text-zinc-200 bg-white dark:bg-black }
+    .menu-item { @apply h-full content-center px-6 py-2 border-zinc-300 dark:border-zinc-650 }
+    .menu-item-hover { @apply hover:text-blue-600 hover:bg-zinc-100 dark:hover:text-red-700 dark:hover:bg-zinc-800 }
+    .footer-item { @apply h-full content-center px-4 py-2 border-zinc-300 dark:border-zinc-650 }
+    .table-div { @apply border border-zinc-300 dark:border-zinc-650 }
+    .table-heading { @apply px-2 py-1 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800 }
+    .table-cell { @apply px-2 py-1 border border-zinc-300 dark:border-zinc-650 }
+    .flash-success { @apply text-white dark:text-white bg-lime-600 dark:bg-lime-600 }
+    .flash-info { @apply text-white dark:text-white bg-blue-500 dark:bg-blue-500 }
+    .flash-warning { @apply text-white dark:text-white bg-red-600 dark:bg-red-600 }
+    .input-normal { @apply w-full p-2 rounded bg-white dark:bg-black border border-zinc-300 dark:border-zinc-650 focus:border focus:border-blue-500 focus:dark:border-blue-700 focus:ring-1 focus:ring-blue-500 focus:dark:ring-blue-700 outline-none }
+    .input-error { @apply w-full p-2 rounded bg-white dark:bg-black border border-red-500 dark:border-red-700 ring-1 ring-red-500 dark:ring-red-700 focus:border focus:border-red-500 focus:dark:border-red-700 focus:ring-1 focus:ring-red-500 focus:dark:ring-red-700 outline-none }
+    .form-error { @apply h-[15px] mt-[2px] text-sm text-red-500 dark:text-red-500 }
+}

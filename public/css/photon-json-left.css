@@ -1,0 +1,19 @@
+/* Layout */
+ol.json-lines             { padding-inline-start: 3.75rem; }
+ol.json-lines >li         { padding-left:0.5rem; }
+ol.json-lines >li:before  { left:-4.0rem; padding-right: 0.5rem; }
+ol.raw-text               { padding-inline-start: 3.75rem; }
+ol.raw-text >li           { padding-left:0.5rem; }
+ol.raw-text >li:before    { left:-4.0rem; padding-right: 0.5rem; }
+
+/* Light theme */
+[data-theme="light"] {
+    ol.json-lines >li     { border-left:1px solid var(--jsonLinesBorder); }
+    ol.raw-text >li       { border-left:1px solid var(--jsonLinesBorder); }
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+    ol.json-lines >li     { border-left:1px solid var(--jsonLinesBorder); }
+    ol.raw-text >li       { border-left:1px solid var(--jsonLinesBorder); }
+}
