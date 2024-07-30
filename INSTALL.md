@@ -62,7 +62,9 @@ These additional modules need to be installed:
 
 Confirm they are installed with this command:
 
-`php -m`
+```
+php -m
+```
 
 
 ## Database
@@ -75,14 +77,17 @@ Installation of SQLite is specific to your Linux distribution.
 
 Confirm it is installed with this command:
 
-`sqlite3 --version`
+```
+sqlite3 --version
+```
 
 
 ## Web User Account
 
 Establish the user account for the web server.
 
-For example, on Debian based systems this is:  
+For example, on Debian based systems this is:
+
 `www-data`
 
 It may be `apache` or `httpd` on other systems.
@@ -91,9 +96,11 @@ Once you have established the user account for the web server, run these command
 
 Substitute `www-data` for the actual user account for the web server.
 
-`export webuser=www-data`  
-`mkdir -p /var/lib/photon/logs /var/lib/photon/output /var/lib/photon/sessions`  
-`chown -R $webuser:$webuser /var/lib/photon/`
+```
+export webuser=www-data  
+mkdir -p /var/lib/photon/logs /var/lib/photon/output /var/lib/photon/sessions  
+chown -R $webuser:$webuser /var/lib/photon/
+```
 
 If the web server user account differs from the default of `www-data`, you need to edit this file in the Photon root directory:
 
@@ -104,6 +111,13 @@ Set the value of:
 app -> httpUser
 
 to the value of the web server user account.
+
+Substitute `apache` for the actual user account for the web server.
+
+```
+export webuser=apache
+sed -i "s/'www-data'/'$webuser'/g" /var/www/config.php
+```
 
 
 ## Composer
@@ -116,20 +130,24 @@ Follow the instructions here:
 
 You can install Composer using these commands:
 
-`cd /tmp`  
-`curl -s https://getcomposer.org/installer -o composer-setup.php`  
-`php composer-setup.php`  
-`mv composer.phar /usr/local/bin/composer`  
-`rm -f composer-setup.php`
+```
+cd /tmp
+curl -s https://getcomposer.org/installer -o composer-setup.php
+php composer-setup.php
+mv composer.phar /usr/local/bin/composer
+rm -f composer-setup.php
+```
 
 Confirm Composer is installed with this command:
 
-`composer -V`
+```
+composer -V
+```
 
 
-## Install Source
+## Install Source Code
 
-Install the source code to:
+The source code is installed to:
 
 `/var/www`
 
@@ -137,15 +155,29 @@ The root directory for the web server configuration is:
 
 `/var/www/public`
 
+Download source from GitHub:
+
+```
+cd /tmp
+curl -LO https://github.com/chisnall/photon/archive/refs/heads/main.tar.gz
+tar -xf main.tar.gz
+mv photon-main/* /var/www/
+rmdir photon-main
+rm -f main.tar.gz
+```
+
 Run Composer:
 
-`cd /var/www`  
-`composer install`
+```
+cd /var/www
+composer install
+```
 
-The next step is to create the database.
+Run migrations to create the database and tables.
 
-`php migrations.php`
-
-that will create the initial database and tables.
+```
+cd /var/www
+php migrations.php
+```
 
 That completes the installation.
