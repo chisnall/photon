@@ -5,7 +5,7 @@ namespace App\Core\Database;
 use App\Core\Traits\GetSetProperty;
 use PDO;
 
-class Connection extends PDO
+final class Connection extends PDO
 {
     use GetSetProperty;
 
