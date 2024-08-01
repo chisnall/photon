@@ -8,7 +8,6 @@ use App\Core\Request;
 use App\Middleware\LoggedInMiddleware;
 use App\Models\LoginModel;
 use App\Models\UserModel;
-use http\Client\Curl\User;
 
 class LoginController extends Controller
 {
