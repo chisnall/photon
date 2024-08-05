@@ -210,7 +210,7 @@ class HttpClient
 
             // Responses in the HTTP client are "lazy" - we need to check the headers otherwise we cannot
             // catch exceptions in this try/catch block
-            $response->getHeaders();
+            $response->getHeaders(false);
 
             // Set response
             $this->response = $response;

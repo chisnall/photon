@@ -13,6 +13,7 @@ use App\Core\Application;
 // HomeController
 Application::app()->router()->get('/', [HomeController::class, 'home']);
 Application::app()->router()->post('/', [HomeController::class, 'home']);
+Application::app()->router()->get('/html', [HomeController::class, 'html']);
 
 // TestsController
 Application::app()->router()->get('/tests', [TestsController::class, 'tests']);

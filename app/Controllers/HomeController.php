@@ -152,7 +152,7 @@ class HomeController extends Controller
         return self::render('home');
     }
 
-    public function initUser()
+    public function initUser(): void
     {
         // Get settings for home view
         $collectionId = SettingsModel::getSetting('home/left/collectionId', true);
@@ -169,5 +169,13 @@ class HomeController extends Controller
         // Collection and request session handlers
         if ($collectionId) CollectionModel::handleSession($collectionId);
         if ($requestId) RequestModel::handleSession($requestId);
+    }
+
+    public function html(): never
+    {
+        // For the /html iframe on the home page
+        $responseBodyContent = Application::app()->session()->get('response/responseBodyContent');
+        echo $responseBodyContent;
+        exit;
     }
 }

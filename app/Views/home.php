@@ -80,6 +80,7 @@ $lower_selectedTab == 'tab2' ? $lower_selectedTab_tab2 = ' current' : $lower_sel
 $lower_selectedTab == 'tab3' ? $lower_selectedTab_tab3 = ' current' : $lower_selectedTab_tab3 = null;
 $lower_selectedTab == 'tab4' ? $lower_selectedTab_tab4 = ' current' : $lower_selectedTab_tab4 = null;
 $lower_selectedTab == 'tab5' ? $lower_selectedTab_tab5 = ' current' : $lower_selectedTab_tab5 = null;
+$lower_selectedTab == 'tab6' ? $lower_selectedTab_tab6 = ' current' : $lower_selectedTab_tab6 = null;
 
 // Set auth and body content
 $requestAuth == 'none' ? $upper_selectedTab_tab3_none = ' current' : $upper_selectedTab_tab3_none = null;
@@ -1166,8 +1167,9 @@ if ($responseValid) {
                             <li id="tab1" class="tab-link<?= $lower_selectedTab_tab1 ?>">Body</li>
                             <li id="tab2" class="tab-link<?= $lower_selectedTab_tab2 ?>">Headers<?php if ($responseHeaders) echo ' (' . count($responseHeaders) . ')'; ?></li>
                             <li id="tab3" class="tab-link<?= $lower_selectedTab_tab3 ?>">Raw</li>
-                            <li id="tab4" class="tab-link<?= $lower_selectedTab_tab4 ?>">Tests</li>
-                            <li id="tab5" class="tab-link<?= $lower_selectedTab_tab5 ?>">Settings</li>
+                            <li id="tab4" class="tab-link<?= $lower_selectedTab_tab4 ?>">HTML</li>
+                            <li id="tab5" class="tab-link<?= $lower_selectedTab_tab5 ?>">Tests</li>
+                            <li id="tab6" class="tab-link<?= $lower_selectedTab_tab6 ?>">Settings</li>
                         </ul>
                     </div>
 
@@ -1289,7 +1291,18 @@ if ($responseValid) {
                     <?php endif; ?>
                     </div>
 
-                    <div id="tab4-content" class="tab-content<?= $lower_selectedTab_tab4 ?>">
+                    <div id="tab4-content" class="tab-content<?= $lower_selectedTab_tab4 ?> overflow-y-hidden h-full border border-zinc-300 dark:border-zinc-650">
+                        <?php if ($responseBodyContent): ?>
+                            <iframe class="w-full h-full" src="/html"></iframe>
+                        <?php elseif ($responseErrorLong): ?>
+                            <div class="w-full min-h-full p-4 font-bold text-red-600 dark:text-red-700">
+                                <div class="mb-2 text-3xl"><i class="fa-solid fa-circle-exclamation"></i></div>
+                                <div><?= $responseErrorLong ?></div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div id="tab5-content" class="tab-content<?= $lower_selectedTab_tab5 ?>">
                         <?php if ($responseValid): ?>
                             <?php if ($testsResults): ?>
                                 <div class="mr-5 mb-5">
@@ -1338,7 +1351,7 @@ if ($responseValid) {
                         <?php endif; ?>
                     </div>
 
-                    <div id="tab5-content" class="tab-content<?= $lower_selectedTab_tab5 ?>">
+                    <div id="tab6-content" class="tab-content<?= $lower_selectedTab_tab6 ?>">
                         <div class="mr-5 mb-5">
                             <table class="text-left border-collapse text-sm">
                                 <tr>
@@ -1378,7 +1391,7 @@ if ($responseValid) {
 
             <div id="lower-footer">
 
-                <div id="tab5-footer" class="ml-3 mr-5 mt-0 mb-5 tab-footer<?= $lower_selectedTab_tab5 ?>">
+                <div id="tab6-footer" class="ml-3 mr-5 mt-0 mb-5 tab-footer<?= $lower_selectedTab_tab6 ?>">
                 <?php if (UserModel::isLoggedIn()): ?>
                     <div>
                         <a href="/?select=settings&tab=tab2" target="_blank"><button type="button" class="general"><span><i class="fa-solid fa-sliders mr-2"></i> Update settings</span></button></a>
@@ -1401,6 +1414,7 @@ if ($responseValid) {
 <textarea id="lower-tab3-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab3-clipboard"><?= $responseBodyRawClipboard ?></textarea>
 <textarea id="lower-tab4-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab4-clipboard"></textarea>
 <textarea id="lower-tab5-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab5-clipboard"></textarea>
+<textarea id="lower-tab6-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab6-clipboard"></textarea>
 
 <?php Functions::includeFile(file: '/app/Views/modals/collectionCreateModal.php'); ?>
 <?php Functions::includeFile(file: '/app/Views/modals/collectionUpdateModal.php'); ?>
