@@ -1165,9 +1165,9 @@ if ($responseValid) {
                     <div>
                         <ul id="lower" class="tabs">
                             <li id="tab1" class="tab-link<?= $lower_selectedTab_tab1 ?>">Body</li>
-                            <li id="tab2" class="tab-link<?= $lower_selectedTab_tab2 ?>">Headers<?php if ($responseHeaders) echo ' (' . count($responseHeaders) . ')'; ?></li>
-                            <li id="tab3" class="tab-link<?= $lower_selectedTab_tab3 ?>">Raw</li>
-                            <li id="tab4" class="tab-link<?= $lower_selectedTab_tab4 ?>">HTML</li>
+                            <li id="tab2" class="tab-link<?= $lower_selectedTab_tab2 ?>">Raw</li>
+                            <li id="tab3" class="tab-link<?= $lower_selectedTab_tab3 ?>">Preview</li>
+                            <li id="tab4" class="tab-link<?= $lower_selectedTab_tab4 ?>">Headers<?php if ($responseHeaders) echo ' (' . count($responseHeaders) . ')'; ?></li>
                             <li id="tab5" class="tab-link<?= $lower_selectedTab_tab5 ?>">Tests</li>
                             <li id="tab6" class="tab-link<?= $lower_selectedTab_tab6 ?>">Settings</li>
                         </ul>
@@ -1179,8 +1179,12 @@ if ($responseValid) {
                             <div class="pr-4 font-bold text-red-600 dark:text-red-700 border-r border-zinc-300 dark:border-zinc-650"><i class="fa-solid fa-circle-exclamation"></i> <?= $responseErrorShort ?></div>
                         <?php endif; ?>
                         <div class="pl-4 pr-2 font-bold text-zinc-400 dark:text-zinc-400"><?= $responseStatusProtocol ?></div>
-                        <?php if ($responseException): ?>
-                            <div class="pr-4 font-bold text-red-600 dark:text-red-700">
+                        <?php if ($responseException or $responseStatusCode >=500): ?>
+                            <div class="pr-4 font-bold text-red-600 dark:text-red-600">
+                                <?= "$responseStatusCode $responseStatusText" ?>
+                            </div>
+                        <?php elseif ($responseStatusCode >=400): ?>
+                            <div class="pr-4 font-bold text-orange-600 dark:text-orange-600">
                                 <?= "$responseStatusCode $responseStatusText" ?>
                             </div>
                         <?php else: ?>
@@ -1230,7 +1234,7 @@ if ($responseValid) {
             <div class="overflow-hidden flex flex-col h-full ml-3 mr-5 mt-0 mb-5">
                 <div id="lower-content" class="overflow-y-auto flex flex-col h-full">
 
-                    <div id="tab1-content" class="tab-content<?= $lower_selectedTab_tab1 ?> overflow-y-scroll h-full border border-zinc-300 dark:border-zinc-650">
+                    <div id="tab1-content" class="tab-content<?= $lower_selectedTab_tab1 ?> overflow-x-hidden overflow-y-scroll h-full border border-zinc-300 dark:border-zinc-650">
                     <?php if ($responseBodyEncoded): ?>
                         <div id="json-output" spellcheck="false" class="json-container w-full min-h-full text-wrap font-mono focus:outline-none select-text cursor-text"></div>
                     <?php elseif ($responseBodyContent): ?>
@@ -1249,32 +1253,7 @@ if ($responseValid) {
                     <?php endif; ?>
                     </div>
 
-                    <div id="tab2-content" class="tab-content<?= $lower_selectedTab_tab2 ?>">
-                    <?php if ($responseHeaders): ?>
-                        <div class="mr-5 mb-5">
-                            <table class="text-left border-collapse text-sm">
-                                <tr>
-                                    <th class="table-heading">Name</th>
-                                    <th class="table-heading">Value</th>
-                                </tr>
-                                <?php
-                                foreach ($responseHeaders as $responseHeaderName => $responseHeaderValue) {
-                                    echo "<tr>\n";
-                                    echo "  <td class='table-cell whitespace-nowrap content-start font-mono'>$responseHeaderName</th>\n";
-                                    echo "  <td class='table-cell content-start font-mono break-all'>$responseHeaderValue</th>\n";
-                                    echo "</tr>\n";
-                                }
-                                ?>
-                            </table>
-                        </div>
-                    <?php elseif ($responseErrorLong): ?>
-                        <div class="font-bold text-red-600 dark:text-red-700">
-                            <?= $responseErrorLong ?>
-                        </div>
-                    <?php endif; ?>
-                    </div>
-
-                    <div id="tab3-content" class="tab-content<?= $lower_selectedTab_tab3 ?> overflow-y-scroll h-full border border-zinc-300 dark:border-zinc-650">
+                    <div id="tab2-content" class="tab-content<?= $lower_selectedTab_tab2 ?> overflow-x-hidden overflow-y-scroll h-full border border-zinc-300 dark:border-zinc-650">
                     <?php if ($responseBodyContent): ?>
                         <div spellcheck="false" class="raw-container w-full min-h-full text-wrap focus:outline-none select-text cursor-text">
                             <ol class="raw-text">
@@ -1291,13 +1270,38 @@ if ($responseValid) {
                     <?php endif; ?>
                     </div>
 
-                    <div id="tab4-content" class="tab-content<?= $lower_selectedTab_tab4 ?> overflow-y-hidden h-full border border-zinc-300 dark:border-zinc-650">
+                    <div id="tab3-content" class="tab-content<?= $lower_selectedTab_tab3 ?> overflow-y-hidden h-full border border-zinc-300 dark:border-zinc-650">
                         <?php if ($responseBodyContent): ?>
                             <iframe class="w-full h-full" src="/html"></iframe>
                         <?php elseif ($responseErrorLong): ?>
                             <div class="w-full min-h-full p-4 font-bold text-red-600 dark:text-red-700">
                                 <div class="mb-2 text-3xl"><i class="fa-solid fa-circle-exclamation"></i></div>
                                 <div><?= $responseErrorLong ?></div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div id="tab4-content" class="tab-content<?= $lower_selectedTab_tab4 ?>">
+                        <?php if ($responseHeaders): ?>
+                            <div class="mr-5 mb-5">
+                                <table class="text-left border-collapse text-sm">
+                                    <tr>
+                                        <th class="table-heading">Name</th>
+                                        <th class="table-heading">Value</th>
+                                    </tr>
+                                    <?php
+                                    foreach ($responseHeaders as $responseHeaderName => $responseHeaderValue) {
+                                        echo "<tr>\n";
+                                        echo "  <td class='table-cell whitespace-nowrap content-start font-mono'>$responseHeaderName</th>\n";
+                                        echo "  <td class='table-cell content-start font-mono break-all'>$responseHeaderValue</th>\n";
+                                        echo "</tr>\n";
+                                    }
+                                    ?>
+                                </table>
+                            </div>
+                        <?php elseif ($responseErrorLong): ?>
+                            <div class="font-bold text-red-600 dark:text-red-700">
+                                <?= $responseErrorLong ?>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -1410,9 +1414,9 @@ if ($responseValid) {
 
 <textarea id="lower-tab-clipboard" class="hidden overflow-hidden w-[1px] h-[1px] p-0 border-0 resize-none" name="lower-tab-clipboard"></textarea>
 <textarea id="lower-tab1-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab1-clipboard"><?= $responseBodyClipboard ?></textarea>
-<textarea id="lower-tab2-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab2-clipboard"><?= $responseHeadersClipboard ?></textarea>
-<textarea id="lower-tab3-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab3-clipboard"><?= $responseBodyRawClipboard ?></textarea>
-<textarea id="lower-tab4-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab4-clipboard"></textarea>
+<textarea id="lower-tab2-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab2-clipboard"><?= $responseBodyRawClipboard ?></textarea>
+<textarea id="lower-tab3-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab3-clipboard"></textarea>
+<textarea id="lower-tab4-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab4-clipboard"><?= $responseHeadersClipboard ?></textarea>
 <textarea id="lower-tab5-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab5-clipboard"></textarea>
 <textarea id="lower-tab6-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab6-clipboard"></textarea>
 
