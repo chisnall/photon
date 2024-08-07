@@ -385,7 +385,10 @@ class HttpClient
                 $this->responseStatusLine = $responseStatusLine;
                 $this->responseStatusProtocol = $responseStatusProtocol;
                 $this->responseStatusCode = $responseStatusCode;
-                $this->responseStatusText = $responseStatusText;
+                //$this->responseStatusText = $responseStatusText;
+
+                // Alternative - getting response status text from HTTP_DESCRIPTIONS instead
+                $this->responseStatusText = $this->responseType;
             }
 
             // Remove status line from headers
