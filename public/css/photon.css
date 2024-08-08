@@ -194,7 +194,7 @@ span.password-display { position: relative; margin-left: -30px; margin-right: 4p
 .ui-autocomplete { max-height: 350px; overflow-x: hidden; overflow-y: auto; color: inherit; background-color: inherit; border-color: var(--borderColour) !important; scrollbar-color: var(--layoutContainerScrollbarColour); font-size: inherit; font-family: inherit; .ui-state-active { background-color: var(--autocompleteHover); border-color: var(--autocompleteHover); } }
 
 /* VarDumper */
-pre.sf-dump, .sf-dump-default { font-size: 15px !important; }
+pre.sf-dump, .sf-dump-default { margin: 0 !important; padding: 5px !important; font-size: 15px !important; }
 span.sf-dump-ellipsis { max-width: 500px !important; }
 input.sf-dump-search-input { font-size: 15px !important; height: 25px !important; }
 input.sf-dump-search-input:focus { outline: none; }
