@@ -81,6 +81,7 @@ $lower_selectedTab == 'tab3' ? $lower_selectedTab_tab3 = ' current' : $lower_sel
 $lower_selectedTab == 'tab4' ? $lower_selectedTab_tab4 = ' current' : $lower_selectedTab_tab4 = null;
 $lower_selectedTab == 'tab5' ? $lower_selectedTab_tab5 = ' current' : $lower_selectedTab_tab5 = null;
 $lower_selectedTab == 'tab6' ? $lower_selectedTab_tab6 = ' current' : $lower_selectedTab_tab6 = null;
+$lower_selectedTab == 'tab7' ? $lower_selectedTab_tab7 = ' current' : $lower_selectedTab_tab7 = null;
 
 // Set auth and body content
 $requestAuth == 'none' ? $upper_selectedTab_tab3_none = ' current' : $upper_selectedTab_tab3_none = null;
@@ -489,7 +490,7 @@ if ($responseValid) {
                 <div class="ml-3 mr-5 mt-5 mb-3">
 
                     <div class="flex">
-                        <div class="flex w-[60%] mr-4">
+                        <div class="flex w-[70%] mr-4">
                             <div id="dropdownMethodButton" class="dropdown-method">
                                 <div class="dropdown-method-button">
                                     <div class="dropdown-method-option-tick dropdown-method-option-tickoff"><i class="fa-solid fa-check"></i></div><div id="dropdownMethodValue" class="dropdown-method-value <?= "dropdown-method-$requestMethod" ?>"><?= $httpMethodList[$requestMethod] ?></div><i class="fa fa-chevron-left mr-2"></i>
@@ -504,7 +505,7 @@ if ($responseValid) {
                             </div>
 
                             <div class="grow">
-                                <input type="text" id="requestUrl" name="requestUrl" data-action="send" placeholder="Enter URL" spellcheck="false" oninvalid="this.setCustomValidity('Enter the URL')" oninput="this.setCustomValidity('')" value="<?= $requestUrl ?>" class="w-full h-[43px] p-2 font-mono border border-l-0 border-r-0 border-zinc-300 dark:border-zinc-650 focus:ring-0 focus:border-zinc-300 dark:focus:border-zinc-650 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none"/>
+                                <input type="text" id="requestUrl" name="requestUrl" data-action="send" placeholder="Enter URL" spellcheck="false" oninvalid="this.setCustomValidity('Enter the URL')" oninput="this.setCustomValidity('')" value="<?= $requestUrl ?>" class="w-full h-[43px] p-2 border border-l-0 border-r-0 border-zinc-300 dark:border-zinc-650 focus:ring-0 focus:border-zinc-300 dark:focus:border-zinc-650 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none"/>
                             </div>
 
                             <div>
@@ -512,7 +513,7 @@ if ($responseValid) {
                             </div>
                         </div>
 
-                        <div class="flex w-[40%]">
+                        <div class="flex w-[30%]">
                             <div class="grow">
                                 <input type="text" id="requestName" name="requestName" data-action="save" placeholder="Enter name" autocomplete="one-time-code" spellcheck="false" value="<?= $requestName ?>" class="w-full h-[43px] p-2 rounded-tl-lg rounded-bl-lg border border-r-0 border-zinc-300 dark:border-zinc-650 focus:ring-0 focus:border-zinc-300 dark:focus:border-zinc-650 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none"/>
                             </div>
@@ -1166,10 +1167,11 @@ if ($responseValid) {
                         <ul id="lower" class="tabs">
                             <li id="tab1" class="tab-link<?= $lower_selectedTab_tab1 ?>">Body</li>
                             <li id="tab2" class="tab-link<?= $lower_selectedTab_tab2 ?>">Raw</li>
-                            <li id="tab3" class="tab-link<?= $lower_selectedTab_tab3 ?>">Preview</li>
-                            <li id="tab4" class="tab-link<?= $lower_selectedTab_tab4 ?>">Headers<?php if ($responseHeaders) echo ' (' . count($responseHeaders) . ')'; ?></li>
-                            <li id="tab5" class="tab-link<?= $lower_selectedTab_tab5 ?>">Tests</li>
-                            <li id="tab6" class="tab-link<?= $lower_selectedTab_tab6 ?>">Settings</li>
+                            <li id="tab3" class="tab-link<?= $lower_selectedTab_tab3 ?>">Browser</li>
+                            <li id="tab4" class="tab-link<?= $lower_selectedTab_tab4 ?>">Interactive</li>
+                            <li id="tab5" class="tab-link<?= $lower_selectedTab_tab5 ?>">Headers<?php if ($responseHeaders) echo ' (' . count($responseHeaders) . ')'; ?></li>
+                            <li id="tab6" class="tab-link<?= $lower_selectedTab_tab6 ?>">Tests</li>
+                            <li id="tab7" class="tab-link<?= $lower_selectedTab_tab7 ?>">Settings</li>
                         </ul>
                     </div>
 
@@ -1272,7 +1274,7 @@ if ($responseValid) {
 
                     <div id="tab3-content" class="tab-content<?= $lower_selectedTab_tab3 ?> overflow-y-hidden h-full border border-zinc-300 dark:border-zinc-650">
                         <?php if ($responseBodyContent): ?>
-                            <iframe class="w-full h-full" src="/html"></iframe>
+                            <iframe id="browser" class="w-full h-full" src="/html"></iframe>
                         <?php elseif ($responseErrorLong): ?>
                             <div class="w-full min-h-full p-4 font-bold text-red-600 dark:text-red-700">
                                 <div class="mb-2 text-3xl"><i class="fa-solid fa-circle-exclamation"></i></div>
@@ -1282,6 +1284,18 @@ if ($responseValid) {
                     </div>
 
                     <div id="tab4-content" class="tab-content<?= $lower_selectedTab_tab4 ?>">
+                        <?php if ($responseBodyDecoded): ?>
+                            <div class="mr-5 mb-5">
+                                <?php dump($responseBodyDecoded) ?>
+                            </div>
+                        <?php elseif ($responseErrorLong): ?>
+                            <div class="font-bold text-red-600 dark:text-red-700">
+                                <?= $responseErrorLong ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div id="tab5-content" class="tab-content<?= $lower_selectedTab_tab5 ?>">
                         <?php if ($responseHeaders): ?>
                             <div class="mr-5 mb-5">
                                 <table class="text-left border-collapse text-sm">
@@ -1306,7 +1320,7 @@ if ($responseValid) {
                         <?php endif; ?>
                     </div>
 
-                    <div id="tab5-content" class="tab-content<?= $lower_selectedTab_tab5 ?>">
+                    <div id="tab6-content" class="tab-content<?= $lower_selectedTab_tab6 ?>">
                         <?php if ($responseValid): ?>
                             <?php if ($testsResults): ?>
                                 <div class="mr-5 mb-5">
@@ -1355,7 +1369,7 @@ if ($responseValid) {
                         <?php endif; ?>
                     </div>
 
-                    <div id="tab6-content" class="tab-content<?= $lower_selectedTab_tab6 ?>">
+                    <div id="tab7-content" class="tab-content<?= $lower_selectedTab_tab7 ?>">
                         <div class="mr-5 mb-5">
                             <table class="text-left border-collapse text-sm">
                                 <tr>
@@ -1395,7 +1409,7 @@ if ($responseValid) {
 
             <div id="lower-footer">
 
-                <div id="tab6-footer" class="ml-3 mr-5 mt-0 mb-5 tab-footer<?= $lower_selectedTab_tab6 ?>">
+                <div id="tab7-footer" class="ml-3 mr-5 mt-0 mb-5 tab-footer<?= $lower_selectedTab_tab7 ?>">
                 <?php if (UserModel::isLoggedIn()): ?>
                     <div>
                         <a href="/?select=settings&tab=tab2" target="_blank"><button type="button" class="general"><span><i class="fa-solid fa-sliders mr-2"></i> Update settings</span></button></a>
@@ -1416,9 +1430,10 @@ if ($responseValid) {
 <textarea id="lower-tab1-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab1-clipboard"><?= $responseBodyClipboard ?></textarea>
 <textarea id="lower-tab2-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab2-clipboard"><?= $responseBodyRawClipboard ?></textarea>
 <textarea id="lower-tab3-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab3-clipboard"></textarea>
-<textarea id="lower-tab4-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab4-clipboard"><?= $responseHeadersClipboard ?></textarea>
-<textarea id="lower-tab5-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab5-clipboard"></textarea>
+<textarea id="lower-tab4-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab4-clipboard"></textarea>
+<textarea id="lower-tab5-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab5-clipboard"><?= $responseHeadersClipboard ?></textarea>
 <textarea id="lower-tab6-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab6-clipboard"></textarea>
+<textarea id="lower-tab7-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab7-clipboard"></textarea>
 
 <?php Functions::includeFile(file: '/app/Views/modals/collectionCreateModal.php'); ?>
 <?php Functions::includeFile(file: '/app/Views/modals/collectionUpdateModal.php'); ?>
