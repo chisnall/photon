@@ -585,8 +585,8 @@ if ($responseValid) {
                                     <thead>
                                     <tr class="h-8">
                                         <th class="w-10 px-2 py-0 border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800"></th>
-                                        <th class="px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Name</th>
-                                        <th class="px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Value</th>
+                                        <th class="w-[250px] px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Name</th>
+                                        <th class="w-[350px] px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Value</th>
                                         <th colspan="2" class="px-2 py-0 border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800"></th>
                                     </tr>
                                     </thead>
@@ -607,10 +607,10 @@ if ($responseValid) {
                                                 <input type="hidden" name="requestParamEnabled[]" value="<?= $requestParamEnabled ?>">
                                             </td>
                                             <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                <input type="text" name="requestParamName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" value="<?= $requestParamName ?>" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                <input type="text" name="requestParamName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" value="<?= $requestParamName ?>" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                             </td>
                                             <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                <input type="text" name="requestParamValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" value="<?= $requestParamValue ?>" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                <input type="text" name="requestParamValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" value="<?= $requestParamValue ?>" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                             </td>
                                             <td class="w-8 py-1 text-center border border-r-0 border-zinc-300 dark:border-zinc-650">
                                                 <button type="button" name="deleteButton" class="px-1 text-base"><i class="fa-solid fa-trash-can"></i></button>
@@ -629,10 +629,10 @@ if ($responseValid) {
                                             <input type="hidden" name="requestParamEnabled[]">
                                         </td>
                                         <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                            <input type="text" name="requestParamName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                            <input type="text" name="requestParamName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                         </td>
                                         <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                            <input type="text" name="requestParamValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                            <input type="text" name="requestParamValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                         </td>
                                         <td class="w-8 py-1 text-center border border-r-0 border-zinc-300 dark:border-zinc-650">
                                             <button type="button" name="deleteButton" class="hidden px-1 text-base"><i class="fa-solid fa-trash-can"></i></button>
@@ -653,8 +653,8 @@ if ($responseValid) {
                                     <thead>
                                     <tr class="h-8">
                                         <th class="w-10 px-2 py-0 border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800"></th>
-                                        <th class="px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Name</th>
-                                        <th class="px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Value</th>
+                                        <th class="w-[250px] px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Name</th>
+                                        <th class="w-[350px] px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Value</th>
                                         <th colspan="2" class="px-2 py-0 border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800"></th>
                                     </tr>
                                     </thead>
@@ -675,10 +675,10 @@ if ($responseValid) {
                                                 <input type="hidden" name="requestHeaderEnabled[]" value="<?= $requestHeaderEnabled ?>">
                                             </td>
                                             <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                <input type="text" name="requestHeaderName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" value="<?= $requestHeaderName ?>" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                <input type="text" name="requestHeaderName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" value="<?= $requestHeaderName ?>" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                             </td>
                                             <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                <input type="text" name="requestHeaderValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" value="<?= $requestHeaderValue ?>" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                <input type="text" name="requestHeaderValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" value="<?= $requestHeaderValue ?>" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                             </td>
                                             <td class="w-8 py-1 text-center border border-r-0 border-zinc-300 dark:border-zinc-650">
                                                 <button type="button" name="deleteButton" class="px-1 text-base"><i class="fa-solid fa-trash-can"></i></button>
@@ -697,10 +697,10 @@ if ($responseValid) {
                                             <input type="hidden" name="requestHeaderEnabled[]">
                                         </td>
                                         <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                            <input type="text" name="requestHeaderName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                            <input type="text" name="requestHeaderName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                         </td>
                                         <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                            <input type="text" name="requestHeaderValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                            <input type="text" name="requestHeaderValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                         </td>
                                         <td class="w-8 py-1 text-center border border-r-0 border-zinc-300 dark:border-zinc-650">
                                             <button type="button" name="deleteButton" class="hidden px-1 text-base"><i class="fa-solid fa-trash-can"></i></button>
@@ -727,13 +727,13 @@ if ($responseValid) {
                                         <tr class="h-8">
                                             <td class="min-w-24 px-2 py-0 font-semibold text-right border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Username</td>
                                             <td colspan="2" class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                <input type="text" id="requestAuthBasicUsername" name="requestAuthBasicUsername" autocomplete="one-time-code" placeholder="Username" spellcheck="false" value="<?= $requestAuthBasicUsername ?>" class="min-w-[350px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                <input type="text" id="requestAuthBasicUsername" name="requestAuthBasicUsername" autocomplete="one-time-code" placeholder="Username" spellcheck="false" value="<?= $requestAuthBasicUsername ?>" class="min-w-[450px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                             </td>
                                         </tr>
                                         <tr class="h-8">
                                             <td class="min-w-24 px-2 py-0 font-semibold text-right border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Password</td>
                                             <td class="px-1 py-1 border border-r-0 border-zinc-300 dark:border-zinc-650">
-                                                <input type="password" id="requestAuthBasicPassword" name="requestAuthBasicPassword" autocomplete="one-time-code" placeholder="Password" spellcheck="false" value="<?= $requestAuthBasicPassword ?>" class="min-w-[350px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                <input type="password" id="requestAuthBasicPassword" name="requestAuthBasicPassword" autocomplete="one-time-code" placeholder="Password" spellcheck="false" value="<?= $requestAuthBasicPassword ?>" class="min-w-[450px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                             </td>
                                             <td id="requestAuthBasicPasswordShow" class="px-2 cursor-pointer border border-l-0 border-zinc-300 dark:border-zinc-650"><i class="fa-solid fa-eye"></i></td>
                                             <td id="requestAuthBasicPasswordHide" class="hidden px-2 cursor-pointer border border-l-0 border-zinc-300 dark:border-zinc-650"><i class="fa-regular fa-eye"></i></td>
@@ -763,14 +763,14 @@ if ($responseValid) {
                                         <tr class="h-8">
                                             <td class="min-w-24 px-2 py-0 font-semibold text-right border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Name</td>
                                             <td colspan="2" class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                <input type="text" id="requestAuthHeaderName" name="requestAuthHeaderName" autocomplete="one-time-code" placeholder="Name" spellcheck="false" value="<?= $requestAuthHeaderName ?>" class="min-w-[350px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                <input type="text" id="requestAuthHeaderName" name="requestAuthHeaderName" autocomplete="one-time-code" placeholder="Name" spellcheck="false" value="<?= $requestAuthHeaderName ?>" class="min-w-[450px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                             </td>
                                         </tr>
                                         <tr class="h-8">
                                             <td class="px-2 py-0 font-semibold text-right border border-b-0 border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Value</td>
                                             <td rowspan="5" class="content-start px-1 py-1 border border-r-0 border-zinc-300 dark:border-zinc-650">
                                                 <div class="table h-full">
-                                                    <textarea rows="6" id="requestAuthHeaderValue" name="requestAuthHeaderValue" autocomplete="one-time-code" placeholder="Value" spellcheck="false" class="textarea-password min-w-[350px] h-full px-1 py-0 text-sm font-mono resize-none border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none"><?= $requestAuthHeaderValue ?></textarea>
+                                                    <textarea rows="6" id="requestAuthHeaderValue" name="requestAuthHeaderValue" autocomplete="one-time-code" placeholder="Value" spellcheck="false" class="textarea-password min-w-[450px] h-full px-1 py-0 text-sm font-mono resize-none border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none"><?= $requestAuthHeaderValue ?></textarea>
                                                 </div>
                                             </td>
                                             <td id="requestAuthHeaderValueShow" class="px-2 cursor-pointer border border-l-0 border-b-0 border-zinc-300 dark:border-zinc-650"><i class="fa-solid fa-eye"></i></td>
@@ -802,8 +802,8 @@ if ($responseValid) {
                                         <thead>
                                         <tr class="h-8">
                                             <th class="w-10 px-2 py-0 border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800"></th>
-                                            <th class="px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Name</th>
-                                            <th class="px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Value</th>
+                                            <th class="w-[250px] px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Name</th>
+                                            <th class="w-[350px] px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Value</th>
                                             <th colspan="2" class="px-2 py-0 border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800"></th>
                                         </tr>
                                         </thead>
@@ -824,10 +824,10 @@ if ($responseValid) {
                                                     <input type="hidden" name="requestBodyFormInputEnabled[]" value="<?= $requestBodyFormInputEnabled ?>">
                                                 </td>
                                                 <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                    <input type="text" name="requestBodyFormInputName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" value="<?= $requestBodyFormInputName ?>" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                    <input type="text" name="requestBodyFormInputName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" value="<?= $requestBodyFormInputName ?>" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                                 </td>
                                                 <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                    <input type="text" name="requestBodyFormInputValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" value="<?= $requestBodyFormInputValue ?>" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                    <input type="text" name="requestBodyFormInputValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" value="<?= $requestBodyFormInputValue ?>" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                                 </td>
                                                 <td class="w-8 py-1 text-center border border-r-0 border-zinc-300 dark:border-zinc-650">
                                                     <button type="button" name="deleteButton" class="px-1 text-base"><i class="fa-solid fa-trash-can"></i></button>
@@ -846,10 +846,10 @@ if ($responseValid) {
                                                 <input type="hidden" name="requestBodyFormInputEnabled[]">
                                             </td>
                                             <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                <input type="text" name="requestBodyFormInputName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                <input type="text" name="requestBodyFormInputName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                             </td>
                                             <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                <input type="text" name="requestBodyFormInputValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                <input type="text" name="requestBodyFormInputValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                             </td>
                                             <td class="w-8 py-1 text-center border border-r-0 border-zinc-300 dark:border-zinc-650">
                                                 <button type="button" name="deleteButton" class="hidden px-1 text-base"><i class="fa-solid fa-trash-can"></i></button>
@@ -916,8 +916,8 @@ if ($responseValid) {
                                     <thead>
                                     <tr class="h-8">
                                         <th class="w-10 px-2 py-0 border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800"></th>
-                                        <th class="px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">JSON key</th>
-                                        <th class="px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Variable name</th>
+                                        <th class="w-[250px] px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">JSON key</th>
+                                        <th class="w-[250px] px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Variable name</th>
                                         <th class="px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Value</th>
                                         <th colspan="4" class="px-2 py-0 border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800"></th>
                                     </tr>
@@ -947,10 +947,10 @@ if ($responseValid) {
                                                 <input type="hidden" name="requestVariableEnabled[]" value="<?= $requestVariableEnabled ?>">
                                             </td>
                                             <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                <input type="text" name="requestVariableKey[]" autocomplete="one-time-code" placeholder="JSON key" spellcheck="false" value="<?= $requestVariableKey ?>" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                <input type="text" name="requestVariableKey[]" autocomplete="one-time-code" placeholder="JSON key" spellcheck="false" value="<?= $requestVariableKey ?>" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                             </td>
                                             <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                <input type="text" name="requestVariableName[]" autocomplete="one-time-code" placeholder="Variable name" spellcheck="false" value="<?= $requestVariableName ?>" class="w-[300px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                <input type="text" name="requestVariableName[]" autocomplete="one-time-code" placeholder="Variable name" spellcheck="false" value="<?= $requestVariableName ?>" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                             </td>
                                             <td class="px-2 py-1 font-mono break-all border border-zinc-300 dark:border-zinc-650">
                                                 <?= $requestVariableValueShort ?>
@@ -990,10 +990,10 @@ if ($responseValid) {
                                             <input type="hidden" name="requestVariableEnabled[]">
                                         </td>
                                         <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                            <input type="text" name="requestVariableKey[]" autocomplete="one-time-code" placeholder="JSON key" spellcheck="false" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                            <input type="text" name="requestVariableKey[]" autocomplete="one-time-code" placeholder="JSON key" spellcheck="false" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                         </td>
                                         <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                            <input type="text" name="requestVariableName[]" autocomplete="one-time-code" placeholder="Variable name" spellcheck="false" class="px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                            <input type="text" name="requestVariableName[]" autocomplete="one-time-code" placeholder="Variable name" spellcheck="false" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                         </td>
                                         <td class="px-2 py-1 font-mono border border-zinc-300 dark:border-zinc-650"></td>
                                         <td class="w-8 py-1 text-center border border-r-0 border-zinc-300 dark:border-zinc-650">
@@ -1181,17 +1181,17 @@ if ($responseValid) {
                             <div class="pr-4 font-bold text-red-600 dark:text-red-700 border-r border-zinc-300 dark:border-zinc-650"><i class="fa-solid fa-circle-exclamation"></i> <?= $responseErrorShort ?></div>
                         <?php endif; ?>
                         <div class="pl-4 pr-2 font-bold text-zinc-400 dark:text-zinc-400"><?= $responseStatusProtocol ?></div>
-                        <?php if ($responseException or $responseStatusCode >=500): ?>
+                        <?php if ($responseException or $responseCode >=500): ?>
                             <div class="pr-4 font-bold text-red-600 dark:text-red-600">
-                                <?= "$responseStatusCode $responseStatusText" ?>
+                                <?= "$responseCode $responseStatusText" ?>
                             </div>
-                        <?php elseif ($responseStatusCode >=400): ?>
+                        <?php elseif ($responseCode >=400): ?>
                             <div class="pr-4 font-bold text-orange-600 dark:text-orange-600">
-                                <?= "$responseStatusCode $responseStatusText" ?>
+                                <?= "$responseCode $responseStatusText" ?>
                             </div>
                         <?php else: ?>
                             <div class="pr-4 font-bold text-[#009900] dark:text-[#00b300]">
-                                <?= "$responseStatusCode $responseStatusText" ?>
+                                <?= "$responseCode $responseStatusText" ?>
                             </div>
                         <?php endif; ?>
 
@@ -1285,7 +1285,7 @@ if ($responseValid) {
 
                     <div id="tab4-content" class="tab-content<?= $lower_selectedTab_tab4 ?>">
                         <?php if ($responseBodyDecoded): ?>
-                            <div class="mr-5 mb-5">
+                            <div class="mr-5">
                                 <?php dump($responseBodyDecoded) ?>
                             </div>
                         <?php elseif ($responseErrorLong): ?>
