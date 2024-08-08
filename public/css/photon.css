@@ -193,6 +193,14 @@ span.password-display { position: relative; margin-left: -30px; margin-right: 4p
 /* Autocomplete */
 .ui-autocomplete { max-height: 350px; overflow-x: hidden; overflow-y: auto; color: inherit; background-color: inherit; border-color: var(--borderColour) !important; scrollbar-color: var(--layoutContainerScrollbarColour); font-size: inherit; font-family: inherit; .ui-state-active { background-color: var(--autocompleteHover); border-color: var(--autocompleteHover); } }
 
+/* VarDumper */
+pre.sf-dump, .sf-dump-default { font-size: 15px !important; }
+span.sf-dump-ellipsis { max-width: 500px !important; }
+input.sf-dump-search-input { font-size: 15px !important; height: 25px !important; }
+input.sf-dump-search-input:focus { outline: none; }
+span.sf-dump-search-count { font-size: 15px !important; height: 25px !important; line-height: 25px !important; }
+button.sf-dump-search-input-previous, button.sf-dump-search-input-next { height: 25px !important; padding: 0 5px !important; }
+
 /* Light theme */
 html[data-theme="light"] {
     /* Layout */
@@ -293,6 +301,18 @@ html[data-theme="light"] {
 
     /* Autocomplete */
     --autocompleteHover: #1d4ed8;                       /* blue-700 */
+
+    /* VarDumper */
+    pre.sf-dump { color: #cc7832; background-color: #fafafa; /*zinc-100*/ }
+    pre.sf-dump span.sf-dump-str { color: #2b9713; }
+    pre.sf-dump span.sf-dump-private, pre.sf-dump span.sf-dump-protected, pre.sf-dump span.sf-dump-public { color: black; }
+    pre.sf-dump span.sf-dump-note { color: #136eb8; }
+    pre.sf-dump span.sf-dump-key { color: #2b9713; }
+    pre.sf-dump a.sf-dump-ref { color: #595858; }
+    pre.sf-dump span.sf-dump-ellipsis { color: #136eb8; }
+    input.sf-dump-search-input { color: black !important; background-color: white; border-color: #d4d4d8; }
+    span.sf-dump-search-count { color: black; background-color: white; border-color: #d4d4d8; }
+    button.sf-dump-search-input-previous, button.sf-dump-search-input-next { border-color: #d4d4d8; fill: #71717a; background-color: #f4f4f5 !important; }
 }
 
 /* Dark theme */
@@ -395,4 +415,10 @@ html[data-theme="dark"] {
 
     /* Autocomplete */
     --autocompleteHover: #1d4ed8;                       /* blue-700 */
+
+    /* VarDumper */
+    pre.sf-dump { background-color: #18181b; /* zinc-800 */ }
+    input.sf-dump-search-input { color: white !important; background-color: black; border-color: #494950; }
+    span.sf-dump-search-count { color: white; background-color: black; border-color: #494950; }
+    button.sf-dump-search-input-previous, button.sf-dump-search-input-next { border-color: #494950; fill: #d4d4d8; background-color: #27272a !important; }
 }
