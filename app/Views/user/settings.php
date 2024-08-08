@@ -216,8 +216,8 @@ $errorFields = [
                                     <thead>
                                     <tr class="h-8">
                                         <th class="w-10 px-2 py-0 border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800"></th>
-                                        <th class="px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Name</th>
-                                        <th class="px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Value</th>
+                                        <th class="w-[200px] px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Name</th>
+                                        <th class="w-[400px] px-2 py-0 font-semibold border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Value</th>
                                         <th colspan="2" class="px-2 py-0 border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800"></th>
                                     </tr>
                                     </thead>
@@ -238,10 +238,10 @@ $errorFields = [
                                                 <input type="hidden" name="globalVariableEnabled[]" value="<?= $globalVariableEnabled ?>">
                                             </td>
                                             <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                <input type="text" name="globalVariableName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" value="<?= $globalVariableName ?>" class="w-[200px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                <input type="text" name="globalVariableName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" value="<?= $globalVariableName ?>" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                             </td>
                                             <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                                <input type="text" name="globalVariableValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" value="<?= $globalVariableValue ?>" class="w-[400px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                <input type="text" name="globalVariableValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" value="<?= $globalVariableValue ?>" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                             </td>
                                             <td class="w-8 py-1 text-center border border-l-0 border-r-0 border-zinc-300 dark:border-zinc-650">
                                                 <button type="button" name="deleteButton" class="px-1 text-base"><i class="fa-solid fa-trash-can"></i></button>
@@ -260,10 +260,10 @@ $errorFields = [
                                             <input type="hidden" name="globalVariableEnabled[]">
                                         </td>
                                         <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                            <input type="text" name="globalVariableName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" class="w-[200px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                            <input type="text" name="globalVariableName[]" autocomplete="one-time-code" placeholder="Name" spellcheck="false" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                         </td>
                                         <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
-                                            <input type="text" name="globalVariableValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" class="w-[400px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                            <input type="text" name="globalVariableValue[]" autocomplete="one-time-code" placeholder="Value" spellcheck="false" class="w-full px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
                                         </td>
                                         <td class="w-8 py-1 text-center border border-l-0 border-r-0 border-zinc-300 dark:border-zinc-650">
                                             <button type="button" name="deleteButton" class="hidden px-1 text-base"><i class="fa-solid fa-trash-can"></i></button>
