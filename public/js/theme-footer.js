@@ -60,6 +60,11 @@ themeToggleBtn.addEventListener('click', function() {
         }
     }
 
+    // Reload browser iframe
+    if (document.querySelector("#browser")) {
+        document.getElementById('browser').contentDocument.location.reload(true);
+    }
+
     // Save to session
     saveSession();
 });
