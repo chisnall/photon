@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\Application;
 use App\Core\Controller;
+use App\Core\Functions;
 use App\Core\Request;
 use App\Middleware\AuthMiddleware;
 use App\Models\CollectionModel;
@@ -174,8 +175,7 @@ class HomeController extends Controller
     public function html(): never
     {
         // For the /html iframe on the home page
-        $responseBodyContent = Application::app()->session()->get('response/responseBodyContent');
-        echo $responseBodyContent;
+        Functions::includeFile(file: '/app/Views/home-browser.php');
         exit;
     }
 }

@@ -1,0 +1,9 @@
+/* Light theme */
+html[data-theme="light"] {
+    body { color: black; }
+}
+
+/* Dark theme */
+html[data-theme="dark"] {
+    body { color: white; }
+}
