@@ -39,7 +39,7 @@ function init() {
     containerHeight = $("#pageSection").height();
 
     // Definite min/max
-    verticalMin = containerWidth * 0.20;
+    verticalMin = containerWidth * 0.175;
     verticalMax = containerWidth * 0.40;
     horizontalMin = containerHeight * 0.30;
     horizontalMax = containerHeight * 0.70;
