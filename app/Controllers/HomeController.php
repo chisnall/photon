@@ -96,21 +96,11 @@ class HomeController extends Controller
 
             // Request - unselect
             if ($unselect == 'request') {
-                // Register session variables
-                Application::app()->session()->set('home/upper/requestModified', false);
-
-                // Remove selected request ID and name
-                Application::app()->session()->remove('home/left/requestId');
-                Application::app()->session()->remove('home/left/requestName');
-
-                // Remove request error
-                Application::app()->session()->remove('tests/upper/requestError');
-
-                // Clear response session data
-                Application::app()->session()->remove('response');
-
-                // Save to settings
-                SettingsModel::updateSetting('home/left/requestId', null);
+                // Clear session
+                if (RequestModel::clearSession()) {
+                    // Save to settings
+                    SettingsModel::updateSetting('home/left/requestId', null);
+                }
 
                 // Redirect to homepage
                 Application::app()->response()->redirect('/');

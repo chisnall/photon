@@ -240,9 +240,8 @@ class RequestModel extends Model
             // Delete record
             $this->deleteRecord();
 
-            // Remove session variables
-            Application::app()->session()->remove('home/left/requestId');
-            Application::app()->session()->remove('home/left/requestName');
+            // Clear session
+            self::clearSession();
 
             // Update settings
             SettingsModel::deleteSetting("home/left/requestId");
@@ -553,7 +552,7 @@ class RequestModel extends Model
 
         // Confirm user ID matches logged in user ID
         if ($collectionUserId == Application::app()->user()->id()) {
-            // Clear response session data
+            // Remove response session data
             Application::app()->session()->remove('response');
 
             // Confirm body file is present
@@ -592,6 +591,39 @@ class RequestModel extends Model
         }
 
         return false;
+    }
+
+    public static function clearSession(): bool
+    {
+        // Remove response session data
+        Application::app()->session()->remove('response');
+
+        // Remove session variables
+        Application::app()->session()->remove('home/left/requestId');
+        Application::app()->session()->remove('home/left/requestName');
+        Application::app()->session()->remove('home/upper/requestMethod');
+        Application::app()->session()->remove('home/upper/requestUrl');
+        Application::app()->session()->remove('home/upper/requestName');
+        Application::app()->session()->remove('home/upper/requestParamsInputs');
+        Application::app()->session()->remove('home/upper/requestHeadersInputs');
+        Application::app()->session()->remove('home/upper/requestAuth');
+        Application::app()->session()->remove('home/upper/requestAuthBasicUsername');
+        Application::app()->session()->remove('home/upper/requestAuthBasicPassword');
+        Application::app()->session()->remove('home/upper/requestAuthTokenValue');
+        Application::app()->session()->remove('home/upper/requestAuthHeaderName');
+        Application::app()->session()->remove('home/upper/requestAuthHeaderValue');
+        Application::app()->session()->remove('home/upper/requestBody');
+        Application::app()->session()->remove('home/upper/requestBodyTextValue');
+        Application::app()->session()->remove('home/upper/requestBodyTextType');
+        Application::app()->session()->remove('home/upper/requestBodyFormInputs');
+        Application::app()->session()->remove('home/upper/requestBodyFileExisting');
+        Application::app()->session()->remove('home/upper/requestVariablesInputs');
+        Application::app()->session()->remove('tests/upper/requestError');
+
+        // Register session variables
+        Application::app()->session()->set('home/upper/requestModified', false);
+
+        return true;
     }
 
     public function requestMethodDisplay(): string
