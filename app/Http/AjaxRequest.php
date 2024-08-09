@@ -19,19 +19,14 @@ class AjaxRequest
     private Session $session;
     private ?string $token;
     private ?string $key;
-    private mixed $value;
-    private bool $process;
+    private string|array|null $value;
+    private ?bool $process;
     private ?string $file;
     private ?array $variables;
     private ?string $class;
     private ?string $method;
     private ?array $classParameters;
     private ?array $methodParameters;
-    private const array KEYS_ALLOWED = KEYS_ALLOWED;
-    private const array FILES_ALLOWED = FILES_ALLOWED;
-    private const array METHODS_ALLOWED = METHODS_ALLOWED;
-    private const array RECORD_KEYS = RECORD_KEYS;
-    private const array SETTINGS_UPDATE = SETTINGS_UPDATE;
 
     public function __construct()
     {
@@ -59,6 +54,9 @@ class AjaxRequest
         $method = $_POST['method'] ?? null;
         $classParameters = $_POST['classParameters'] ?? null;
         $methodParameters = $_POST['methodParameters'] ?? null;
+
+        // Cast process to bool
+        if ($process) settype($process, 'bool');
 
         // Session/settings update
         if ($key) {
@@ -107,7 +105,7 @@ class AjaxRequest
         ]);
 
         // Restrict to allowed keys
-        if (!array_key_exists($this->key, $this::KEYS_ALLOWED)) {
+        if (!array_key_exists($this->key, KEYS_ALLOWED)) {
             // Set status code and exit
             http_response_code(403);
             exit;
@@ -170,10 +168,10 @@ class AjaxRequest
         //}
 
         // Indicate to the user that changes have been made to the record
-        $recordModifiedKey = $this::KEYS_ALLOWED[$this->key];
+        $recordModifiedKey = KEYS_ALLOWED[$this->key];
         if ($recordModifiedKey) {
             // Get the session key for the relevant selected record ID
-            $recordIdKey = $this::RECORD_KEYS[$recordModifiedKey];
+            $recordIdKey = RECORD_KEYS[$recordModifiedKey];
 
             // Get the record ID currently selected
             $recordIdValue = $this->session->get($recordIdKey);
@@ -187,7 +185,7 @@ class AjaxRequest
 
         // Check if we need to save to user setting
         // Only if user ID is valid and key is present in the settings update array
-        if ($userId && in_array($this->key, $this::SETTINGS_UPDATE)) {
+        if ($userId && in_array($this->key, SETTINGS_UPDATE)) {
             // Create application instance - we need this for database access
             new Application();
 
@@ -207,7 +205,7 @@ class AjaxRequest
     public function handleFile(): void
     {
         // Restrict to allowed files
-        if (!in_array($this->file, $this::FILES_ALLOWED)) {
+        if (!in_array($this->file, FILES_ALLOWED)) {
             // Set status code and exit
             http_response_code(403);
             exit;
@@ -223,7 +221,7 @@ class AjaxRequest
     public function handleMethod(): void
     {
         // Restrict to allowed class/methods
-        if (!in_array($this->class . '::' . $this->method . "()", $this::METHODS_ALLOWED)) {
+        if (!in_array($this->class . '::' . $this->method . "()", METHODS_ALLOWED)) {
             // Set status code and exit
             http_response_code(403);
             exit;
