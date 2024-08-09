@@ -235,6 +235,12 @@ class GroupModel extends Model
                 // Clear session
                 self::clearSession();
 
+                // Delete output files
+                $files = glob("/var/lib/photon/output/groupTests-" . $this->id . "-*");
+                foreach ($files as $file) {
+                    unlink($file);
+                }
+
                 // Update settings
                 SettingsModel::deleteSetting("tests/left/groupId");
 
