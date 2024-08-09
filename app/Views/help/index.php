@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 $title = 'Help';
 ?>
 <h2 class="text-2xl font-bold"><a class="underline text-blue-600 dark:text-red-600" href="/help/configuration">Configuration</a></h2>

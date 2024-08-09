@@ -7,8 +7,9 @@
 /** @var array $exceptionTrace */
 /** @var array $exceptionTraceString */
 
-use App\Functions\Output;
+declare(strict_types=1);
 
+use App\Functions\Output;
 ?>
 
 <div class="flex justify-center">

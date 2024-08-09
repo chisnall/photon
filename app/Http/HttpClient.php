@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http;
 
 use App\Core\Application;
@@ -429,6 +431,9 @@ class HttpClient
                 if (in_array($key, $requestVariables)) {
                     foreach ($requestVariables as $variableName => $variableKey) {
                         if ($variableKey == $key) {
+                            // Cast value to string
+                            settype($value, 'string');
+
                             // Get collection ID
                             $collectionId = $this->model->getProperty('collectionId');
 

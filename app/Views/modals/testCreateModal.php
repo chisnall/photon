@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 use App\Core\Application;
 
 $formElements = Application::app()->model('TestModel')->formElements('create');

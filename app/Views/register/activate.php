@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 $title = 'Activate Account';
 
 // We'll only show this page if the token is invalid

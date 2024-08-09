@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Core\Database;
+declare(strict_types=1);
 
-use Exception;
+namespace App\Core\Database;
 
 abstract class Database
 {

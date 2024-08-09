@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controllers;
 
 use App\Core\Application;
@@ -54,7 +56,7 @@ class HomeController extends Controller
             // Collection - select
             if ($select == 'collection') {
                 // Get collection ID
-                $collectionId = $_GET['id'];
+                $collectionId = (int)$_GET['id'];
 
                 // Handle session
                 if (CollectionModel::handleSession($collectionId)) {
@@ -82,7 +84,7 @@ class HomeController extends Controller
             // Request - select
             if ($select == 'request') {
                 // Get request ID
-                $requestId = $_GET['id'];
+                $requestId = (int)$_GET['id'];
 
                 // Handle session
                 if (RequestModel::handleSession($requestId)) {
@@ -109,7 +111,7 @@ class HomeController extends Controller
             // Variable - reset button
             if ($select == 'variable') {
                 // Get variable collection ID and name
-                $variableCollectionId = $_GET['collection'];
+                $variableCollectionId = (int)$_GET['collection'];
                 $variableName = $_GET['variable'];
 
                 // Remove variable

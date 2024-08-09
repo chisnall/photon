@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 use App\Core\Application;
 
 $flashClass = Application::app()->session()->getFlash()['class'];

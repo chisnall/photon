@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Core\Application;
@@ -21,18 +23,18 @@ class SettingsModel extends Model
     protected ?string $updatedAt = null;
 
     // These don't exist in the table
-    protected mixed $http_defaultScheme = null;
-    protected mixed $http_sortHeaders = null;
-    protected mixed $http_timeout  = null;
-    protected mixed $http_version  = null;
-    protected mixed $http_accept  = null;
-    protected mixed $json_lineNumbers = null;
-    protected mixed $json_indent = null;
-    protected mixed $json_linkUrls = null;
-    protected mixed $json_trailingCommas = null;
-    protected mixed $json_quoteKeys = null;
-    protected mixed $groups_stopOnResponseFail = null;
-    protected mixed $variables_showGlobalsHome = null;
+    protected ?string $http_defaultScheme = null;
+    protected ?bool $http_sortHeaders = null;
+    protected ?float $http_timeout  = null;
+    protected ?string $http_version  = null;
+    protected ?string $http_accept  = null;
+    protected ?string $json_lineNumbers = null;
+    protected ?int $json_indent = null;
+    protected ?bool $json_linkUrls = null;
+    protected ?bool $json_trailingCommas = null;
+    protected ?bool $json_quoteKeys = null;
+    protected ?bool $groups_stopOnResponseFail = null;
+    protected ?bool $variables_showGlobalsHome = null;
 
     public function __construct()
     {
@@ -148,9 +150,9 @@ class SettingsModel extends Model
         $this->groups_stopOnResponseFail = $settings['groups']['stopOnResponseFail'] ?? $settingsDefaults['groups']['stopOnResponseFail'];
         $this->variables_showGlobalsHome = $settings['variables']['showGlobalsHome'] ?? $settingsDefaults['variables']['showGlobalsHome'];
 
-        // Format timeout to 1 decimal place
+        // Round timeout to 1 decimal place
         if ($this->http_timeout) {
-            $this->http_timeout = number_format($this->http_timeout, 1);
+            $this->http_timeout = round($this->http_timeout, 1);
         }
     }
 

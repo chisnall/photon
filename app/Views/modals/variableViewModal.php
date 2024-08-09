@@ -1,3 +1,7 @@
+<?php
+
+declare(strict_types=1);
+?>
 <section id="variableViewModal" class="modal hidden">
     <form id="variableView">
         <div class="modal-header">

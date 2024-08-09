@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 $title = 'Account Activated';
 ?>
 <h1 class="pb-4 text-3xl font-bold">Account Activated</h1>

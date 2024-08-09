@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Core\Application;
 use App\Functions\Output;
-
 ?>
 <div class="fixed bottom-0 z-50 w-full h-[41px] font-semibold
                 bg-gradient-to-b from-zinc-100 dark:from-zinc-800

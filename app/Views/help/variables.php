@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 $title = 'Help: Variables';
 ?>
 <h2 class="mb-4 text-2xl font-bold">Variables</h2>

@@ -1,7 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Core\Application;
-use App\Models\SettingsModel;
 
 $title = 'Settings';
 
@@ -13,6 +14,10 @@ $selectedTab == 'tab1' ? $selectedTab_tab1 = ' current' : $selectedTab_tab1 = nu
 $selectedTab == 'tab2' ? $selectedTab_tab2 = ' current' : $selectedTab_tab2 = null;
 $selectedTab == 'tab3' ? $selectedTab_tab3 = ' current' : $selectedTab_tab3 = null;
 $selectedTab == 'tab4' ? $selectedTab_tab4 = ' current' : $selectedTab_tab4 = null;
+
+// Get values for text inputs
+$http_timeout = number_format(Application::app()->model('SettingsModel')->getProperty('http_timeout'), 1);
+$json_indent = Application::app()->model('SettingsModel')->getProperty('json_indent');
 
 // Create selected strings for the select inputs
 Application::app()->model('SettingsModel')->getProperty('http_defaultScheme') == 'http://' ? $http_defaultScheme_http = ' selected' : $http_defaultScheme_http = null;
@@ -98,7 +103,7 @@ $errorFields = [
                         <div class="flex flex-row mb-6">
                             <div class="w-[175px] mr-4 text-right content-center">Timeout</div>
                             <div class="w-[225px]">
-                                <input type="text" name="http_timeout" value="<?= Application::app()->model('SettingsModel')->getProperty('http_timeout') ?>" autocomplete="one-time-code" spellcheck="false" class="<?= $http_timeoutClass ?>"/>
+                                <input type="text" name="http_timeout" value="<?= $http_timeout ?>" autocomplete="one-time-code" spellcheck="false" class="<?= $http_timeoutClass ?>"/>
                             </div>
                             <div class="ml-4 content-center text-red-500 dark:text-red-500"><?= $http_timeoutError ?></div>
                         </div>
@@ -150,7 +155,7 @@ $errorFields = [
                         <div class="flex flex-row mb-6">
                             <div class="w-[175px] mr-4 text-right content-center">JSON indent</div>
                             <div class="w-[225px]">
-                                <input type="text" name="json_indent" value="<?= Application::app()->model('SettingsModel')->getProperty('json_indent') ?>" autocomplete="one-time-code" spellcheck="false" class="<?= $json_indentClass ?>"/>
+                                <input type="text" name="json_indent" value="<?= $json_indent ?>" autocomplete="one-time-code" spellcheck="false" class="<?= $json_indentClass ?>"/>
                             </div>
                             <div class="ml-4 content-center text-red-500 dark:text-red-500"><?= $json_indentError ?></div>
                         </div>

@@ -1,6 +1,8 @@
 <?php
 /**  @var int $groupId **/
 
+declare(strict_types=1);
+
 // Get tests progress
 $progressFile = "/var/lib/photon/output/groupTests-$groupId-progress";
 if (file_exists($progressFile)) {

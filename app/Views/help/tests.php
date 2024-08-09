@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 $title = 'Help: Tests';
 ?>
 <h2 class="mb-4 text-2xl font-bold">Tests</h2>

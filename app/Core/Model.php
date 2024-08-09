@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Core;
 
 use App\Core\Database\Connection;
@@ -48,6 +50,12 @@ abstract class Model
             // Only handle form elements backed by a property
             // Only handle form elements which are not an empty string
             if (property_exists($this, $key) && $value != '') {
+                // Cast variable to property type
+                //$propertyType = (new ReflectionProperty($this, $key))->getType()->getName();
+                $propertyType = (new ReflectionClass($this))->getProperty($key)->getType()->getName();
+                settype($value, $propertyType);
+
+                // Set property
                 $this->$key = $value;
             }
         }
@@ -237,6 +245,7 @@ abstract class Model
     {
         $message = $this->errorMessages()[$rule] ?? '';
         foreach ($params as $key => $value) {
+            settype($value, 'string');
             $message = str_replace(search: "{{$key}}", replace: $value, subject: $message);
         }
         $this->errors[$field] = $message;
@@ -440,7 +449,7 @@ abstract class Model
         $statement->execute();
 
         // Get record ID
-        $id = Application::app()->db()->lastInsertId();
+        $id = (int)Application::app()->db()->lastInsertId();
 
         // Update the model that called this method
         $this->id = $id;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Traits;
+declare(strict_types=1);
 
-use App\Core\Functions;
+namespace App\Traits;
 
 trait LogTrait
 {

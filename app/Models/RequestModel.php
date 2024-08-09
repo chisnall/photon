@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Core\Application;
@@ -365,7 +367,7 @@ class RequestModel extends Model
         // Validate request
         if ($this->validate()) {
             // Remove request error
-            Application::app()->session()->remove('tests/upper/requestError');
+            Application::app()->session()->remove('home/upper/requestError');
 
             // Send
             if ($this->formAction == 'send') {
@@ -441,7 +443,7 @@ class RequestModel extends Model
         } else {
             // Register session variables
             if ($this->id) Application::app()->session()->set('home/upper/requestModified', true);
-            Application::app()->session()->set('tests/upper/requestError', $this->displayError());
+            Application::app()->session()->set('home/upper/requestError', $this->displayError());
 
             // Remove the response from the session
             Application::app()->session()->remove('response');
@@ -582,7 +584,7 @@ class RequestModel extends Model
             Application::app()->session()->set('home/upper/requestModified', false);
 
             // Remove request error
-            Application::app()->session()->remove('tests/upper/requestError');
+            Application::app()->session()->remove('home/upper/requestError');
 
             // Only register the request name if it differs from the request URL
             $requestData->getProperty('requestName') != $requestData->getProperty('requestUrl') ? Application::app()->session()->set('home/upper/requestName', $requestData->getProperty('requestName')): Application::app()->session()->set('home/upper/requestName', null);
@@ -618,7 +620,7 @@ class RequestModel extends Model
         Application::app()->session()->remove('home/upper/requestBodyFormInputs');
         Application::app()->session()->remove('home/upper/requestBodyFileExisting');
         Application::app()->session()->remove('home/upper/requestVariablesInputs');
-        Application::app()->session()->remove('tests/upper/requestError');
+        Application::app()->session()->remove('home/upper/requestError');
 
         // Register session variables
         Application::app()->session()->set('home/upper/requestModified', false);

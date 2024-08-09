@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Core\Application;
@@ -195,27 +197,16 @@ class GroupModel extends Model
         // Validate
         if ($this->validate()) {
             if ($this->formAction == 'save' && $this->updateRecord()) {
-                // Register session variables
-                Application::app()->session()->set('tests/left/groupName', $this->groupName);
-                Application::app()->session()->set('tests/upper/groupModified', false);
-
-                // Remove group error
-                Application::app()->session()->remove('tests/upper/groupError');
+                // Handle session
+                self::handleSession($this->id);
 
                 // Set flash message
                 Application::app()->session()->setFlash('info', 'Group has been updated.');
             }
 
             if (($this->formAction == 'create' || $this->formAction == 'clone') && $this->insertRecord()) {
-                // Register session variables
-                Application::app()->session()->set('tests/left/groupId', $this->id);
-                Application::app()->session()->set('tests/left/groupName', $this->groupName);
-                Application::app()->session()->set('tests/upper/groupName', $this->groupName);
-                Application::app()->session()->set('tests/upper/groupRequests', $this->groupRequests);
-                Application::app()->session()->set('tests/upper/groupModified', false);
-
-                // Remove group error
-                Application::app()->session()->remove('tests/upper/groupError');
+                // Handle session
+                self::handleSession($this->id);
 
                 // Update settings
                 SettingsModel::updateSetting('tests/left/groupId', $this->id);
@@ -241,11 +232,8 @@ class GroupModel extends Model
             }
 
             if ($this->formAction == 'delete' && $this->deleteRecord()) {
-                // Remove session variables
-                Application::app()->session()->remove('tests/left/groupId');
-                Application::app()->session()->remove('tests/left/groupName');
-                Application::app()->session()->remove('tests/upper/groupName');
-                Application::app()->session()->remove('tests/upper/groupRequests');
+                // Clear session
+                self::clearSession();
 
                 // Update settings
                 SettingsModel::deleteSetting("tests/left/groupId");
@@ -291,6 +279,21 @@ class GroupModel extends Model
         }
 
         return false;
+    }
+
+    public static function clearSession(): bool
+    {
+        // Remove session variables
+        Application::app()->session()->remove('tests/left/groupId');
+        Application::app()->session()->remove('tests/left/groupName');
+        Application::app()->session()->remove('tests/upper/groupName');
+        Application::app()->session()->remove('tests/upper/groupRequests');
+        Application::app()->session()->remove('tests/upper/groupError');
+
+        // Register session variables
+        Application::app()->session()->set('tests/upper/groupModified', false);
+
+        return true;
     }
 
     public function formElements(string $formAction): array

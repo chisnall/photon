@@ -1,6 +1,8 @@
 <?php
 /**  @var int $groupId **/
 
+declare(strict_types=1);
+
 // Check for results
 $resultsData = null;
 if ($groupId) {

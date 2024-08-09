@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http;
 
 use App\Core\Application;
@@ -21,7 +23,7 @@ class HttpGroupTests
     public function __construct(?array $parameters)
     {
         // Get group Id
-        $groupId = $parameters['groupId'] ?? null;
+        $groupId = (int)$parameters['groupId'] ?? null;
 
         // Set properties
         $this->groupId = $groupId;

@@ -1,6 +1,8 @@
 <?php
 /**  @var int $groupId **/
 
+declare(strict_types=1);
+
 use App\Functions\Output;
 
 // Check for results

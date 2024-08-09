@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Core\Application;
 use App\Core\Functions;
 use App\Functions\Css;
@@ -57,7 +59,7 @@ $modalOpenName = $_POST['modalName'] ?? null;
 $modalOverlayClass = Css::getOverlayClass();
 
 // Get form error
-$requestError = Application::app()->session()->get('tests/upper/requestError');
+$requestError = Application::app()->session()->get('home/upper/requestError');
 
 // Get tabs from session
 $left_selectedTab = Application::app()->session()->get('home/left/selectedTab') ?? "tab1";
@@ -145,6 +147,7 @@ if ($left_collectionId) {
     // Merge arrays - give priority to the request variables where keys clash, followed by collection variables
     $variablesData = array_merge($globalVariablesData, $collectionVariablesData, $requestVariablesData);
 
+    // Sort
     ksort($variablesData, SORT_NATURAL);
 } else {
     $variablesData = [];

@@ -1,3 +1,7 @@
+<?php
+
+declare(strict_types=1);
+?>
 <section id="testDeleteModal" class="modal hidden">
     <form id="testDelete" action="/" method="POST">
         <div class="modal-header">

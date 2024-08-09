@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controllers;
 
 use App\Core\Application;
@@ -9,8 +11,6 @@ use App\Core\Request;
 use App\Exception\AppException;
 use App\Exception\BadRequestException;
 use App\Middleware\AuthMiddleware;
-use App\Models\CollectionModel;
-use App\Models\TestModel;
 use Exception;
 
 class SiteController extends Controller

@@ -1,4 +1,5 @@
 <?php
+
 const HTTP_DESCRIPTIONS = [
     100 => "Continue",
     101 => "Switching Protocols",

@@ -1,6 +1,8 @@
 <?php
 /** @var array $params */
 
+declare(strict_types=1);
+
 $title = 'Error';
 $exception = $params["exception"];
 $code = $params["code"];

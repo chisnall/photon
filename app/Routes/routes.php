@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Controllers\HomeController;
 use App\Controllers\LoginController;
 use App\Controllers\ProfileController;
@@ -8,7 +10,6 @@ use App\Controllers\SettingsController;
 use App\Controllers\SiteController;
 use App\Controllers\TestsController;
 use App\Core\Application;
-
 
 // HomeController
 Application::app()->router()->get('/', [HomeController::class, 'home']);

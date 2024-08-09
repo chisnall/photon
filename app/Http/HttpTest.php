@@ -1,13 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http;
 
-use App\Core\Application;
 use App\Core\Functions;
 use App\Core\Traits\GetSetProperty;
 use App\Functions\Data;
-use App\Models\CollectionModel;
-use App\Models\SettingsModel;
 
 class HttpTest
 {

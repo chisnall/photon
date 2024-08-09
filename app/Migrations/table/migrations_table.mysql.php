@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 // MySQL table format
 $sql = "CREATE TABLE IF NOT EXISTS migrations (
                 id SERIAL PRIMARY KEY,

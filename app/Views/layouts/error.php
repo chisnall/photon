@@ -1,3 +1,7 @@
+<?php
+
+declare(strict_types=1);
+?>
 <!doctype html>
 <html id="html" lang="en">
 <head>

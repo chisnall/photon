@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controllers;
 
 use App\Core\Application;
@@ -48,7 +50,7 @@ class TestsController extends Controller
             // Group - select
             if ($select == 'group') {
                 // Get group ID
-                $groupId = $_GET['id'];
+                $groupId = (int)$_GET['id'];
 
                 // Handle session
                 if (GroupModel::handleSession($groupId)) {
@@ -62,15 +64,11 @@ class TestsController extends Controller
 
             // Group - unselect
             if ($unselect == 'group') {
-                // Remove selected group ID and name
-                Application::app()->session()->remove('tests/left/groupId');
-                Application::app()->session()->remove('tests/left/groupName');
-
-                // Clear upper data
-                Application::app()->session()->remove('tests/upper');
-
-                // Save to settings
-                SettingsModel::updateSetting('tests/left/groupId', null);
+                // Clear session
+                if (GroupModel::clearSession()) {
+                    // Save to settings
+                    SettingsModel::updateSetting('tests/left/groupId', null);
+                }
 
                 // Redirect to tests
                 Application::app()->response()->redirect('/tests');
