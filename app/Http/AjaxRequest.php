@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http;
 
 use App\Core\Application;
+use App\Core\ExceptionHandler;
 use App\Core\Functions;
 use App\Core\Session;
 use App\Models\SettingsModel;
@@ -30,6 +31,9 @@ class AjaxRequest
 
     public function __construct()
     {
+        // Sets the default exception handler
+        set_exception_handler([ExceptionHandler::class, 'ajax']);
+
         // Create session
         $this->session = new Session('ajax');
 
@@ -56,7 +60,7 @@ class AjaxRequest
         $methodParameters = $_POST['methodParameters'] ?? null;
 
         // Cast process to bool
-        if ($process) settype($process, 'bool');
+        settype($process, 'bool');
 
         // Session/settings update
         if ($key) {
