@@ -1,5 +1,5 @@
 <?php
-/** @var array $classNameShort */
+/** @var array $shortClassName */
 /** @var array $exceptionFile */
 /** @var array $exceptionLine */
 /** @var array $exceptionMessage */
@@ -32,7 +32,7 @@ use App\Functions\Output;
                     <?= Output::icon('warning') ?>
                 </div>
                 <div>
-                    <h1 class="inline-block ml-3 text-3xl font-bold"><?= $classNameShort ?></h1>
+                    <h1 class="inline-block ml-3 text-3xl font-bold"><?= $shortClassName ?></h1>
                 </div>
             </div>
 
