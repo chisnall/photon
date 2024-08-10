@@ -163,10 +163,10 @@ final class Application
 
     public function setModel(Model $model): void {
         // Get short class name
-        $classNameShort = (new ReflectionClass($model))->getShortName();
+        $shortClassName = (new ReflectionClass($model))->getShortName();
 
         // Set model
-        $this->models[$classNameShort] = $model;
+        $this->models[$shortClassName] = $model;
     }
 
     public function initConfig()
