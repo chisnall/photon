@@ -110,6 +110,9 @@ final class ExceptionHandler
         // Output
         echo $layoutContent;
 
+        // Log
+        self::log($exception);
+
         // Exit
         exit;
     }
@@ -128,6 +131,18 @@ final class ExceptionHandler
         echo "<pre>" . $exception->getMessage() . "</pre>\n";
         echo "<pre>" . $exception->getTraceAsString() . "</pre>\n";
         echo "</div>\n";
+
+        // Log
+        self::log($exception);
+
+        // Exit
+        exit;
+    }
+
+    public static function ajax(Throwable $exception): never
+    {
+        // Log
+        self::log($exception);
 
         // Exit
         exit;
@@ -170,7 +185,52 @@ final class ExceptionHandler
         // Update footer time
         Functions::time();
 
+        // Log
+        self::log($exception);
+
         // Exit
         exit;
+    }
+
+    public static function log(Throwable $exception): void
+    {
+        // Get class name and exception message
+        $className = get_class($exception);
+        $exceptionMessage = $exception->getMessage();
+
+        // Check for previous exception
+        if ($exception->getPrevious()) {
+            // Get exception details
+            $exceptionPreviousMessage = $exception->getPrevious()->getMessage();
+            $exceptionCode = $exception->getPrevious()->getCode();
+            $exceptionFile = $exception->getPrevious()->getFile();
+            $exceptionLine = $exception->getPrevious()->getLine();
+            $exceptionTraceString = $exception->getPrevious()->getTraceAsString();
+        } else {
+            // Get exception details
+            $exceptionPreviousMessage = null;
+            $exceptionCode = $exception->getCode();
+            $exceptionFile = $exception->getFile();
+            $exceptionLine = $exception->getLine();
+            $exceptionTraceString = $exception->getTraceAsString();
+        }
+
+        // Get short class name
+        $classNameShort = (new ReflectionClass($className))->getShortName();
+
+        // Log
+        $log = date('Y-m-d H:i:s') . "\n";
+        $log .= "$classNameShort\n";
+        if ($exceptionPreviousMessage) {
+            $log .= "mess: $exceptionPreviousMessage\n";
+        } else {
+            $log .= "mess: $exceptionMessage\n";
+        }
+        $log .= "code: $exceptionCode\n";
+        $log .= "file: $exceptionFile\n";
+        $log .= "line: $exceptionLine\n";
+        $log .= "$exceptionTraceString\n";
+        $log .= "--------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+        file_put_contents('/var/lib/photon/logs/exceptions.txt', $log, FILE_APPEND);
     }
 }
