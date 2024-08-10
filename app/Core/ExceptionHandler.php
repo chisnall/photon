@@ -64,34 +64,20 @@ final class ExceptionHandler
         // Set title
         $title = 'Error';
 
-        // Get class name and exception message
-        $className = get_class($exception);
-        $exceptionMessage = $exception->getMessage();
-
-        // Check for previous exception
-        if ($exception->getPrevious()) {
-            // Get exception details
-            $exceptionPreviousMessage = $exception->getPrevious()->getMessage();
-            $exceptionCode = $exception->getPrevious()->getCode();
-            $exceptionFile = $exception->getPrevious()->getFile();
-            $exceptionLine = $exception->getPrevious()->getLine();
-            $exceptionTrace = $exception->getPrevious()->getTrace();
-            $exceptionTraceString = $exception->getPrevious()->getTraceAsString();
-        } else {
-            // Get exception details
-            $exceptionPreviousMessage = null;
-            $exceptionCode = $exception->getCode();
-            $exceptionFile = $exception->getFile();
-            $exceptionLine = $exception->getLine();
-            $exceptionTrace = $exception->getTrace();
-            $exceptionTraceString = $exception->getTraceAsString();
-        }
-
-        // Get short class name
-        $classNameShort = (new ReflectionClass($className))->getShortName();
+        // Get exception details
+        $exceptionDetails = new ExceptionDetails($exception);
+        $className = $exceptionDetails->className;
+        $shortClassName = $exceptionDetails->shortClassName;
+        $exceptionMessage = $exceptionDetails->message;
+        $exceptionPreviousMessage = $exceptionDetails->previousMessage;
+        $exceptionCode = $exceptionDetails->code;
+        $exceptionFile = $exceptionDetails->file;
+        $exceptionLine = $exceptionDetails->line;
+        $exceptionTrace = $exceptionDetails->trace;
+        $exceptionTraceString = $exceptionDetails->traceString;
 
         // Check for certain class names
-        if ($className == 'PDOException') $classNameShort = 'Database Error';
+        if ($className == 'PDOException') $shortClassName = 'Database Error';
 
         // Get view
         ob_start();
@@ -194,33 +180,19 @@ final class ExceptionHandler
 
     public static function log(Throwable $exception): void
     {
-        // Get class name and exception message
-        $className = get_class($exception);
-        $exceptionMessage = $exception->getMessage();
-
-        // Check for previous exception
-        if ($exception->getPrevious()) {
-            // Get exception details
-            $exceptionPreviousMessage = $exception->getPrevious()->getMessage();
-            $exceptionCode = $exception->getPrevious()->getCode();
-            $exceptionFile = $exception->getPrevious()->getFile();
-            $exceptionLine = $exception->getPrevious()->getLine();
-            $exceptionTraceString = $exception->getPrevious()->getTraceAsString();
-        } else {
-            // Get exception details
-            $exceptionPreviousMessage = null;
-            $exceptionCode = $exception->getCode();
-            $exceptionFile = $exception->getFile();
-            $exceptionLine = $exception->getLine();
-            $exceptionTraceString = $exception->getTraceAsString();
-        }
-
-        // Get short class name
-        $classNameShort = (new ReflectionClass($className))->getShortName();
+        // Get exception details
+        $exceptionDetails = new ExceptionDetails($exception);
+        $shortClassName = $exceptionDetails->shortClassName;
+        $exceptionMessage = $exceptionDetails->message;
+        $exceptionPreviousMessage = $exceptionDetails->previousMessage;
+        $exceptionCode = $exceptionDetails->code;
+        $exceptionFile = $exceptionDetails->file;
+        $exceptionLine = $exceptionDetails->line;
+        $exceptionTraceString = $exceptionDetails->traceString;
 
         // Log
         $log = date('Y-m-d H:i:s') . "\n";
-        $log .= "$classNameShort\n";
+        $log .= "$shortClassName\n";
         if ($exceptionPreviousMessage) {
             $log .= "mess: $exceptionPreviousMessage\n";
         } else {
