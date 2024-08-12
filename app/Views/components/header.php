@@ -92,6 +92,6 @@ use App\Models\UserModel;
 </nav>
 <?php
 if (Application::app()->controller()->getProperty('page')['view'] != 'user/login') {
-    echo "<input type='hidden' id='ajaxToken' name='ajaxToken' value='" . session_id() . "'>\n";
+    echo "<input type='hidden' id='ajaxToken' name='ajaxToken' value='" . Application::app()->session()->get('user/token') . "'>\n";
 }
 ?>

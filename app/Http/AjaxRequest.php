@@ -34,15 +34,15 @@ class AjaxRequest
         // Sets the default exception handler
         set_exception_handler([ExceptionHandler::class, 'ajax']);
 
-        // Create session
-        $this->session = new Session('ajax');
+        // Create application instance - we need this for session and database access
+        new Application();
 
         // Get token
         $token = $_POST['token'] ?: null;
         $this->token = $token;
 
-        // Confirm token is valid
-        if ($this->token !== session_id()) {
+        // Confirm token matches the users token
+        if ($this->token !== Application::app()->session()->get('user/token')) {
             // Set status code and exit
             http_response_code(401);
             exit;
@@ -117,7 +117,7 @@ class AjaxRequest
 
         // Check if user is logged in - get user ID
         // Set user ID to 0 if not logged in - this is the guest user
-        $userId = $this->session->get('user/id') ?? 0;
+        $userId = Application::app()->session()->get('user/id');
 
         // Check key for file delete request
         if ($this->key === 'home/upper/requestBodyFileDelete') {
@@ -140,20 +140,20 @@ class AjaxRequest
 
         // Check key for clear session variable
         elseif ($this->key === 'variables/clear') {
-            $this->session->remove('variables/' . $this->value);
+            Application::app()->session()->remove('variables/' . $this->value);
         }
 
         // Check if processing the value into individual keys/values
         elseif (is_array($this->value) && $this->process) {
             foreach ($this->value as $subKey => $subValue) {
                 // Set key
-                $this->session->set("$this->key/$subKey", $subValue);
+                Application::app()->session()->set("$this->key/$subKey", $subValue);
             }
         }
 
         else {
             // Set key
-            $this->session->set($this->key, $this->value);
+            Application::app()->session()->set($this->key, $this->value);
         }
 
         // Debug
@@ -178,21 +178,19 @@ class AjaxRequest
             $recordIdKey = RECORD_KEYS[$recordModifiedKey];
 
             // Get the record ID currently selected
-            $recordIdValue = $this->session->get($recordIdKey);
+            $recordIdValue = Application::app()->session()->get($recordIdKey);
 
             // Debug
             //$this->log("ajax", ["Session: " . $recordModifiedKey . " | key: " . $recordIdKey . " | ID: " . $recordIdValue]);
 
             // Set modified key if we have a record ID
-            if ($recordIdValue) $this->session->set($recordModifiedKey, true);
+            if ($recordIdValue) Application::app()->session()->set($recordModifiedKey, true);
+            if ($recordIdValue) Application::app()->session()->set($recordModifiedKey, true);
         }
 
         // Check if we need to save to user setting
         // Only if user ID is valid and key is present in the settings update array
         if ($userId && in_array($this->key, SETTINGS_UPDATE)) {
-            // Create application instance - we need this for database access
-            new Application();
-
             // Check if processing the value into individual keys/values
             if (is_array($this->value) && $this->process) {
                 foreach ($this->value as $subKey => $subValue) {
@@ -215,9 +213,6 @@ class AjaxRequest
             exit;
         }
 
-        // Create application instance - we need this for session and database access
-        new Application();
-
         // Load file
         Functions::includeFile(file: $this->file, variables: $this->variables);
     }
@@ -233,9 +228,6 @@ class AjaxRequest
 
         // Confirm method exists
         if (method_exists($this->class, $this->method)) {
-            // Create application instance - we need this for session and database access
-            new Application();
-
             // Create object
             $class = new $this->class($this->classParameters);
 
