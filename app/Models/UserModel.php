@@ -102,7 +102,7 @@ class UserModel extends Model
 
     public static function generateToken(int $userId): void
     {
-        $userData = UserModel::getSingleRecord(['id' => $userId]);
+        $userData = self::getSingleRecord(['id' => $userId]);
 
         // Set token
         $userData->token = bin2hex(random_bytes(20));
@@ -114,6 +114,7 @@ class UserModel extends Model
     public static function login(int $userId): bool
     {
         Application::app()->session()->set('user/id', $userId);
+        Application::app()->session()->set('user/token', self::getSingleRecord(['id' => $userId])->token);
         Application::app()->session()->set('user/dbDriver', Application::app()->db()->driver());
 
         // Only used if implementing the user activation feature
