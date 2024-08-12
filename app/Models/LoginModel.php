@@ -67,6 +67,9 @@ class LoginModel extends UserModel
             $pendingMigrations = (new Migrations())->getPendingMigrations();
             Application::app()->session()->set('status/pendingMigrations', (bool)$pendingMigrations);
 
+            // Generate new token
+            UserModel::generateToken($userId);
+
             // Login user
             UserModel::login($userId);
 

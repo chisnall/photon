@@ -100,7 +100,18 @@ class UserModel extends Model
         return Application::app()->user()->getProperty('firstname') ?? 'guest';
     }
 
-    public static function login($userId): bool
+    public static function generateToken(int $userId): void
+    {
+        $userData = UserModel::getSingleRecord(['id' => $userId]);
+
+        // Set token
+        $userData->token = bin2hex(random_bytes(20));
+
+        // Update record
+        $userData->updateRecord();
+    }
+
+    public static function login(int $userId): bool
     {
         Application::app()->session()->set('user/id', $userId);
         Application::app()->session()->set('user/dbDriver', Application::app()->db()->driver());
