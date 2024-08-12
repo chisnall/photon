@@ -8,12 +8,9 @@ use App\Core\Application;
 use App\Core\Functions;
 use App\Models\RequestModel;
 use App\Models\SettingsModel;
-use App\Traits\LogTrait;
 
 class HttpGroupTests
 {
-    use LogTrait;
-
     private int $groupId;
     private string $groupTestsProgress;
     private string $groupTestsResults;
@@ -52,8 +49,8 @@ class HttpGroupTests
         Functions::deleteFile($this->groupTestsResults);
         Functions::deleteFile($this->groupTestsStop);
 
-        // Log
-        //$this->log("ajax", [" from: runGroupTests()", "group: " . $this->groupId, " stop: " . (int)$stopOnResponseFail]);
+        // Debug log
+        //Application::app()->logger()->logDebug('http.log', [" from: runGroupTests()", "group: " . $this->groupId, " stop: " . (int)$stopOnResponseFail]);
 
         // Count enabled requests first
         $groupRequestsCount = 0;

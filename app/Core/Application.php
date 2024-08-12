@@ -17,6 +17,7 @@ final class Application
 
     private static Application $app;
     private Controller $controller;
+    private Logger $logger;
     private Request $request;
     private Response $response;
     private Router $router;
@@ -38,6 +39,7 @@ final class Application
 
         // Create instances
         self::$app = $this;
+        $this->logger = new Logger();
         $this->request = new Request();
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
@@ -119,6 +121,11 @@ final class Application
     public function controller(): Controller
     {
         return $this->controller;
+    }
+
+    public function logger(): Logger
+    {
+        return $this->logger;
     }
 
     public function request(): Request

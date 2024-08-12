@@ -8,10 +8,8 @@ use App\Core\Application;
 use App\Core\Functions;
 use App\Core\Traits\GetSetProperty;
 use App\Functions\Data;
-use App\Models\CollectionModel;
 use App\Models\RequestModel;
 use App\Models\SettingsModel;
-use App\Traits\LogTrait;
 use ReflectionClass;
 use Symfony\Component\HttpClient\CurlHttpClient;
 use Throwable;
@@ -19,7 +17,6 @@ use Throwable;
 class HttpClient
 {
     use GetSetProperty;
-    use LogTrait;
 
     protected ?object $response = null;
     protected ?object $exception = null;
@@ -437,8 +434,8 @@ class HttpClient
                             // Get collection ID
                             $collectionId = $this->model->getProperty('collectionId');
 
-                            // Debug
-                            $this->log("http", ["Set: " . $variableName . " | value: " . $value]);
+                            // Debug log
+                            Application::app()->logger()->logDebug('http.log', ["Set: " . $variableName . " | value: " . $value]);
 
                             // Save to session
                             Application::app()->session()->set("variables/$collectionId/$variableName", ['value' => $value, 'type' => 'request', 'timestamp' => time()]);

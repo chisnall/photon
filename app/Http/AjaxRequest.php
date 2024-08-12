@@ -9,14 +9,11 @@ use App\Core\ExceptionHandler;
 use App\Core\Functions;
 use App\Core\Session;
 use App\Models\SettingsModel;
-use App\Traits\LogTrait;
 
 Functions::includeFile(file: '/app/Data/ajax.php');
 
 class AjaxRequest
 {
-    use LogTrait;
-
     private Session $session;
     private ?string $token;
     private ?string $key;
@@ -101,11 +98,11 @@ class AjaxRequest
 
     public function handlePost(): void
     {
-        // Debug
-        $this->log("ajax", [
+        // Debug log
+        Application::app()->logger()->logDebug('ajax.log', [
             "from: handlePost()",
             " key: " . $this->key . " | process: " . json_encode($this->process) . " | type: " . gettype($this->value),
-            " tkn: " . $this->token . " | session: " . session_id()
+            " tkn: " . $this->token . " | session: " . session_id(),
         ]);
 
         // Restrict to allowed keys
@@ -180,8 +177,8 @@ class AjaxRequest
             // Get the record ID currently selected
             $recordIdValue = Application::app()->session()->get($recordIdKey);
 
-            // Debug
-            //$this->log("ajax", ["Session: " . $recordModifiedKey . " | key: " . $recordIdKey . " | ID: " . $recordIdValue]);
+            // Debug log
+            //Application::app()->logger()->logDebug('ajax.log', ["Session: " . $recordModifiedKey . " | key: " . $recordIdKey . " | ID: " . $recordIdValue]);
 
             // Set modified key if we have a record ID
             if ($recordIdValue) Application::app()->session()->set($recordModifiedKey, true);

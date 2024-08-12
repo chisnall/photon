@@ -97,7 +97,7 @@ final class ExceptionHandler
         echo $layoutContent;
 
         // Log
-        self::log($exception);
+        Application::app()->logger()->logException($exception);
 
         // Exit
         exit;
@@ -119,7 +119,7 @@ final class ExceptionHandler
         echo "</div>\n";
 
         // Log
-        self::log($exception);
+        Application::app()->logger()->logException($exception);
 
         // Exit
         exit;
@@ -128,7 +128,7 @@ final class ExceptionHandler
     public static function ajax(Throwable $exception): never
     {
         // Log
-        self::log($exception);
+        Application::app()->logger()->logException($exception);
 
         // Exit
         exit;
@@ -172,37 +172,9 @@ final class ExceptionHandler
         Functions::time();
 
         // Log
-        self::log($exception);
+        Application::app()->logger()->logException($exception);
 
         // Exit
         exit;
-    }
-
-    public static function log(Throwable $exception): void
-    {
-        // Get exception details
-        $exceptionDetails = new ExceptionDetails($exception);
-        $shortClassName = $exceptionDetails->shortClassName;
-        $exceptionMessage = $exceptionDetails->message;
-        $exceptionPreviousMessage = $exceptionDetails->previousMessage;
-        $exceptionCode = $exceptionDetails->code;
-        $exceptionFile = $exceptionDetails->file;
-        $exceptionLine = $exceptionDetails->line;
-        $exceptionTraceString = $exceptionDetails->traceString;
-
-        // Log
-        $log = date('Y-m-d H:i:s') . "\n";
-        $log .= "$shortClassName\n";
-        if ($exceptionPreviousMessage) {
-            $log .= "mess: $exceptionPreviousMessage\n";
-        } else {
-            $log .= "mess: $exceptionMessage\n";
-        }
-        $log .= "code: $exceptionCode\n";
-        $log .= "file: $exceptionFile\n";
-        $log .= "line: $exceptionLine\n";
-        $log .= "$exceptionTraceString\n";
-        $log .= "--------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
-        file_put_contents('/var/lib/photon/logs/exceptions.txt', $log, FILE_APPEND);
     }
 }
