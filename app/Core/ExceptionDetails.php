@@ -13,7 +13,7 @@ class ExceptionDetails
     public ?string $shortClassName;
     public ?string $message;
     public ?string $previousMessage;
-    public ?int $code;
+    public ?string $code;
     public ?string $file;
     public ?int $line;
     public ?array $trace;
