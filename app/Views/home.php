@@ -103,6 +103,7 @@ $settings_home_leftSection = Application::app()->session()->get('home/layout/lef
 $settings_home_rightSection = Application::app()->session()->get('home/layout/rightSection') ?? SettingsModel::getSetting('home/layout/rightSection');
 $settings_home_topSection = Application::app()->session()->get('home/layout/topSection') ?? SettingsModel::getSetting('home/layout/topSection');
 $settings_home_bottomSection = Application::app()->session()->get('home/layout/bottomSection') ?? SettingsModel::getSetting('home/layout/bottomSection');
+$settings_home_hidePasswords = SettingsModel::getSetting('home/hidePasswords');
 //---
 $settings_http_defaultScheme = SettingsModel::getSetting('http/defaultScheme');
 $settings_http_timeout = SettingsModel::getSetting('http/timeout');
@@ -735,11 +736,17 @@ if ($responseValid) {
                                         </tr>
                                         <tr class="h-8">
                                             <td class="min-w-24 px-2 py-0 font-semibold text-right border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Password</td>
-                                            <td class="px-1 py-1 border border-r-0 border-zinc-300 dark:border-zinc-650">
-                                                <input type="password" id="requestAuthBasicPassword" name="requestAuthBasicPassword" autocomplete="one-time-code" placeholder="Password" spellcheck="false" value="<?= $requestAuthBasicPassword ?>" class="min-w-[450px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
-                                            </td>
-                                            <td id="requestAuthBasicPasswordShow" class="px-2 cursor-pointer border border-l-0 border-zinc-300 dark:border-zinc-650"><i class="fa-solid fa-eye"></i></td>
-                                            <td id="requestAuthBasicPasswordHide" class="hidden px-2 cursor-pointer border border-l-0 border-zinc-300 dark:border-zinc-650"><i class="fa-regular fa-eye"></i></td>
+                                            <?php if($settings_home_hidePasswords): ?>
+                                                <td class="px-1 py-1 border border-r-0 border-zinc-300 dark:border-zinc-650">
+                                                    <input type="password" id="requestAuthBasicPassword" name="requestAuthBasicPassword" autocomplete="one-time-code" placeholder="Password" spellcheck="false" value="<?= $requestAuthBasicPassword ?>" class="min-w-[450px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                </td>
+                                                <td id="requestAuthBasicPasswordShow" class="px-2 cursor-pointer border border-l-0 border-zinc-300 dark:border-zinc-650"><i class="fa-solid fa-eye"></i></td>
+                                                <td id="requestAuthBasicPasswordHide" class="hidden px-2 cursor-pointer border border-l-0 border-zinc-300 dark:border-zinc-650"><i class="fa-regular fa-eye"></i></td>
+                                            <?php else: ?>
+                                                <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
+                                                    <input type="text" id="requestAuthBasicPassword" name="requestAuthBasicPassword" autocomplete="one-time-code" placeholder="Password" spellcheck="false" value="<?= $requestAuthBasicPassword ?>" class="min-w-[450px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                </td>
+                                            <?php endif; ?>
                                         </tr>
                                     </table>
                                 </div>
@@ -750,11 +757,17 @@ if ($responseValid) {
                                     <table id="requestAuthToken" class="table-auto text-left text-sm">
                                         <tr class="h-8">
                                             <td class="min-w-24 px-2 py-0 font-semibold text-right border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Token</td>
-                                            <td class="px-1 py-1 border border-r-0 border-zinc-300 dark:border-zinc-650">
-                                                <input type="password" id="requestAuthTokenValue" name="requestAuthTokenValue" autocomplete="one-time-code" placeholder="Token" spellcheck="false" value="<?= $requestAuthTokenValue ?>" class="min-w-[450px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
-                                            </td>
-                                            <td id="requestAuthTokenValueShow" class="px-2 cursor-pointer border border-l-0 border-zinc-300 dark:border-zinc-650"><i class="fa-solid fa-eye"></i></td>
-                                            <td id="requestAuthTokenValueHide" class="hidden px-2 cursor-pointer border border-l-0 border-zinc-300 dark:border-zinc-650"><i class="fa-regular fa-eye"></i></td>
+                                            <?php if($settings_home_hidePasswords): ?>
+                                                <td class="px-1 py-1 border border-r-0 border-zinc-300 dark:border-zinc-650">
+                                                    <input type="password" id="requestAuthTokenValue" name="requestAuthTokenValue" autocomplete="one-time-code" placeholder="Token" spellcheck="false" value="<?= $requestAuthTokenValue ?>" class="min-w-[450px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                </td>
+                                                <td id="requestAuthTokenValueShow" class="px-2 cursor-pointer border border-l-0 border-zinc-300 dark:border-zinc-650"><i class="fa-solid fa-eye"></i></td>
+                                                <td id="requestAuthTokenValueHide" class="hidden px-2 cursor-pointer border border-l-0 border-zinc-300 dark:border-zinc-650"><i class="fa-regular fa-eye"></i></td>
+                                            <?php else: ?>
+                                                <td class="px-1 py-1 border border-zinc-300 dark:border-zinc-650">
+                                                    <input type="text" id="requestAuthTokenValue" name="requestAuthTokenValue" autocomplete="one-time-code" placeholder="Token" spellcheck="false" value="<?= $requestAuthTokenValue ?>" class="min-w-[450px] px-1 py-0 text-sm font-mono border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none">
+                                                </td>
+                                            <?php endif; ?>
                                         </tr>
                                     </table>
                                 </div>
@@ -770,22 +783,33 @@ if ($responseValid) {
                                             </td>
                                         </tr>
                                         <tr class="h-8">
-                                            <td class="px-2 py-0 font-semibold text-right border border-b-0 border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Value</td>
-                                            <td rowspan="5" class="content-start px-1 py-1 border border-r-0 border-zinc-300 dark:border-zinc-650">
-                                                <div class="table h-full">
-                                                    <textarea rows="6" id="requestAuthHeaderValue" name="requestAuthHeaderValue" autocomplete="one-time-code" placeholder="Value" spellcheck="false" class="textarea-password min-w-[450px] h-full px-1 py-0 text-sm font-mono resize-none border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none"><?= $requestAuthHeaderValue ?></textarea>
-                                                </div>
-                                            </td>
-                                            <td id="requestAuthHeaderValueShow" class="px-2 cursor-pointer border border-l-0 border-b-0 border-zinc-300 dark:border-zinc-650"><i class="fa-solid fa-eye"></i></td>
-                                            <td id="requestAuthHeaderValueHide" class="hidden px-2 cursor-pointer border border-l-0 border-b-0 border-zinc-300 dark:border-zinc-650"><i class="fa-regular fa-eye"></i></td>
+                                            <?php if($settings_home_hidePasswords): ?>
+                                                <td class="px-2 py-0 font-semibold text-right border border-b-0 border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Value</td>
+                                                <td rowspan="5" class="content-start px-1 py-1 border border-r-0 border-zinc-300 dark:border-zinc-650">
+                                                    <div class="table h-full">
+                                                        <textarea rows="6" id="requestAuthHeaderValue" name="requestAuthHeaderValue" autocomplete="one-time-code" placeholder="Value" spellcheck="false" class="textarea-password min-w-[450px] h-full px-1 py-0 text-sm font-mono resize-none border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none"><?= $requestAuthHeaderValue ?></textarea>
+                                                    </div>
+                                                </td>
+                                                <td id="requestAuthHeaderValueShow" class="px-2 cursor-pointer border border-l-0 border-b-0 border-zinc-300 dark:border-zinc-650"><i class="fa-solid fa-eye"></i></td>
+                                                <td id="requestAuthHeaderValueHide" class="hidden px-2 cursor-pointer border border-l-0 border-b-0 border-zinc-300 dark:border-zinc-650"><i class="fa-regular fa-eye"></i></td>
+                                            <?php else: ?>
+                                                <td class="align-top px-2 py-[6px] font-semibold text-right border border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800">Value</td>
+                                                <td class="content-start px-1 py-1 border border-zinc-300 dark:border-zinc-650">
+                                                    <div class="table h-full">
+                                                        <textarea rows="7" id="requestAuthHeaderValue" name="requestAuthHeaderValue" autocomplete="one-time-code" placeholder="Value" spellcheck="false" class="min-w-[450px] h-full px-1 py-[2px] text-sm font-mono resize-none border-0 focus:ring-0 bg-transparent dark:bg-transparent placeholder-zinc-300 dark:placeholder-zinc-600 outline-none"><?= $requestAuthHeaderValue ?></textarea>
+                                                    </div>
+                                                </td>
+                                            <?php endif; ?>
                                         </tr>
-                                        <tr class="h-8">
-                                            <td rowspan="4" class="border border-t-0 border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800"></td>
-                                            <td rowspan="4" class="border border-l-0 border-t-0 border-zinc-300 dark:border-zinc-650"></td>
-                                        </tr>
-                                        <tr class="h-8"></tr>
-                                        <tr class="h-8"></tr>
-                                        <tr class="h-8"></tr>
+                                        <?php if($settings_home_hidePasswords): ?>
+                                            <tr class="h-8">
+                                                <td rowspan="4" class="border border-t-0 border-zinc-300 dark:border-zinc-650 bg-zinc-100 dark:bg-zinc-800"></td>
+                                                <td rowspan="4" class="border border-l-0 border-t-0 border-zinc-300 dark:border-zinc-650"></td>
+                                            </tr>
+                                            <tr class="h-8"></tr>
+                                            <tr class="h-8"></tr>
+                                            <tr class="h-8"></tr>
+                                        <?php endif; ?>
                                     </table>
                                 </div>
                             </div>
@@ -1178,7 +1202,7 @@ if ($responseValid) {
                         </ul>
                     </div>
 
-                    <div id="responseStatus" class="flex flex-row items-center">
+                    <div id="responseStatus" class="flex flex-row items-center text-sm">
                     <?php if ($responseStatusLine): ?>
                         <?php if ($responseValid && $responseErrorShort): ?>
                             <div class="pr-4 font-bold text-red-600 dark:text-red-700 border-r border-zinc-300 dark:border-zinc-650"><i class="fa-solid fa-circle-exclamation"></i> <?= $responseErrorShort ?></div>
