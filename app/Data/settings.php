@@ -22,7 +22,8 @@ $settings = [
             'rightSection' => '75%',
             'topSection' => '45%',
             'bottomSection' => '55%',
-        ]
+        ],
+        'hidePasswords' => false,
     ],
     # JSON
     'json' => [
@@ -39,7 +40,7 @@ $settings = [
             'rightSection' => '75%',
             'topSection' => '45%',
             'bottomSection' => '55%',
-        ]
+        ],
     ],
     # Groups
     'variables' => [
