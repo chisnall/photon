@@ -23,11 +23,12 @@ class SettingsModel extends Model
     protected ?string $updatedAt = null;
 
     // These don't exist in the table
+    protected ?bool $home_hidePasswords = null;
     protected ?string $http_defaultScheme = null;
-    protected ?bool $http_sortHeaders = null;
     protected ?float $http_timeout  = null;
     protected ?string $http_version  = null;
     protected ?string $http_accept  = null;
+    protected ?bool $http_sortHeaders = null;
     protected ?string $json_lineNumbers = null;
     protected ?int $json_indent = null;
     protected ?bool $json_linkUrls = null;
@@ -73,11 +74,12 @@ class SettingsModel extends Model
     public function fieldLabels(): array
     {
         return [
+            'home_hidePasswords' => 'hide passwords',
             'http_defaultScheme' => 'default scheme',
-            'http_sortHeaders' => 'sort headers',
             'http_timeout' => 'timeout',
             'http_version' => 'version',
             'http_accept' => 'accept header',
+            'http_sortHeaders' => 'sort headers',
             'json_lineNumbers' => 'line numbers',
             'json_indent' => 'indent',
             'json_linkUrls' => 'link URLs',
@@ -91,11 +93,12 @@ class SettingsModel extends Model
     public function rules(): array
     {
         return [
+            'home_hidePasswords' => [self::RULE_REQUIRED],
             'http_defaultScheme' => [self::RULE_REQUIRED],
-            'http_sortHeaders' => [self::RULE_REQUIRED],
             'http_timeout' => [self::RULE_REQUIRED, self::RULE_DECIMAL, [self::RULE_MIN_VALUE, 'min' => 0.5], [self::RULE_MAX_VALUE, 'max' => 10]],
             'http_version' => [self::RULE_REQUIRED],
             'http_accept' => [self::RULE_REQUIRED],
+            'http_sortHeaders' => [self::RULE_REQUIRED],
             'json_lineNumbers' => [self::RULE_REQUIRED],
             'json_indent' => [self::RULE_REQUIRED, self::RULE_INTEGER, [self::RULE_MIN_VALUE, 'min' => 2], [self::RULE_MAX_VALUE, 'max' => 10]],
             'json_linkUrls' => [self::RULE_REQUIRED],
@@ -137,11 +140,12 @@ class SettingsModel extends Model
 
         // These don't exist in the table
         // If not present, use the defaults
+        $this->home_hidePasswords = $settings['home']['hidePasswords'] ?? $settingsDefaults['home']['hidePasswords'];
         $this->http_defaultScheme = $settings['http']['defaultScheme'] ?? $settingsDefaults['http']['defaultScheme'];
-        $this->http_sortHeaders = $settings['http']['sortHeaders'] ?? $settingsDefaults['http']['sortHeaders'];
         $this->http_timeout = $settings['http']['timeout'] ?? $settingsDefaults['http']['timeout'];
         $this->http_version = $settings['http']['version'] ?? $settingsDefaults['http']['version'];
         $this->http_accept = $settings['http']['accept'] ?? $settingsDefaults['http']['accept'];
+        $this->http_sortHeaders = $settings['http']['sortHeaders'] ?? $settingsDefaults['http']['sortHeaders'];
         $this->json_lineNumbers = $settings['json']['lineNumbers'] ?? $settingsDefaults['json']['lineNumbers'];
         $this->json_indent = $settings['json']['indent'] ?? $settingsDefaults['json']['indent'];
         $this->json_linkUrls = $settings['json']['linkUrls'] ?? $settingsDefaults['json']['linkUrls'];
@@ -166,6 +170,7 @@ class SettingsModel extends Model
 
         // Cast select elements to boolean
         // We need this before validation in case validation fails, so we can retain the select values on the form
+        $this->home_hidePasswords = (bool)($this->home_hidePasswords);
         $this->http_sortHeaders = (bool)($this->http_sortHeaders);
         $this->json_linkUrls = (bool)($this->json_linkUrls);
         $this->json_trailingCommas = (bool)($this->json_trailingCommas);
