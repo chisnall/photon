@@ -20,16 +20,18 @@ $http_timeout = number_format(Application::app()->model('SettingsModel')->getPro
 $json_indent = Application::app()->model('SettingsModel')->getProperty('json_indent');
 
 // Create selected strings for the select inputs
+Application::app()->model('SettingsModel')->getProperty('home_hidePasswords') === true ? $home_hidePasswords_on = ' selected' : $home_hidePasswords_on = null;
+Application::app()->model('SettingsModel')->getProperty('home_hidePasswords') === false ? $home_hidePasswords_off = ' selected' : $home_hidePasswords_off = null;
 Application::app()->model('SettingsModel')->getProperty('http_defaultScheme') == 'http://' ? $http_defaultScheme_http = ' selected' : $http_defaultScheme_http = null;
 Application::app()->model('SettingsModel')->getProperty('http_defaultScheme') == 'https://' ? $http_defaultScheme_https = ' selected' : $http_defaultScheme_https = null;
-Application::app()->model('SettingsModel')->getProperty('http_sortHeaders') === true ? $http_sortHeaders_on = ' selected' : $http_sortHeaders_on = null;
-Application::app()->model('SettingsModel')->getProperty('http_sortHeaders') === false ? $http_sortHeaders_off = ' selected' : $http_sortHeaders_off = null;
 Application::app()->model('SettingsModel')->getProperty('http_version') == '1.0' ? $http_version_10 = ' selected' : $http_version_10 = null;
 Application::app()->model('SettingsModel')->getProperty('http_version') == '1.1' ? $http_version_11 = ' selected' : $http_version_11 = null;
 Application::app()->model('SettingsModel')->getProperty('http_version') == '2.0' ? $http_version_20 = ' selected' : $http_version_20 = null;
 Application::app()->model('SettingsModel')->getProperty('http_version') == 'auto' ? $http_version_auto = ' selected' : $http_version_auto = null;
 Application::app()->model('SettingsModel')->getProperty('http_accept') == 'default' ? $http_accept_default = ' selected' : $http_accept_default = null;
 Application::app()->model('SettingsModel')->getProperty('http_accept') == 'application/json' ? $http_accept_json = ' selected' : $http_accept_json = null;
+Application::app()->model('SettingsModel')->getProperty('http_sortHeaders') === true ? $http_sortHeaders_on = ' selected' : $http_sortHeaders_on = null;
+Application::app()->model('SettingsModel')->getProperty('http_sortHeaders') === false ? $http_sortHeaders_off = ' selected' : $http_sortHeaders_off = null;
 Application::app()->model('SettingsModel')->getProperty('json_lineNumbers') == 'left' ? $json_lineNumbers_left = ' selected' : $json_lineNumbers_left = null;
 Application::app()->model('SettingsModel')->getProperty('json_lineNumbers') == 'right' ? $json_lineNumbers_right = ' selected' : $json_lineNumbers_right = null;
 Application::app()->model('SettingsModel')->getProperty('json_linkUrls') === true ? $json_linkUrls_on = ' selected' : $json_linkUrls_on = null;
@@ -90,6 +92,16 @@ $errorFields = [
 
                 <div id="settings-content">
                     <div id="tab1-content" class="tab-content<?= $selectedTab_tab1 ?>">
+                        <div class="flex flex-row mb-6">
+                            <div class="w-[175px] mr-4 text-right content-center">Hide passwords</div>
+                            <div class="w-[225px]">
+                                <select name="home_hidePasswords" class="input-normal w-full rounded p-2 border border-zinc-300 dark:border-zinc-650 bg-white dark:bg-black">
+                                    <option value="1"<?= $home_hidePasswords_on ?>>On</option>
+                                    <option value="0"<?= $home_hidePasswords_off ?>>Off</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="flex flex-row mb-6">
                             <div class="w-[175px] mr-4 text-right content-center">Default scheme</div>
                             <div class="w-[225px]">
