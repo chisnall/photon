@@ -2,7 +2,8 @@
 
 Photon is a REST client for testing REST APIs.
 
-The easiest way to evaluate Photon is to download the Docker image.
+The easiest way to try Photon is to use the live demo or download the Docker image.  
+Links are below.
 
 
 ## Features
@@ -38,6 +39,13 @@ These databases are supported:
 * MariaDB
 * MySQL
 * PostgreSQL
+
+
+## Live Demo
+
+A live demo is hosted on AWS here:
+
+<https://photon.chisnall.net>
 
 
 ## Docker Image
