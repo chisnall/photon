@@ -417,10 +417,11 @@ class HttpClient
         if ($this->responseBodyValid) {
             // Check for array based response body
             // If response body is array, we will use the first record
-            if (array_is_list($this->responseBodyDecoded)) {
-                $bodyDecoded =  $this->responseBodyDecoded[0];
-            } else {
-                $bodyDecoded =  $this->responseBodyDecoded;
+            if (array_is_list($this->responseBodyDecoded) & count($this->responseBodyDecoded) > 0) {
+                $bodyDecoded = $this->responseBodyDecoded[0];
+            }
+            else {
+                $bodyDecoded = $this->responseBodyDecoded;
             }
 
             // Process body
