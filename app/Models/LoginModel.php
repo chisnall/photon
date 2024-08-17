@@ -14,6 +14,7 @@ use Throwable;
 class LoginModel extends UserModel
 {
     protected string $passwordDisplay = 'hide';
+    protected ?string $formAction = null;
 
     public function rules(): array
     {
