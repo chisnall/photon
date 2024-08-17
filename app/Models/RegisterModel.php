@@ -43,7 +43,7 @@ class RegisterModel extends UserModel
             'lastname' => [self::RULE_REQUIRED],
             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL,
                 [self::RULE_UNIQUE, 'attributes' => ['email' => '=']]],
-            'password' => [self::RULE_REQUIRED, [self::RULE_MIN_LENGTH, 'min' => 4], [self::RULE_MAX_LENGTH, 'max' => 10]],
+            'password' => [self::RULE_REQUIRED, [self::RULE_MIN_LENGTH, 'min' => 4], [self::RULE_MAX_LENGTH, 'max' => 50]],
             'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
         ];
     }

@@ -50,7 +50,7 @@ class ProfileModel extends UserModel
 
         // This rule is conditional, if the new password is provided
         if ($this->newPassword) {
-            $rules['newPassword'] = [[self::RULE_MIN_LENGTH, 'min' => 4], [self::RULE_MAX_LENGTH, 'max' => 10]];
+            $rules['newPassword'] = [[self::RULE_MIN_LENGTH, 'min' => 4], [self::RULE_MAX_LENGTH, 'max' => 50]];
             $rules['confirmNewPassword'] = [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'newPassword']];
         }
 
