@@ -11,6 +11,7 @@ $title = 'Login';
 $emailValue = Application::app()->model('LoginModel')->getProperty('email');
 $passwordValue = Application::app()->model('LoginModel')->getProperty('password');
 $passwordDisplay = Application::app()->model('LoginModel')->getProperty('passwordDisplay');
+$formAction = Application::app()->model('LoginModel')->getProperty('formAction');
 
 // Get errors
 $emailError = Application::app()->model('LoginModel')->getError('email');
@@ -19,6 +20,28 @@ $passwordError = Application::app()->model('LoginModel')->getError('password');
 // Get CSS class
 $emailClass = Application::app()->model('LoginModel')->getInputClass('email');
 $passwordClass = Application::app()->model('LoginModel')->getInputClass('password');
+
+// Make login error ambiguous - i.e. don't give an attacker a clue to which input is incorrect
+if ($formAction == 'login' && ($emailError == 'Account does not exist' || $passwordError == 'Password is incorrect')) {
+    // Set email error and remove password error if password is provided
+    $emailError = 'Incorrect email or password';
+    if ($passwordValue) $passwordError = null;
+
+    // Set email and password classes
+    $emailClass = 'input-error';
+    $passwordClass = 'input-error';
+} elseif ($formAction == 'login' && $passwordValue === null && ($emailError === null || $emailError == 'Account is not activated')) {
+    // Don't allow the attacker to know the difference between an email that is registered and one that is not
+    // This is to cover where the password is not entered and the the attacker keeps trying different emails
+    // Let's make the form error consistent whether the email is registered or not
+    // We will also not allow the attacker to know if the email is registered where the account is not activated yet
+
+    // Set email error
+    $emailError = 'Incorrect email or password';
+
+    // Set email class
+    $emailClass = 'input-error';
+}
 
 // Set CSS class on password visibility icons
 $passwordShowClass = Application::app()->model('LoginModel')->getPasswordIconClass('passwordDisplay', 'show');
@@ -57,6 +80,7 @@ $passwordHideClass = Application::app()->model('LoginModel')->getPasswordIconCla
             </div>
 
             <input type="hidden" name="passwordDisplay" value="<?= $passwordDisplay ?>">
+            <input type="hidden" name="formAction" value="login">
         </form>
     </div>
 </div>
