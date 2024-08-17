@@ -419,8 +419,7 @@ class HttpClient
             // If response body is array, we will use the first record
             if (array_is_list($this->responseBodyDecoded) & count($this->responseBodyDecoded) > 0) {
                 $bodyDecoded = $this->responseBodyDecoded[0];
-            }
-            else {
+            } else {
                 $bodyDecoded = $this->responseBodyDecoded;
             }
 
