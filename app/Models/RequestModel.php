@@ -434,6 +434,9 @@ class RequestModel extends Model
                 Application::app()->session()->set('home/left/requestName', $this->requestName);
                 Application::app()->session()->set('home/upper/requestModified', false);
 
+                // Remove the response from the session
+                Application::app()->session()->remove('response');
+
                 // Update settings
                 SettingsModel::updateSetting('home/left/requestId', $this->id);
 
