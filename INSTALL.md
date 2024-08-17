@@ -102,22 +102,6 @@ mkdir -p /var/lib/photon/logs /var/lib/photon/output /var/lib/photon/sessions
 chown -R $webuser:$webuser /var/lib/photon/
 ```
 
-If the web server user account differs from the default of `www-data`, you need to edit this file in the Photon root directory:
-
-`config.php`
-
-Set the value of:
-
-app -> httpUser
-
-to the value of the web server user account.
-
-Substitute `apache` for the actual user account for the web server.
-
-```
-export webuser=apache
-sed -i "s/'www-data'/'$webuser'/g" /var/www/config.php
-```
 
 
 ## Composer
@@ -171,6 +155,24 @@ Run Composer:
 ```
 cd /var/www
 composer install
+```
+
+If the web server user account differs from the default of `www-data`, you need to edit this file in the Photon root directory:
+
+`config.php`
+
+Set the value of:
+
+app -> httpUser
+
+to the value of the web server user account.
+
+This can be handled from the shell with the following commands.  
+Substitute `www-data` for the actual user account for the web server.
+
+```
+export webuser=www-data
+sed -i "s/'www-data'/'$webuser'/g" /var/www/config.php
 ```
 
 Run migrations to create the database and tables.
