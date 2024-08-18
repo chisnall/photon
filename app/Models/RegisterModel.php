@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Core\Application;
 use App\Core\Request;
+use App\Database\SeedExampleCollection;
 use App\Exception\AppException;
 use Throwable;
 
@@ -14,6 +15,7 @@ class RegisterModel extends UserModel
     protected ?string $confirmPassword = null;
     protected string $passwordDisplay = 'hide';
     protected string $confirmPasswordDisplay = 'hide';
+    protected ?string $createCollection = null;
 
     static public function fields(): array
     {
@@ -84,6 +86,13 @@ class RegisterModel extends UserModel
 
             // Create settings for user
             SettingsModel::createDefaults($userId);
+
+            // Create example collection
+            if ($this->createCollection == 'on') {
+                $seed = new SeedExampleCollection($this->id);
+                $seed->createCollection();
+                $seed->createRequests();
+            }
 
             // Login the user
             UserModel::login($userId);
