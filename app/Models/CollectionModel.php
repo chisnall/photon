@@ -168,6 +168,9 @@ class CollectionModel extends Model
                 Application::app()->session()->remove('home/left/collectionName');
                 Application::app()->session()->remove('home/left/collectionVariables');
 
+                // Clear request session
+                RequestModel::clearSession();
+
                 // Update settings
                 SettingsModel::deleteSetting("home/left/collectionId");
 
