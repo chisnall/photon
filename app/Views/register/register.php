@@ -14,6 +14,10 @@ $passwordValue = Application::app()->model('RegisterModel')->getProperty('passwo
 $confirmPasswordValue = Application::app()->model('RegisterModel')->getProperty('confirmPassword');
 $passwordDisplay = Application::app()->model('RegisterModel')->getProperty('passwordDisplay');
 $confirmPasswordDisplay = Application::app()->model('RegisterModel')->getProperty('confirmPasswordDisplay');
+$createCollection = Application::app()->model('RegisterModel')->getProperty('createCollection') ?? 'on';
+
+// Set checkbox checked value
+$createCollection == 'on' ? $createCollectionChecked = ' checked' : $createCollectionChecked = null;
 
 // Get errors
 $firstnameError = Application::app()->model('RegisterModel')->getError('firstname');
@@ -75,6 +79,16 @@ $confirmPasswordHideClass = Application::app()->model('RegisterModel')->getPassw
                     <span id="confirmPasswordHide" class="<?= $confirmPasswordHideClass ?>password-display fa-regular fa-eye"></span>
                     <div class="ml-4 content-center text-red-500 dark:text-red-500"><?= $confirmPasswordError ?></div>
                 </div>
+
+                <div class="flex flex-row mb-6">
+                    <div class="w-[175px] mr-4 text-right content-center"></div>
+                    <div class="w-[25px]">
+                        <input type="checkbox" name="createCollectionCheckbox" id="createCollectionCheckbox"<?= $createCollectionChecked ?>>
+                    </div>
+                    <div class="mr-4 content-center">
+                        <label for="createCollectionCheckbox" class="select-none">Create example collection</label>
+                    </div>
+                </div>
             </div>
 
             <div>
@@ -87,6 +101,7 @@ $confirmPasswordHideClass = Application::app()->model('RegisterModel')->getPassw
 
         <input type="hidden" name="passwordDisplay" value="<?= $passwordDisplay ?>">
         <input type="hidden" name="confirmPasswordDisplay" value="<?= $confirmPasswordDisplay ?>">
+        <input type="hidden" name="createCollection" id="createCollection" value="<?= $createCollection ?>">
     </form>
 
 </div>

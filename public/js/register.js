@@ -38,3 +38,11 @@ $("span#passwordShow, span#passwordHide, span#confirmPasswordShow, span#confirmP
         $("form#register input[name='" + inputId + "Display']").val("hide");
     }
 });
+
+$('input#createCollectionCheckbox').change(function() {
+    if (this.checked) {
+        $("input#createCollection").val("on");
+    } else {
+        $("input#createCollection").val("off");
+    }
+});
