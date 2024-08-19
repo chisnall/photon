@@ -2,8 +2,9 @@
 
 Photon is a REST client for testing REST APIs.
 
-The easiest way to try Photon is to use the live demo or download the Docker image.  
-Links are below.
+Written in PHP with some JavaScript for the frontend. Tailwind is used for CSS. The app runs on a custom built MVC framework.
+
+The easiest way to try Photon is to use the live demo or download the Docker image. Links are below.
 
 
 ## Features
