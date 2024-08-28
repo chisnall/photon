@@ -91,7 +91,7 @@ $settings_groups_stopOnResponseFail ? $display_groups_stopOnResponseFail = 'On' 
                 </div>
             </div>
             <div id="tab2-header" class="tab-header<?= $left_selectedTab_tab2 ?>">
-                <div class="font-bold">Help</div>
+                <div class="font-bold">Tab 2</div>
             </div>
         </div>
 
@@ -136,7 +136,6 @@ $settings_groups_stopOnResponseFail ? $display_groups_stopOnResponseFail = 'On' 
                 <div>
                     <ul id="left" class="tabs">
                         <li id="tab1" class="w-[84px] tab-link<?= $left_selectedTab_tab1 ?>"><div class="flex flex-col items-center"><div><?= Output::icon('groups') ?></div><div>Groups</div></div></li>
-                        <li id="tab2" class="w-[84px] tab-link<?= $left_selectedTab_tab2 ?>"><div class="flex flex-col items-center"><div><?= Output::icon('help') ?></div><div>Help</div></div></li>
                     </ul>
                 </div>
             </div>
