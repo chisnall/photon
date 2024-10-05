@@ -400,7 +400,7 @@ if ($responseValid) {
                     <?php if (UserModel::isLoggedIn()): ?>
                         <?php if (count($variablesData) > 0): ?>
                             <table id="variablesList" class="variables">
-                                <?php foreach ($variablesData as $VariableName => $variableData): ?>
+                                <?php foreach ($variablesData as $variableName => $variableData): ?>
                                     <?php
                                     $variableType = $variableData['type'];
                                     $variableValue = $variableData['value'];
@@ -410,17 +410,19 @@ if ($responseValid) {
                                     } else {
                                         $variableValueShort = $variableValue;
                                     }
+                                    $variableName = htmlspecialchars($variableName);
+                                    $variableValue = htmlspecialchars($variableValue);
                                     ?>
                                     <tr class="hover:bg-zinc-200 dark:hover:bg-zinc-700 cursor-default">
                                         <td class="w-full pl-2 pr-2 py-1 break-all">
-                                            <span class="text-sm text-zinc-500 dark:text-zinc-400"><?= $VariableName . ' (' . $variableTypeShort . ')' ?></span>
+                                            <span class="text-sm text-zinc-500 dark:text-zinc-400"><?= $variableName . ' (' . $variableTypeShort . ')' ?></span>
                                             <br>
-                                            <?= $variableValueShort ?>
+                                            <?= htmlspecialchars($variableValueShort) ?>
                                         </td>
                                         <td class="pr-1">
-                                            <button type="button" name="variableViewOpenButton" data-modal="variableViewModal" data-div_variable-name="<?= $VariableName ?>" data-textarea_variable-value="<?= $variableValue ?>" class="invisible px-1 cursor-pointer"><i class="fa-solid fa-magnifying-glass"></i></button><br>
+                                            <button type="button" name="variableViewOpenButton" data-modal="variableViewModal" data-div_variable-name="<?= $variableName ?>" data-textarea_variable-value="<?= $variableValue ?>" class="invisible px-1 cursor-pointer"><i class="fa-solid fa-magnifying-glass"></i></button><br>
                                             <?php if ($variableType == 'request'): ?>
-                                                <button type="button" name="variableClearButton" value="<?= $VariableName ?>" class="invisible px-1 cursor-pointer"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+                                                <button type="button" name="variableClearButton" value="<?= $variableName ?>" class="invisible px-1 cursor-pointer"><i class="fa-solid fa-arrow-rotate-left"></i></button>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
