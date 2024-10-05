@@ -6,7 +6,6 @@ use App\Core\Application;
 
 $responseBodyContent = Application::app()->session()->get('response/responseBodyContent');
 ?>
-
 <!doctype html>
 <html id="html" lang="en">
 
