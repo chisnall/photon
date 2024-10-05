@@ -25,7 +25,7 @@ define('APP_DEBUG', false);
 define('APP_VERSION', '2024.8.1');
 define('APP_RELEASE', '2024-08-17');
 define('APP_SUPPORT', 'https://www.chisnall.net/support');
-define('APP_DOCKER', 'https://hub.docker.com/r/chisnall/photon  ');
+define('APP_DOCKER', 'https://hub.docker.com/r/chisnall/photon');
 define('APP_GITHUB', 'https://github.com/chisnall/photon');
 define('BASE_PATH', dirname(__DIR__));
 define('UPLOAD_PATH', '/tmp/body-files');
