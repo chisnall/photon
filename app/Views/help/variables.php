@@ -46,6 +46,8 @@ $title = 'Help: Variables';
         <td class="table-cell pr-6">
             <p>Request variables are values captured from a request in the JSON response data.</p>
             <p>Any key value in the JSON response can be stored as a request variable.</p>
+            <p>Use forward slash notation to capture variables several layers deep into the JSON response data:<br>
+               key1/key2/key3</p>
             <p>Request variables can then be used in subsequent requests in the same collection.</p>
             <p>Manage these variables in the Variables tab in the request section of the Home page.</p>
             <p class="mb-2">These variables are session based and last until logout.</p>
