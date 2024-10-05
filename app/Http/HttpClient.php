@@ -415,32 +415,43 @@ class HttpClient
     public function saveVariables(array $requestVariables): void
     {
         if ($this->responseBodyValid) {
-            // Check for array based response body
-            // If response body is array, we will use the first record
-            if (array_is_list($this->responseBodyDecoded) & count($this->responseBodyDecoded) > 0) {
-                $bodyDecoded = $this->responseBodyDecoded[0];
-            } else {
-                $bodyDecoded = $this->responseBodyDecoded;
-            }
+            // Get body as array
+            $bodyDecoded = $this->responseBodyDecoded;
 
-            // Process body
-            foreach($bodyDecoded as $key => $value) {
-                if (in_array($key, $requestVariables)) {
-                    foreach ($requestVariables as $variableName => $variableKey) {
-                        if ($variableKey == $key) {
-                            // Cast value to string
-                            settype($value, 'string');
+            // Get collection ID
+            $collectionId = $this->model->getProperty('collectionId');
 
-                            // Get collection ID
-                            $collectionId = $this->model->getProperty('collectionId');
+            // Loop request variables
+            foreach ($requestVariables as $variableName => $variableKey) {
+                // Convert key1/key2/key3 notation to array
+                $variableKeyArray = explode('/', $variableKey);
 
-                            // Debug log
-                            Application::app()->logger()->logDebug('http.log', ["Set: " . $variableName . " | value: " . $value]);
+                // Init value from decoded body
+                $value = $bodyDecoded;
 
-                            // Save to session
-                            Application::app()->session()->set("variables/$collectionId/$variableName", ['value' => $value, 'type' => 'request', 'timestamp' => time()]);
-                        }
+                // Loop the elements to obtain the final key value
+                foreach ($variableKeyArray as $variableKeyArrayElement) {
+                    if (array_key_exists($variableKeyArrayElement, $value)) {
+                        $value = $value[$variableKeyArrayElement];
+                    } else {
+                        $value = null;
+                        break;
                     }
+                }
+
+                // Save value
+                if ($value) {
+                    // Check if value is array
+                    if (is_array($value)) $value = json_encode($value);
+
+                    // Cast value to string
+                    $value = (string)$value;
+
+                    // Debug log
+                    Application::app()->logger()->logDebug('http.log', ["Set: " . $variableName . " | value: " . $value]);
+
+                    // Save to session
+                    Application::app()->session()->set("variables/$collectionId/$variableName", ['value' => $value, 'type' => 'request', 'timestamp' => time()]);
                 }
             }
         }
