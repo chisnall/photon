@@ -83,6 +83,11 @@ $("button[name$=OpenButton]").on("click", function() {
             // Remove "textarea_" from the start of the textarea ID
             inputId = inputId.replace(/^textarea_/g, "");
 
+            // Convert input value into string so we can handle JSON
+            if (typeof inputValue === "object") {
+                inputValue = JSON.stringify(inputValue);
+            }
+
             // Set textarea value in the form
             $("section#" + modalName).find("textarea[name='" + inputId + "']").val(inputValue);
         }
