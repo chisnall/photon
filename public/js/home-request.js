@@ -8,6 +8,24 @@ function ajaxRequest(key, value, modified = true) {
     $.ajax({ method: "POST", url: "/ajax.php", data: {token: ajaxToken, key: key, value: value} });
 }
 
+function ajaxSortRequests() {
+    let collectionId = $("form#requestManage input[name='collectionId").val();
+    let dataArray = [];
+
+    $("table#requestsList > tbody > tr").each(function () {
+        let rowId = $(this).attr("id");
+        dataArray.push(rowId);
+    });
+
+    if ( dataArray.length !== 0 ) {
+        // Set AJAX key
+        let ajaxKey = "home/upper/requestsList";
+
+        // Do AJAX request
+        ajaxRequest(ajaxKey, {"collection": collectionId, "records": dataArray}, false);
+    }
+}
+
 function ajaxTable(tableId) {
     if (tableId === "requestParamsInputs") {
         var rowEnabledElement = "requestParamEnabled[]";
@@ -81,16 +99,25 @@ function ajaxInput() {
 }
 
 function tableDragDrop() {
-    $("table#requestParamsInputs, table#requestHeadersInputs, table#requestBodyFormInputs, table#requestVariablesInputs, table#collectionVariablesInputs").tableDnD({
+    $("table#requestsList, table#requestParamsInputs, table#requestHeadersInputs, table#requestBodyFormInputs, table#requestVariablesInputs, table#collectionVariablesInputs").tableDnD({
         onDragStop: function (table) {
             //console.log("table: " + table.id + " | dropped row");
-            ajaxTable(table.id);
+            $("table#requestsList").removeClass('disable-hover');
+
+            if ( table.id === "requestsList" ) {
+                ajaxSortRequests();
+            } else {
+                ajaxTable(table.id);
+            }
+        },
+
+        onDragStart: function (table) {
+            //console.log("table: " + table.id + " | picked up row");
+            $("table#requestsList").addClass('disable-hover');
         },
 
         dragHandle: ".dragHandle", onDragClass: "dragRow"
     });
-
-    //console.log("init tableDnD");
 }
 
 $(document).ready(function(){

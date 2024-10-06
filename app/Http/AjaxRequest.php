@@ -116,6 +116,26 @@ class AjaxRequest
         // Set user ID to 0 if not logged in - this is the guest user
         $userId = Application::app()->session()->get('user/id');
 
+        // Check key for re-ordering the request list
+        if ($this->key === 'home/upper/requestsList') {
+            // Get collection ID and records
+            $collectionId = $this->value['collection'];
+            $collectionRecords = $this->value['records'];
+
+            // Init sort number
+            $requestSort = 1;
+
+            // Process records
+            foreach ($collectionRecords as $requestId) {
+                // Update request
+                $sql = "UPDATE requests SET sort_order = $requestSort WHERE id = $requestId";
+                Application::app()->db()->query($sql);
+
+                // Increment sort number
+                $requestSort++;
+            }
+        }
+
         // Check key for file delete request
         if ($this->key === 'home/upper/requestBodyFileDelete') {
             // Set uploaded body files directory

@@ -55,8 +55,9 @@ div.borderHorizontalBottomDrag { border-top: 2px solid var(--borderDragColour); 
 pre.sf-dump { z-index: 10 !important; width: 600px; padding: 5px !important; margin: 5px 0 5px 0; }
 
 /* Tables */
-tr.dragRow { background-color: var(--tableDragRowColour); }
+tr.dragRow { background-color: var(--tableDragRowColour) !important; }
 table.variables tr:hover button { visibility: visible; }
+table.disable-hover tr:hover { background-color: inherit; }
 
 /* Tabs */
 ul.tabs { display: flex; flex-direction: row; list-style: none; font-size: 14px; font-weight: 600; }

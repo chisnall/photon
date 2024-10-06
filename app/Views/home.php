@@ -19,7 +19,7 @@ $left_collectionId = Application::app()->session()->get('home/left/collectionId'
 $left_collectionName = Application::app()->session()->get('home/left/collectionName');
 
 // Get requests data and selected request
-$left_collectionId ? $requestsData = RequestModel::getAllRecords(match: ['collectionId' => $left_collectionId], sort: ['requestName' => 'ASC', 'requestMethod' => 'ASC', 'createdAt' => 'ASC']) : $requestsData = [];
+$left_collectionId ? $requestsData = RequestModel::getAllRecords(match: ['collectionId' => $left_collectionId], sort: ['sortOrder' => 'ASC']) : $requestsData = [];
 $left_requestId = Application::app()->session()->get('home/left/requestId');
 $left_requestName = Application::app()->session()->get('home/left/requestName');
 
@@ -380,6 +380,11 @@ if ($responseValid) {
                                     <?php else: ?>
                                         <td></td>
                                     <?php endif; ?>
+                                    <td class="dragHandle cursor-move w-8 pl-1 pr-2 py-1 text-center">
+                                        <div id="dragHandle">
+                                            <i class="fa-solid fa-grip-vertical"></i>
+                                        </div>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>

@@ -35,6 +35,7 @@ class RequestModel extends Model
     protected ?array $requestBodyFormSend = null;
     protected ?string $requestBodyFile = null;
     protected ?array $requestVariablesInputs = null;
+    protected ?int $sortOrder = null;
     protected ?array $testsResults = null;
     protected ?string $createdAt = null;
     protected ?string $updatedAt = null;
@@ -74,6 +75,7 @@ class RequestModel extends Model
             'requestBodyFormInputs' => 'request_body_form_inputs',
             'requestBodyFile' => 'request_body_file',
             'requestVariablesInputs' => 'request_variables_inputs',
+            'sortOrder' => 'sort_order',
         ];
     }
 
@@ -98,6 +100,7 @@ class RequestModel extends Model
             'requestBodyFormInputs' => 'body form',
             'requestBodyFile' => 'body file',
             'requestVariablesInputs' => 'variables',
+            'sortOrder' => 'sort order',
         ];
     }
 
@@ -340,6 +343,13 @@ class RequestModel extends Model
         $this->requestBodyFormInputs = $requestBodyFormInputs;
         $this->requestBodyFormSend = $requestBodyFormSend;
         $this->requestVariablesInputs = $requestVariablesInputs;
+
+        // Get the current max sort order value for this collection from the table
+        $sql = "SELECT MAX(sort_order) as max_value FROM requests WHERE collection_id = " . $this->collectionId;
+        $statement = Application::app()->db()->prepare($sql);
+        $statement->execute();
+        $maxSortOrder = $statement->fetchObject()->max_value;
+        $this->sortOrder = $maxSortOrder + 1;
 
         // Save to session - inputs
         Application::app()->session()->set('home/upper/requestMethod', $this->requestMethod);

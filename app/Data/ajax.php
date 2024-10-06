@@ -8,6 +8,7 @@ const KEYS_ALLOWED = [
     'home/left/selectedTab' => null,
     'home/upper/selectedTab' => null,
     'home/lower/selectedTab' => null,
+    'home/upper/requestsList' => null,
     'home/upper/requestMethod' => 'home/upper/requestModified',
     'home/upper/requestUrl' => 'home/upper/requestModified',
     'home/upper/requestName' => 'home/upper/requestModified',
