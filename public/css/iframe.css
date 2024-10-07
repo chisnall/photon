@@ -1,9 +1,20 @@
+html {
+    scrollbar-width: auto;
+    scrollbar-color: var(--layoutContainerScrollbarColour);
+}
+
+body {
+    color: var(--bodyTextColour);
+}
+
 /* Light theme */
 html[data-theme="light"] {
-    body { color: black; }
+    --bodyTextColour: black;
+    --layoutContainerScrollbarColour: #a1a1aa #f4f4f5;  /* zinc-400 + zinc-100 */
 }
 
 /* Dark theme */
 html[data-theme="dark"] {
-    body { color: white; }
+    --bodyTextColour: white;
+    --layoutContainerScrollbarColour: #52525b #27272a;  /* zinc-600 + zinc-800 */
 }
