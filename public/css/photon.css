@@ -205,8 +205,7 @@ button.sf-dump-search-input-previous, button.sf-dump-search-input-next { height:
 /* Light theme */
 html[data-theme="light"] {
     /* Layout */
-    /* --layoutContainerScrollbarColour: #999999 #eeeeee; */
-    --layoutContainerScrollbarColour: #a1a1aa #f4f4f5;
+    --layoutContainerScrollbarColour: #a1a1aa #f4f4f5;  /* zinc-400 + zinc-100 */
 
     /* Inputs */
     --inputAutofillText: #27272a;                       /* zinc-800 */
@@ -319,8 +318,7 @@ html[data-theme="light"] {
 /* Dark theme */
 html[data-theme="dark"] {
     /* Layout */
-    /* --layoutContainerScrollbarColour: #555555 #222222; */
-    --layoutContainerScrollbarColour: #52525b #27272a;
+    --layoutContainerScrollbarColour: #52525b #27272a;  /* zinc-600 + zinc-800 */
 
     /* Inputs */
     --inputAutofillText: #e4e4e7;                       /* zinc-200 */
