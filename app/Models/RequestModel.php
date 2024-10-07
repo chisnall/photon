@@ -344,12 +344,25 @@ class RequestModel extends Model
         $this->requestBodyFormSend = $requestBodyFormSend;
         $this->requestVariablesInputs = $requestVariablesInputs;
 
-        // Get the current max sort order value for this collection from the table
-        $sql = "SELECT MAX(sort_order) as max_value FROM requests WHERE collection_id = " . $this->collectionId;
-        $statement = Application::app()->db()->prepare($sql);
-        $statement->execute();
-        $maxSortOrder = $statement->fetchObject()->max_value;
-        $this->sortOrder = $maxSortOrder + 1;
+        // Check if updating existing record or inserting a new record
+        if ($this->id) {
+            // Update record
+
+            // Need to obtain sort order field from the table - we cannot use a hidden field on the form
+            // because the update to the table "sort_order" fields takes place without reloading the page
+            $sql = "SELECT sort_order FROM requests WHERE id = " . $this->id;
+            $statement = Application::app()->db()->prepare($sql);
+            $statement->execute();
+            $this->sortOrder = $statement->fetchObject()->sort_order;
+        } else {
+            // Insert record
+
+            // Get the current max sort order value for this collection from the table and add 1
+            $sql = "SELECT MAX(sort_order) as max_value FROM requests WHERE collection_id = " . $this->collectionId;
+            $statement = Application::app()->db()->prepare($sql);
+            $statement->execute();
+            $this->sortOrder = $statement->fetchObject()->max_value + 1;
+        }
 
         // Save to session - inputs
         Application::app()->session()->set('home/upper/requestMethod', $this->requestMethod);
