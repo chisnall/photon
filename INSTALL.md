@@ -142,18 +142,13 @@ The root directory for the web server configuration is:
 Download source from GitHub:
 
 ```
-cd /tmp
-curl -LO https://github.com/chisnall/photon/archive/refs/heads/main.tar.gz
-tar -xf main.tar.gz
-mv photon-main/* /var/www/
-rmdir photon-main
-rm -f main.tar.gz
-```
-
-Run Composer:
-
-```
 cd /var/www
+git clone https://github.com/chisnall/photon.git .
+```
+
+Install dependencies:
+
+```
 composer install
 ```
 
@@ -178,8 +173,19 @@ sed -i "s/'www-data'/'$webuser'/g" /var/www/config.php
 Run migrations to create the database and tables.
 
 ```
-cd /var/www
 php migrations.php
 ```
 
 That completes the installation.
+
+
+## Update Source Code
+
+Update source from GitHub:
+
+```
+cd /www
+git pull https://github.com/chisnall/photon.git
+```
+
+That will update the source code with the latest changes.
