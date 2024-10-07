@@ -37,21 +37,21 @@ class SeedExampleCollection
     {
         // Define array for the request records - jsonplaceholder.typicode.com
         //$requestsData = [];
-        //$requestsData[] = ['requestMethod' => 'get', 'requestUrl' => '{{BASE_URL}}/posts', 'requestName' => '1) get posts'];
-        //$requestsData[] = ['requestMethod' => 'get', 'requestUrl' => '{{BASE_URL}}/posts/10', 'requestName' => '2) get single post'];
-        //$requestsData[] = ['requestMethod' => 'post', 'requestUrl' => '{{BASE_URL}}/posts/', 'requestName' => '3) create post', 'requestBody' => 'text', 'requestBodyTextValue' => "{\n    \"title\": \"foo\",\n    \"body\": \"bar\",\n    \"userId\": 1\n}", 'requestBodyTextType' => 'json'];
-        //$requestsData[] = ['requestMethod' => 'put', 'requestUrl' => '{{BASE_URL}}/posts/10', 'requestName' => '4) update post (PUT)', 'requestBody' => 'text', 'requestBodyTextValue' => "{\n    \"title\": \"foo new\",\n    \"body\": \"bar new\",\n    \"userId\": 1\n}", 'requestBodyTextType' => 'json'];
-        //$requestsData[] = ['requestMethod' => 'patch', 'requestUrl' => '{{BASE_URL}}/posts/10', 'requestName' => '5) update post (PATCH)', 'requestBody' => 'text', 'requestBodyTextValue' => "{\n    \"title\": \"foo new\"\n}", 'requestBodyTextType' => 'json'];
-        //$requestsData[] = ['requestMethod' => 'delete', 'requestUrl' => '{{BASE_URL}}/posts/10', 'requestName' => '6) delete post'];
+        //$requestsData[] = ['requestMethod' => 'get', 'requestUrl' => '{{BASE_URL}}/posts', 'requestName' => 'get posts', 'sortOrder' => 1];
+        //$requestsData[] = ['requestMethod' => 'get', 'requestUrl' => '{{BASE_URL}}/posts/10', 'requestName' => 'get single post', 'sortOrder' => 2];
+        //$requestsData[] = ['requestMethod' => 'post', 'requestUrl' => '{{BASE_URL}}/posts/', 'requestName' => 'create post', 'requestBody' => 'text', 'requestBodyTextValue' => "{\n    \"title\": \"foo\",\n    \"body\": \"bar\",\n    \"userId\": 1\n}", 'requestBodyTextType' => 'json', 'sortOrder' => 3];
+        //$requestsData[] = ['requestMethod' => 'put', 'requestUrl' => '{{BASE_URL}}/posts/10', 'requestName' => 'update post (PUT)', 'requestBody' => 'text', 'requestBodyTextValue' => "{\n    \"title\": \"foo new\",\n    \"body\": \"bar new\",\n    \"userId\": 1\n}", 'requestBodyTextType' => 'json', 'sortOrder' => 4];
+        //$requestsData[] = ['requestMethod' => 'patch', 'requestUrl' => '{{BASE_URL}}/posts/10', 'requestName' => 'update post (PATCH)', 'requestBody' => 'text', 'requestBodyTextValue' => "{\n    \"title\": \"foo new\"\n}", 'requestBodyTextType' => 'json', 'sortOrder' => 5];
+        //$requestsData[] = ['requestMethod' => 'delete', 'requestUrl' => '{{BASE_URL}}/posts/10', 'requestName' => 'delete post', 'sortOrder' => 6];
 
         // Define array for the request records - reqres.in
         $requestsData = [];
-        $requestsData[] = ['requestMethod' => 'get', 'requestUrl' => '{{BASE_URL}}/api/users', 'requestName' => '1) get users'];
-        $requestsData[] = ['requestMethod' => 'get', 'requestUrl' => '{{BASE_URL}}/api/users/{{USER}}', 'requestName' => '2) get single user'];
-        $requestsData[] = ['requestMethod' => 'post', 'requestUrl' => '{{BASE_URL}}/api/users/', 'requestName' => '3) create user', 'requestBody' => 'text', 'requestBodyTextValue' => "{\n    \"email\": \"dave.smith@reqres.in\",\n    \"first_name\": \"Dave\",\n    \"last_name\": \"Smith\"\n}", 'requestBodyTextType' => 'json'];
-        $requestsData[] = ['requestMethod' => 'put', 'requestUrl' => '{{BASE_URL}}/api/users/{{USER}}', 'requestName' => '4) update user (PUT)', 'requestBody' => 'text', 'requestBodyTextValue' => "{\n    \"email\": \"dave.smith@gmail.com\",\n    \"first_name\": \"Dave\",\n    \"last_name\": \"Smith\"\n}", 'requestBodyTextType' => 'json'];
-        $requestsData[] = ['requestMethod' => 'patch', 'requestUrl' => '{{BASE_URL}}/api/users/{{USER}}', 'requestName' => '5) update user (PATCH)', 'requestBody' => 'text', 'requestBodyTextValue' => "{\n    \"email\": \"dave.smith@gmail.com\"\n}", 'requestBodyTextType' => 'json'];
-        $requestsData[] = ['requestMethod' => 'delete', 'requestUrl' => '{{BASE_URL}}/api/users/{{USER}}', 'requestName' => '6) delete user'];
+        $requestsData[] = ['requestMethod' => 'get', 'requestUrl' => '{{BASE_URL}}/api/users', 'requestName' => 'get users', 'sortOrder' => 1];
+        $requestsData[] = ['requestMethod' => 'get', 'requestUrl' => '{{BASE_URL}}/api/users/{{USER}}', 'requestName' => 'get single user', 'sortOrder' => 2];
+        $requestsData[] = ['requestMethod' => 'post', 'requestUrl' => '{{BASE_URL}}/api/users/', 'requestName' => 'create user', 'requestBody' => 'text', 'requestBodyTextValue' => "{\n    \"email\": \"dave.smith@reqres.in\",\n    \"first_name\": \"Dave\",\n    \"last_name\": \"Smith\"\n}", 'requestBodyTextType' => 'json', 'sortOrder' => 3];
+        $requestsData[] = ['requestMethod' => 'put', 'requestUrl' => '{{BASE_URL}}/api/users/{{USER}}', 'requestName' => 'update user (PUT)', 'requestBody' => 'text', 'requestBodyTextValue' => "{\n    \"email\": \"dave.smith@gmail.com\",\n    \"first_name\": \"Dave\",\n    \"last_name\": \"Smith\"\n}", 'requestBodyTextType' => 'json', 'sortOrder' => 4];
+        $requestsData[] = ['requestMethod' => 'patch', 'requestUrl' => '{{BASE_URL}}/api/users/{{USER}}', 'requestName' => 'update user (PATCH)', 'requestBody' => 'text', 'requestBodyTextValue' => "{\n    \"email\": \"dave.smith@gmail.com\"\n}", 'requestBodyTextType' => 'json', 'sortOrder' => 5];
+        $requestsData[] = ['requestMethod' => 'delete', 'requestUrl' => '{{BASE_URL}}/api/users/{{USER}}', 'requestName' => 'delete user', 'sortOrder' => 6];
 
         // Create records
         foreach ($requestsData as $requestData) {
@@ -63,6 +63,7 @@ class SeedExampleCollection
             if (array_key_exists('requestBody', $requestData)) $request->setProperty('requestBody', $requestData['requestBody']);
             if (array_key_exists('requestBodyTextValue', $requestData)) $request->setProperty('requestBodyTextValue', $requestData['requestBodyTextValue']);
             if (array_key_exists('requestBodyTextType', $requestData)) $request->setProperty('requestBodyTextType', $requestData['requestBodyTextType']);
+            $request->setProperty('sortOrder', $requestData['sortOrder']);
             $request->insertRecord();
         }
     }
