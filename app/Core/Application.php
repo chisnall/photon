@@ -29,13 +29,13 @@ final class Application
     private readonly array $config;
     private int $errors = 0;
 
-    public function __construct()
+    public function __construct(string $handler = 'framework')
     {
-        // Sets the default exception handler
-        set_exception_handler([ExceptionHandler::class, 'framework']);
+        // Sets the exception handler
+        set_exception_handler([ExceptionHandler::class, $handler]);
 
         // Sets the error handler for PHP errors
-        set_error_handler([ErrorHandler::class, 'framework']);
+        set_error_handler([ErrorHandler::class, $handler]);
 
         // Create instances
         self::$app = $this;
