@@ -185,7 +185,7 @@ Update source from GitHub:
 
 ```
 cd /www
-git pull https://github.com/chisnall/photon.git
+git pull
 ```
 
 That will update the source code with the latest changes.
