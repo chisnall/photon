@@ -29,9 +29,11 @@ class AjaxRequest
 
     public function __construct()
     {
+        // Get post data
+        $postData = Application::app()->request()->getBody(false);
+
         // Get token
-        $token = $_POST['token'] ?: null;
-        $this->token = $token;
+        $this->token = $postData['token'] ?? null;
 
         // Confirm token matches the users token
         if ($this->token !== Application::app()->session()->get('user/token')) {
@@ -41,15 +43,15 @@ class AjaxRequest
         }
 
         // Get post values
-        $key = $_POST['key'] ?? null;
-        $value = $_POST['value'] ?? null;
-        $process = $_POST['process'] ?? false;
-        $file = $_POST['file'] ?? null;
-        $variables = $_POST['variables'] ?? null;
-        $class = $_POST['class'] ?? null;
-        $method = $_POST['method'] ?? null;
-        $classParameters = $_POST['classParameters'] ?? null;
-        $methodParameters = $_POST['methodParameters'] ?? null;
+        $key = $postData['key'] ?? null;
+        $value = $postData['value'] ?? null;
+        $process = $postData['process'] ?? false;
+        $file = $postData['file'] ?? null;
+        $variables = $postData['variables'] ?? null;
+        $class = $postData['class'] ?? null;
+        $method = $postData['method'] ?? null;
+        $classParameters = $postData['classParameters'] ?? null;
+        $methodParameters = $postData['methodParameters'] ?? null;
 
         // Cast process to bool
         settype($process, 'bool');

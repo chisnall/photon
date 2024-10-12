@@ -49,7 +49,7 @@ class SiteController extends Controller
         // Check for post
         if ($request->isPost()) {
             // Get model class name
-            $modelClassName = $_POST['modelClassName'];
+            $modelClassName = $request->getBody()['modelClassName'];
 
             // Handle post request
             $$modelClassName->handlePost($request);
@@ -62,7 +62,7 @@ class SiteController extends Controller
     public function flashTest(): void
     {
         // Set flash message
-        Application::app()->session()->setFlash($_GET['type'], 'Testing flash message.');
+        Application::app()->session()->setFlash($this->data['type'], 'Testing flash message.');
 
         // Redirect to test page
         Application::app()->response()->redirect('/test');

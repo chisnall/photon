@@ -91,6 +91,9 @@ class CollectionModel extends Model
         // Load data
         $this->loadData($request->getBody());
 
+        // Get additional post data that is not defined as properties
+        $postData = Application::app()->controller()->data();
+
         // Create
         if ($this->formAction == 'create') {
             // Set properties
@@ -100,9 +103,9 @@ class CollectionModel extends Model
         // Update
         if ($this->formAction == 'update') {
             // Get table data
-            $collectionVariableEnabledArray = $_POST['collectionVariableEnabled'];
-            $collectionVariableNameArray = $_POST['collectionVariableName'];
-            $collectionVariableValueArray = $_POST['collectionVariableValue'];
+            $collectionVariableEnabledArray = $postData['collectionVariableEnabled'];
+            $collectionVariableNameArray = $postData['collectionVariableName'];
+            $collectionVariableValueArray = $postData['collectionVariableValue'];
 
             // Process table data
             $collectionVariablesInputs = [];

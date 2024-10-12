@@ -44,13 +44,13 @@ class TestsController extends Controller
             }
 
             // Get select / unselect
-            $select = $_GET['select'] ?? null;
-            $unselect = $_GET['unselect'] ?? null;
+            $select = $this->data['select'] ?? null;
+            $unselect = $this->data['unselect'] ?? null;
 
             // Group - select
             if ($select == 'group') {
                 // Get group ID
-                $groupId = (int)$_GET['id'];
+                $groupId = (int)$this->data['id'];
 
                 // Handle session
                 if (GroupModel::handleSession($groupId)) {
@@ -76,7 +76,7 @@ class TestsController extends Controller
 
         } elseif ($request->isPost()) {
             // Get model class name
-            $modelClassName = $_POST['modelClassName'];
+            $modelClassName = $request->getBody()['modelClassName'];
 
             // Handle post request
             $$modelClassName->handlePost($request);

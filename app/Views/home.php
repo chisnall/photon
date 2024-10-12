@@ -53,7 +53,7 @@ $requestVariablesInputs = Application::app()->session()->get('home/upper/request
 $requestUrl !== null ? $title = strtoupper($requestMethod) . ' ' . $requestUrl : $title = 'Home';
 
 // Get open modal
-$modalOpenName = $_POST['modalName'] ?? null;
+$modalOpenName = Application::app()->request()->getBody()['modalName'] ?? null;
 
 // Get overlay class
 $modalOverlayClass = Css::getOverlayClass();

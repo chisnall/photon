@@ -14,12 +14,16 @@ abstract class Controller
     protected ?string $action = null;
     protected ?string $view = null;
     protected array $middleware = [];
+    protected array $data = [];
 
     public function __construct()
     {
         // Set the default page layout
         $this->page['layout'] = Functions::getConfig("page/default/layout");
         $this->page['view'] = $this->view;
+
+        // Get data
+        $this->data = Application::app()->request()->getBody();
     }
 
     public function render(string $view, array $params = []): string
@@ -44,5 +48,10 @@ abstract class Controller
     public function registerMiddleware(Middleware $middleware): void
     {
         $this->middleware[] = $middleware;
+    }
+
+    public function data(): array
+    {
+        return $this->data;
     }
 }

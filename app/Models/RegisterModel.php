@@ -118,7 +118,7 @@ class RegisterModel extends UserModel
     public function handleActivate(): void
     {
         // Get token
-        $token = $_GET['token'] ?? null;
+        $token = Application::app()->controller()->data()['token'] ?? null;
 
         // Check for token
         if ($token) {
