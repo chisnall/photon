@@ -35,10 +35,7 @@ require_once BASE_PATH . '/vendor/autoload.php';
 #------------------------------------------------------------------------------------------------
 
 // Boot application
-$app = new Application();
-
-// Run application
-$app->run();
+(new Application())->run();
 
 // Calculate application time
 Functions::time();
