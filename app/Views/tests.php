@@ -34,7 +34,7 @@ foreach ($groupRequests as $groupRequestKey => $groupRequestValue) {
 $left_groupName !== null ? $title = "Tests: $left_groupName" : $title = 'Tests';
 
 // Get open modal
-$modalOpenName = $_POST['modalName'] ?? null;
+$modalOpenName = Application::app()->request()->getBody()['modalName'] ?? null;
 
 // Get overlay class
 $modalOverlayClass = Css::getOverlayClass();

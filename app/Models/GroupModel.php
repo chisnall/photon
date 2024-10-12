@@ -126,13 +126,16 @@ class GroupModel extends Model
         // Load data
         $this->loadData($request->getBody());
 
+        // Get additional post data that is not defined as properties
+        $postData = Application::app()->controller()->data();
+
         // Save
         if ($this->formAction == 'save') {
             // Handle tables
 
             // Get table data
-            $groupRequestIdArray = $_POST['groupRequestId'] ?? null;
-            $groupRequestEnabledArray = $_POST['groupRequestEnabled'] ?? null;
+            $groupRequestIdArray = $postData['groupRequestId'] ?? null;
+            $groupRequestEnabledArray = $postData['groupRequestEnabled'] ?? null;
 
             // Arrays to hold data
             $groupRequestsInputs = [];
@@ -159,9 +162,9 @@ class GroupModel extends Model
             Application::app()->session()->set('tests/upper/groupRequests', $this->groupRequests);
 
             // Save to session - tabs
-            Application::app()->session()->set('tests/left/selectedTab', $_POST['left_selectedTab']);
-            Application::app()->session()->set('tests/upper/selectedTab', $_POST['upper_selectedTab']);
-            Application::app()->session()->set('tests/lower/selectedTab', $_POST['lower_selectedTab']);
+            Application::app()->session()->set('tests/left/selectedTab', $postData['left_selectedTab']);
+            Application::app()->session()->set('tests/upper/selectedTab', $postData['upper_selectedTab']);
+            Application::app()->session()->set('tests/lower/selectedTab', $postData['lower_selectedTab']);
         }
 
         // Clone

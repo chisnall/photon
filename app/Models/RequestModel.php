@@ -240,6 +240,9 @@ class RequestModel extends Model
         // Load data
         $this->loadData($request->getBody(false));
 
+        // Get additional post data that is not defined as properties
+        $postData = Application::app()->controller()->data();
+
         // Delete - this does not require validation
         if ($this->formAction == 'delete') {
             // Delete record
@@ -272,7 +275,7 @@ class RequestModel extends Model
         }
 
         // Check for existing file upload
-        $requestBodyFileExisting = $_POST['requestBodyFileExisting'] ?? null;
+        $requestBodyFileExisting = $postData['requestBodyFileExisting'] ?? null;
         $this->requestBodyFile = $requestBodyFileExisting;
 
         // Check for new file upload
@@ -304,18 +307,18 @@ class RequestModel extends Model
         // Handle tables
 
         // Get table data
-        $requestParamEnabledArray = $_POST['requestParamEnabled'];
-        $requestParamNameArray = $_POST['requestParamName'];
-        $requestParamValueArray = $_POST['requestParamValue'];
-        $requestHeaderEnabledArray = $_POST['requestHeaderEnabled'];
-        $requestHeaderNameArray = $_POST['requestHeaderName'];
-        $requestHeaderValueArray = $_POST['requestHeaderValue'];
-        $requestBodyFormInputEnabledArray = $_POST['requestBodyFormInputEnabled'];
-        $requestBodyFormInputNameArray = $_POST['requestBodyFormInputName'];
-        $requestBodyFormInputValueArray = $_POST['requestBodyFormInputValue'];
-        $requestVariableEnabledArray = $_POST['requestVariableEnabled'];
-        $requestVariableKeyArray = $_POST['requestVariableKey'];
-        $requestVariableNameArray = $_POST['requestVariableName'];
+        $requestParamEnabledArray = $postData['requestParamEnabled'];
+        $requestParamNameArray = $postData['requestParamName'];
+        $requestParamValueArray = $postData['requestParamValue'];
+        $requestHeaderEnabledArray = $postData['requestHeaderEnabled'];
+        $requestHeaderNameArray = $postData['requestHeaderName'];
+        $requestHeaderValueArray = $postData['requestHeaderValue'];
+        $requestBodyFormInputEnabledArray = $postData['requestBodyFormInputEnabled'];
+        $requestBodyFormInputNameArray = $postData['requestBodyFormInputName'];
+        $requestBodyFormInputValueArray = $postData['requestBodyFormInputValue'];
+        $requestVariableEnabledArray = $postData['requestVariableEnabled'];
+        $requestVariableKeyArray = $postData['requestVariableKey'];
+        $requestVariableNameArray = $postData['requestVariableName'];
 
         // Process table based inputs
         $requestParamsInputs = $this->processTable($requestParamEnabledArray, $requestParamNameArray, $requestParamValueArray);
@@ -383,9 +386,9 @@ class RequestModel extends Model
         Application::app()->session()->set('home/upper/requestVariablesInputs', $this->requestVariablesInputs);
 
         // Save to session - tabs
-        Application::app()->session()->set('home/left/selectedTab', $_POST['left_selectedTab']);
-        Application::app()->session()->set('home/upper/selectedTab', $_POST['upper_selectedTab']);
-        Application::app()->session()->set('home/lower/selectedTab', $_POST['lower_selectedTab']);
+        Application::app()->session()->set('home/left/selectedTab', $postData['left_selectedTab']);
+        Application::app()->session()->set('home/upper/selectedTab', $postData['upper_selectedTab']);
+        Application::app()->session()->set('home/lower/selectedTab', $postData['lower_selectedTab']);
 
         // Validate request
         if ($this->validate()) {

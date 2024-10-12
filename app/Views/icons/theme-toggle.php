@@ -1,6 +1,7 @@
 <div>
 <?php
-$userTheme = $_SESSION['page']['theme'] ?? null;
+$userTheme = \App\Core\Application::app()->session()->get('page/theme') ?? null;
+
 if ($userTheme == 'light') {
     echo "    <div id='theme-toggle-placeholder'>
         <svg class='w-auto h-[1.5rem]' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' viewBox='0 0 24 24'>

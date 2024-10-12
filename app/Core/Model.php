@@ -51,7 +51,6 @@ abstract class Model
             // Only handle form elements which are not an empty string
             if (property_exists($this, $key) && $value != '') {
                 // Cast variable to property type
-                //$propertyType = (new ReflectionProperty($this, $key))->getType()->getName();
                 $propertyType = (new ReflectionClass($this))->getProperty($key)->getType()->getName();
                 settype($value, $propertyType);
 

@@ -50,13 +50,13 @@ class HomeController extends Controller
             }
 
             // Get select / unselect
-            $select = $_GET['select'] ?? null;
-            $unselect = $_GET['unselect'] ?? null;
+            $select = $this->data['select'] ?? null;
+            $unselect = $this->data['unselect'] ?? null;
 
             // Collection - select
             if ($select == 'collection') {
                 // Get collection ID
-                $collectionId = (int)$_GET['id'];
+                $collectionId = (int)$this->data['id'];
 
                 // Handle session
                 if (CollectionModel::handleSession($collectionId)) {
@@ -84,7 +84,7 @@ class HomeController extends Controller
             // Request - select
             if ($select == 'request') {
                 // Get request ID
-                $requestId = (int)$_GET['id'];
+                $requestId = (int)$this->data['id'];
 
                 // Handle session
                 if (RequestModel::handleSession($requestId)) {
@@ -111,8 +111,8 @@ class HomeController extends Controller
             // Variable - reset button
             if ($select == 'variable') {
                 // Get variable collection ID and name
-                $variableCollectionId = (int)$_GET['collection'];
-                $variableName = $_GET['variable'];
+                $variableCollectionId = (int)$this->data['collection'];
+                $variableName = $this->data['variable'];
 
                 // Remove variable
                 Application::app()->session()->remove("variables/$variableCollectionId/$variableName");
@@ -124,7 +124,7 @@ class HomeController extends Controller
             // Settings - update button
             if ($select == 'settings') {
                 // Get tab
-                $tab = $_GET['tab'];
+                $tab = $this->data['tab'];
 
                 // Save tab to session
                 Application::app()->session()->set('settings/selectedTab', $tab);
@@ -135,7 +135,7 @@ class HomeController extends Controller
 
         } elseif ($request->isPost()) {
             // Get model class name
-            $modelClassName = $_POST['modelClassName'];
+            $modelClassName = $request->getBody()['modelClassName'];
 
             // Handle post request
             $$modelClassName->handlePost($request);

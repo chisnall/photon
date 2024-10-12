@@ -165,8 +165,11 @@ class SettingsModel extends Model
         // Load data
         $this->loadData($request->getBody());
 
+        // Get additional post data that is not defined as properties
+        $postData = Application::app()->controller()->data();
+
         // Save to session - tabs
-        Application::app()->session()->set('settings/selectedTab', $_POST['selectedTab']);
+        Application::app()->session()->set('settings/selectedTab', $postData['selectedTab']);
 
         // Cast select elements to boolean
         // We need this before validation in case validation fails, so we can retain the select values on the form
@@ -179,9 +182,9 @@ class SettingsModel extends Model
         $this->variables_showGlobalsHome = (bool)($this->variables_showGlobalsHome);
 
         // Get table data
-        $globalVariableEnabledArray = $_POST['globalVariableEnabled'];
-        $globalVariableNameArray = $_POST['globalVariableName'];
-        $globalVariableValueArray = $_POST['globalVariableValue'];
+        $globalVariableEnabledArray = $postData['globalVariableEnabled'];
+        $globalVariableNameArray = $postData['globalVariableName'];
+        $globalVariableValueArray = $postData['globalVariableValue'];
 
         // Process table data
         $globalVariablesInputs = [];
