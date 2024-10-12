@@ -14,7 +14,16 @@ final class ErrorHandler
         // Log
         Application::app()->logger()->logError($errorLevel, $errorString, $errorFile, $errorLine);
 
-        // Show error on screen
+        // Output error so we can view on screen
         return false;
+    }
+
+    public static function ajax($errorLevel, $errorString, $errorFile, $errorLine): bool
+    {
+        // Log
+        Application::app()->logger()->logError($errorLevel, $errorString, $errorFile, $errorLine);
+
+        // Don't output error
+        return true;
     }
 }
