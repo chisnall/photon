@@ -8,6 +8,7 @@ use App\Core\Application;
 use App\Core\ExceptionHandler;
 use App\Core\Functions;
 use App\Core\Session;
+use App\Exception\AppException;
 use App\Models\SettingsModel;
 
 Functions::includeFile(file: '/app/Data/ajax.php');
@@ -28,12 +29,6 @@ class AjaxRequest
 
     public function __construct()
     {
-        // Sets the default exception handler
-        set_exception_handler([ExceptionHandler::class, 'ajax']);
-
-        // Create application instance - we need this for session and database access
-        new Application();
-
         // Get token
         $token = $_POST['token'] ?: null;
         $this->token = $token;
