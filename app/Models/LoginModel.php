@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Core\Application;
 use App\Core\Database\Migrations;
-use App\Core\Functions;
 use App\Core\Request;
 use App\Exception\AppException;
 use Throwable;
@@ -53,7 +51,7 @@ class LoginModel extends UserModel
 
             try {
                 // Run statement
-                $statement = Application::app()->db()->prepare($sql);
+                $statement = db()->prepare($sql);
                 $statement->bindValue(":email", $this->email);
                 $statement->execute();
                 $userId = $statement->fetchColumn();
@@ -62,11 +60,11 @@ class LoginModel extends UserModel
             }
 
             // Cleanup old session files
-            Functions::cleanupSessions();
+            cleanupSessions();
 
             // Get pending migrations and set session
             $pendingMigrations = (new Migrations())->getPendingMigrations();
-            Application::app()->session()->set('status/pendingMigrations', (bool)$pendingMigrations);
+            session()->set('status/pendingMigrations', (bool)$pendingMigrations);
 
             // Generate new token
             UserModel::generateToken($userId);
@@ -81,23 +79,23 @@ class LoginModel extends UserModel
             }
 
             // Remove layout settings from guest user
-            Application::app()->session()->remove('home/layout');
-            Application::app()->session()->remove('tests/layout');
+            session()->remove('home/layout');
+            session()->remove('tests/layout');
 
             // Set home and tests page to init the layout
-            Application::app()->session()->set("home/layout/initUser", true);
-            Application::app()->session()->set("tests/layout/initUser", true);
+            session()->set("home/layout/initUser", true);
+            session()->set("tests/layout/initUser", true);
 
             // Set flash message
-            Application::app()->session()->setFlash('success', 'You have logged in.');
+            session()->setFlash('success', 'You have logged in.');
 
             // Check for pending migrations
             if ($pendingMigrations) {
                 // Redirect to pending migrations page
-                Application::app()->response()->redirect('/migrations');
+                response()->redirect('/migrations');
             } else {
                 // Redirect to referer page
-                Application::app()->response()->redirect(Application::app()->session()->getReferer());
+                response()->redirect(session()->getReferer());
             }
         }
     }

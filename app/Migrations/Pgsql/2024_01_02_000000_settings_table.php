@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-
 return new class
 {
     public function up(): void
@@ -21,13 +19,13 @@ return new class
                     ON DELETE CASCADE
                 );";
 
-        Application::app()->db()->exec($sql);
+        db()->exec($sql);
     }
 
     public function down(): void
     {
         $sql = "DROP TABLE settings;";
 
-        Application::app()->db()->exec($sql);
+        db()->exec($sql);
     }
 };

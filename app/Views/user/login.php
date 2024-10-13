@@ -2,24 +2,23 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
 use App\Functions\Output;
 
 $title = 'Login';
 
 // Get values
-$emailValue = Application::app()->model('LoginModel')->getProperty('email');
-$passwordValue = Application::app()->model('LoginModel')->getProperty('password');
-$passwordDisplay = Application::app()->model('LoginModel')->getProperty('passwordDisplay');
-$formAction = Application::app()->model('LoginModel')->getProperty('formAction');
+$emailValue = model('LoginModel')->getProperty('email');
+$passwordValue = model('LoginModel')->getProperty('password');
+$passwordDisplay = model('LoginModel')->getProperty('passwordDisplay');
+$formAction = model('LoginModel')->getProperty('formAction');
 
 // Get errors
-$emailError = Application::app()->model('LoginModel')->getError('email');
-$passwordError = Application::app()->model('LoginModel')->getError('password');
+$emailError = model('LoginModel')->getError('email');
+$passwordError = model('LoginModel')->getError('password');
 
 // Get CSS class
-$emailClass = Application::app()->model('LoginModel')->getInputClass('email');
-$passwordClass = Application::app()->model('LoginModel')->getInputClass('password');
+$emailClass = model('LoginModel')->getInputClass('email');
+$passwordClass = model('LoginModel')->getInputClass('password');
 
 // Make login error ambiguous - i.e. don't give an attacker a clue to which input is incorrect
 if ($formAction == 'login' && ($emailError == 'Account does not exist' || $passwordError == 'Password is incorrect')) {
@@ -44,8 +43,8 @@ if ($formAction == 'login' && ($emailError == 'Account does not exist' || $passw
 }
 
 // Set CSS class on password visibility icons
-$passwordShowClass = Application::app()->model('LoginModel')->getPasswordIconClass('passwordDisplay', 'show');
-$passwordHideClass = Application::app()->model('LoginModel')->getPasswordIconClass('passwordDisplay', 'hide');
+$passwordShowClass = model('LoginModel')->getPasswordIconClass('passwordDisplay', 'show');
+$passwordHideClass = model('LoginModel')->getPasswordIconClass('passwordDisplay', 'hide');
 ?>
 <div class="flex h-full pb-20">
     <div class="w-[500px] m-auto bg-zinc-50 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-650 p-8 rounded-xl">

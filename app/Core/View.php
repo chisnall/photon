@@ -9,16 +9,16 @@ final class View
     public function renderView(string $view, $params = []): string
     {
         // Get page settings from the controller
-        $layout = Application::app()->controller()->getProperty('page')['layout'];
+        $layout = controller()->getProperty('page')['layout'];
 
         // Check if layout exists
         if (!file_exists(BASE_PATH . "/app/Views/layouts/$layout.php")) {
-            throw new (Functions::getConfig("class/exception/framework"))(message: "Layout not found: $layout");
+            throw new (getConfig("class/exception/framework"))(message: "Layout not found: $layout");
         }
 
         // Check if view exists
         if (!file_exists(BASE_PATH . "/app/Views/$view.php")) {
-            throw new (Functions::getConfig("class/exception/framework"))(message: "View not found: $view");
+            throw new (getConfig("class/exception/framework"))(message: "View not found: $view");
         }
 
         // Get view variables and content
@@ -31,7 +31,7 @@ final class View
         $layoutContent = $this->layoutContent($layout);
 
         // Get title - default to config if not provided
-        $title = $viewVariables["title"] ?? Functions::getConfig("page/default/title");
+        $title = $viewVariables["title"] ?? getConfig("page/default/title");
 
         // Replace title, padding and content placeholders
         $layoutContent = str_replace('{{title}}', $title, $layoutContent);
@@ -61,7 +61,7 @@ final class View
         ob_start();
 
         // Add the query array as a variable that the view can access
-        $query = Application::app()->request()->getQuery();
+        $query = request()->getQuery();
 
         // Include view
         include BASE_PATH . "/app/Views/$view.php";

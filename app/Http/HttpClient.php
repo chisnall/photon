@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http;
 
-use App\Core\Application;
-use App\Core\Functions;
 use App\Core\Traits\GetSetProperty;
 use App\Functions\Data;
 use App\Models\RequestModel;
@@ -59,7 +57,7 @@ class HttpClient
         $clientStart = microtime(true);
 
         // Get status codes
-        Functions::includeFile(file: '/app/Data/httpStatusCodes.php', once: true);
+        includeFile(file: '/app/Data/httpStatusCodes.php', once: true);
 
         // Init response for certain errors
         $response = null;
@@ -448,10 +446,10 @@ class HttpClient
                     $value = (string)$value;
 
                     // Debug log
-                    Application::app()->logger()->logDebug('http.log', ["Set: " . $variableName . " | value: " . $value]);
+                    logger()->logDebug('http.log', ["Set: " . $variableName . " | value: " . $value]);
 
                     // Save to session
-                    Application::app()->session()->set("variables/$collectionId/$variableName", ['value' => $value, 'type' => 'request', 'timestamp' => time()]);
+                    session()->set("variables/$collectionId/$variableName", ['value' => $value, 'type' => 'request', 'timestamp' => time()]);
                 }
             }
         }
@@ -472,26 +470,26 @@ class HttpClient
 
     public function saveToSession()
     {
-        Application::app()->session()->set('response/responseRequestTime', time());
-        Application::app()->session()->set('response/responseValid', $this->responseValid);
-        Application::app()->session()->set('response/responseException', (bool)$this->exception);
-        Application::app()->session()->set('response/responseExceptionClass', $this->exceptionClass);
-        Application::app()->session()->set('response/responseScheme', $this->responseScheme);
-        Application::app()->session()->set('response/responseSchemeIcon', $this->responseSchemeIcon);
-        Application::app()->session()->set('response/responseCode', $this->responseCode);
-        Application::app()->session()->set('response/responseType', $this->responseType);
-        Application::app()->session()->set('response/responseHeaders', $this->responseHeaders);
-        Application::app()->session()->set('response/responseStatusLine', $this->responseStatusLine);
-        Application::app()->session()->set('response/responseStatusProtocol', $this->responseStatusProtocol);
-        Application::app()->session()->set('response/responseStatusCode', $this->responseStatusCode);
-        Application::app()->session()->set('response/responseStatusText', $this->responseStatusText);
-        Application::app()->session()->set('response/responseBodyContent', $this->responseBodyContent);
-        Application::app()->session()->set('response/responseBodyDecoded', $this->responseBodyDecoded);
-        Application::app()->session()->set('response/responseBodySize', $this->responseBodySize);
-        Application::app()->session()->set('response/responseBodySizeFormatted', $this->responseBodySizeFormatted);
-        Application::app()->session()->set('response/responseBodyValid', $this->responseBodyValid);
-        Application::app()->session()->set('response/responseTime', $this->responseTime);
-        Application::app()->session()->set('response/responseTimeFormatted', $this->responseTimeFormatted);
-        Application::app()->session()->set('response/responseErrorMessage', $this->errorMessage);
+        session()->set('response/responseRequestTime', time());
+        session()->set('response/responseValid', $this->responseValid);
+        session()->set('response/responseException', (bool)$this->exception);
+        session()->set('response/responseExceptionClass', $this->exceptionClass);
+        session()->set('response/responseScheme', $this->responseScheme);
+        session()->set('response/responseSchemeIcon', $this->responseSchemeIcon);
+        session()->set('response/responseCode', $this->responseCode);
+        session()->set('response/responseType', $this->responseType);
+        session()->set('response/responseHeaders', $this->responseHeaders);
+        session()->set('response/responseStatusLine', $this->responseStatusLine);
+        session()->set('response/responseStatusProtocol', $this->responseStatusProtocol);
+        session()->set('response/responseStatusCode', $this->responseStatusCode);
+        session()->set('response/responseStatusText', $this->responseStatusText);
+        session()->set('response/responseBodyContent', $this->responseBodyContent);
+        session()->set('response/responseBodyDecoded', $this->responseBodyDecoded);
+        session()->set('response/responseBodySize', $this->responseBodySize);
+        session()->set('response/responseBodySizeFormatted', $this->responseBodySizeFormatted);
+        session()->set('response/responseBodyValid', $this->responseBodyValid);
+        session()->set('response/responseTime', $this->responseTime);
+        session()->set('response/responseTimeFormatted', $this->responseTimeFormatted);
+        session()->set('response/responseErrorMessage', $this->errorMessage);
     }
 }

@@ -54,7 +54,7 @@ final class Session
         // otherwise the flash message will be shown again on page reload
 
         // Get flash message class
-        $class = Functions::getConfig("page/flash/$type");
+        $class = getConfig("page/flash/$type");
 
         // Register session
         $_SESSION[self::FLASH_KEY][] = [
@@ -124,7 +124,7 @@ final class Session
             $refererPath = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
 
             // Ignore certain views like login and register
-            if ( !in_array($refererPath, Functions::getConfig("no-referer"))) {
+            if ( !in_array($refererPath, getConfig("no-referer"))) {
                 $this->set('page/referer', $refererPath);
             }
         }

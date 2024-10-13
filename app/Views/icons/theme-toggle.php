@@ -1,6 +1,6 @@
 <div>
 <?php
-$userTheme = \App\Core\Application::app()->session()->get('page/theme') ?? null;
+$userTheme = session()->get('page/theme') ?? null;
 
 if ($userTheme == 'light') {
     echo "    <div id='theme-toggle-placeholder'>

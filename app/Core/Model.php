@@ -148,7 +148,7 @@ abstract class Model
 
                     try {
                         // Run statement
-                        $statement = Application::app()->db()->prepare($sql);
+                        $statement = db()->prepare($sql);
                         foreach ($ruleAttributes as $sqlField => $sqlOperator) {
                             // Use lowercase if the type is string
                             if (gettype($this->$sqlField) == 'string') {
@@ -160,7 +160,7 @@ abstract class Model
                         $statement->execute();
                         $data = $statement->fetchObject();
                     } catch (Throwable $exception) {
-                        throw new (Functions::getConfig("class/exception/framework"))(message: "Validate failure: RULE_UNIQUE", previous: $exception);
+                        throw new (getConfig("class/exception/framework"))(message: "Validate failure: RULE_UNIQUE", previous: $exception);
                     }
 
                     // Check for data
@@ -175,12 +175,12 @@ abstract class Model
 
                     try {
                         // Run statement
-                        $statement = Application::app()->db()->prepare($sql);
+                        $statement = db()->prepare($sql);
                         $statement->bindValue(":" . $ruleAttributes['where'], $fieldValue);
                         $statement->execute();
                         $data = $statement->fetchObject();
                     } catch (Throwable $exception) {
-                        throw new (Functions::getConfig("class/exception/framework"))(message: "Validate failure: RULE_USER_EXISTS", previous: $exception);
+                        throw new (getConfig("class/exception/framework"))(message: "Validate failure: RULE_USER_EXISTS", previous: $exception);
                     }
 
                     // Check for data
@@ -194,12 +194,12 @@ abstract class Model
 
                     try {
                         // Run statement
-                        $statement = Application::app()->db()->prepare($sql);
+                        $statement = db()->prepare($sql);
                         $statement->bindValue(":" . $ruleAttributes['where'], $fieldValue);
                         $statement->execute();
                         $status = $statement->fetchColumn();
                     } catch (Throwable $exception) {
-                        throw new (Functions::getConfig("class/exception/framework"))(message: "Validate failure: RULE_USER_ACTIVE", previous: $exception);
+                        throw new (getConfig("class/exception/framework"))(message: "Validate failure: RULE_USER_ACTIVE", previous: $exception);
                     }
 
                     // Anything that does not match the required value is an account that is not active
@@ -215,12 +215,12 @@ abstract class Model
 
                     try {
                         $sql = "SELECT " . $fields[$userPasswordField] . " FROM $tableName WHERE " . $fields[$userEmailField] . " = :$userEmailField";
-                        $statement = Application::app()->db()->prepare($sql);
+                        $statement = db()->prepare($sql);
                         $statement->bindValue(":$userEmailField", $userEmailValue);
                         $statement->execute();
                         $userPasswordValue = $statement->fetchColumn();
                     } catch (Throwable $exception) {
-                        throw new (Functions::getConfig("class/exception/framework"))(message: "Validate failure: RULE_PASSWORD_VERIFY", previous: $exception);
+                        throw new (getConfig("class/exception/framework"))(message: "Validate failure: RULE_PASSWORD_VERIFY", previous: $exception);
                     }
 
                     // Check password
@@ -294,7 +294,7 @@ abstract class Model
 
         // Throw exception if running this method through this class
         if ($className == 'App\Core\Model') {
-            throw new (Functions::getConfig("class/exception/framework"))(message: "getAllRecords() cannot be accessed through Model");
+            throw new (getConfig("class/exception/framework"))(message: "getAllRecords() cannot be accessed through Model");
         }
 
         // Get table name
@@ -332,7 +332,7 @@ abstract class Model
             $sql = "SELECT * FROM $tableName WHERE {$sqlWhere}{$orderBy}";
 
             // Run statement
-            $statement = Application::app()->db()->prepare($sql);
+            $statement = db()->prepare($sql);
             foreach ($match as $key => $value) {
                 $statement->bindValue(":$key", $value);
             }
@@ -344,7 +344,7 @@ abstract class Model
             $sql = "SELECT * FROM {$tableName}{$orderBy}";
 
             // Run statement
-            $statement = Application::app()->db()->prepare($sql);
+            $statement = db()->prepare($sql);
             $statement->execute();
         }
 
@@ -391,7 +391,7 @@ abstract class Model
 
         // Throw exception if running this method through this class
         if ($className == 'App\Core\Model') {
-            throw new (Functions::getConfig("class/exception/framework"))(message: "getSingleRecord() cannot be accessed through Model");
+            throw new (getConfig("class/exception/framework"))(message: "getSingleRecord() cannot be accessed through Model");
         }
 
         // Get record
@@ -427,7 +427,7 @@ abstract class Model
         $sql = "INSERT INTO $tableName (" . implode(', ', $columns) . ") VALUES (" . implode(', ', $placeholders) . ")";
 
         // Prepare query
-        $statement = Application::app()->db()->prepare($sql);
+        $statement = db()->prepare($sql);
 
         // Bind values
         foreach (array_keys($fields) as $fieldName) {
@@ -448,7 +448,7 @@ abstract class Model
         $statement->execute();
 
         // Get record ID
-        $id = (int)Application::app()->db()->lastInsertId();
+        $id = (int)db()->lastInsertId();
 
         // Update the model that called this method
         $this->id = $id;
@@ -483,7 +483,7 @@ abstract class Model
         $sql = "UPDATE $tableName SET " . implode(', ', $placeholders) . " WHERE $primaryKeyColumn = $primaryValue";
 
         // Prepare query
-        $statement = Application::app()->db()->prepare($sql);
+        $statement = db()->prepare($sql);
 
         // Bind values
         foreach (array_keys($fields) as $fieldName) {
@@ -523,7 +523,7 @@ abstract class Model
         $sql = "DELETE FROM $tableName WHERE $primaryKeyColumn = $primaryValue";
 
         // Prepare query
-        $statement = Application::app()->db()->prepare($sql);
+        $statement = db()->prepare($sql);
 
         // Run query
         $statement->execute();

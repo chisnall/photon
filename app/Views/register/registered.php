@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-
 $title = 'Registered';
 ?>
 <h1 class="pb-4 text-3xl font-bold">Registration Complete</h1>
@@ -12,12 +10,12 @@ $title = 'Registered';
 <?php
 // Get the user email
 // This would actually be implemented with an e-mail sent to the user in production system
-$email = Application::app()->session()->get('user/registered');
+$email = session()->get('user/registered');
 
 if ($email) {
     // Get token from the user record
     $sql = "SELECT token FROM users WHERE email = '$email'";
-    $token = Application::app()->db()->query($sql)->fetchColumn();
+    $token = db()->query($sql)->fetchColumn();
 
     // Create link
     $link = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . "/register/activate?token=$token";

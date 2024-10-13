@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Core\Application;
 use App\Core\Controller;
-use App\Core\Functions;
 use App\Core\Request;
 use App\Middleware\AuthMiddleware;
 use App\Models\CollectionModel;
@@ -36,14 +34,14 @@ class HomeController extends Controller
         $TestModel = new TestModel();
 
         // Set model properties in the application
-        Application::app()->setModel($CollectionModel);
-        Application::app()->setModel($RequestModel);
-        Application::app()->setModel($TestModel);
+        app()->setModel($CollectionModel);
+        app()->setModel($RequestModel);
+        app()->setModel($TestModel);
 
         // Check request
         if ($request->isGet()) {
             // Check if user has logged in
-            if (Application::app()->session()->get('home/layout/initUser')) {
+            if (session()->get('home/layout/initUser')) {
                 // Init user
                 // The home view page will set the value to false
                 $this->initUser();
@@ -65,20 +63,20 @@ class HomeController extends Controller
                 }
 
                 // Redirect to homepage
-                Application::app()->response()->redirect('/');
+                response()->redirect('/');
             }
 
             // Collection - unselect
             if ($unselect == 'collection') {
                 // Remove selected collection ID and name
-                Application::app()->session()->remove('home/left/collectionId');
-                Application::app()->session()->remove('home/left/collectionName');
+                session()->remove('home/left/collectionId');
+                session()->remove('home/left/collectionName');
 
                 // Save to settings
                 SettingsModel::updateSetting('home/left/collectionId', null);
 
                 // Redirect to homepage
-                Application::app()->response()->redirect('/');
+                response()->redirect('/');
             }
 
             // Request - select
@@ -93,7 +91,7 @@ class HomeController extends Controller
                 }
 
                 // Redirect to homepage
-                Application::app()->response()->redirect('/');
+                response()->redirect('/');
             }
 
             // Request - unselect
@@ -105,7 +103,7 @@ class HomeController extends Controller
                 }
 
                 // Redirect to homepage
-                Application::app()->response()->redirect('/');
+                response()->redirect('/');
             }
 
             // Variable - reset button
@@ -115,10 +113,10 @@ class HomeController extends Controller
                 $variableName = $this->data['variable'];
 
                 // Remove variable
-                Application::app()->session()->remove("variables/$variableCollectionId/$variableName");
+                session()->remove("variables/$variableCollectionId/$variableName");
 
                 // Redirect to homepage
-                Application::app()->response()->redirect('/');
+                response()->redirect('/');
             }
 
             // Settings - update button
@@ -127,10 +125,10 @@ class HomeController extends Controller
                 $tab = $this->data['tab'];
 
                 // Save tab to session
-                Application::app()->session()->set('settings/selectedTab', $tab);
+                session()->set('settings/selectedTab', $tab);
 
                 // Redirect to settings
-                Application::app()->response()->redirect('/settings');
+                response()->redirect('/settings');
             }
 
         } elseif ($request->isPost()) {
@@ -155,9 +153,9 @@ class HomeController extends Controller
         $lower_selectedTab = SettingsModel::getSetting('home/lower/selectedTab', true);
 
         // Set session
-        if ($left_selectedTab) Application::app()->session()->set('home/left/selectedTab', $left_selectedTab);
-        if ($upper_selectedTab) Application::app()->session()->set('home/upper/selectedTab', $upper_selectedTab);
-        if ($lower_selectedTab) Application::app()->session()->set('home/lower/selectedTab', $lower_selectedTab);
+        if ($left_selectedTab) session()->set('home/left/selectedTab', $left_selectedTab);
+        if ($upper_selectedTab) session()->set('home/upper/selectedTab', $upper_selectedTab);
+        if ($lower_selectedTab) session()->set('home/lower/selectedTab', $lower_selectedTab);
 
         // Collection and request session handlers
         if ($collectionId) CollectionModel::handleSession($collectionId);
@@ -167,7 +165,7 @@ class HomeController extends Controller
     public function html(): never
     {
         // For the /html iframe on the home page
-        Functions::includeFile(file: '/app/Views/home-browser.php');
+        includeFile(file: '/app/Views/home-browser.php');
         exit;
     }
 }

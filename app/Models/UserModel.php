@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Core\Application;
 use App\Core\Model;
 use App\Traits\FormTrait;
 
@@ -82,7 +81,7 @@ class UserModel extends Model
 
     public static function id(): int
     {
-        return Application::app()->user()->getProperty('id');
+        return user()->getProperty('id');
     }
 
     public static function isLoggedIn(): bool
@@ -97,7 +96,7 @@ class UserModel extends Model
 
     public static function getDisplayName(): string
     {
-        return Application::app()->user()->getProperty('firstname') ?? 'guest';
+        return user()->getProperty('firstname') ?? 'guest';
     }
 
     public static function generateToken(int $userId): void
@@ -113,25 +112,25 @@ class UserModel extends Model
 
     public static function login(int $userId): bool
     {
-        Application::app()->session()->set('user/id', $userId);
-        Application::app()->session()->set('user/token', self::getSingleRecord(['id' => $userId])->token);
-        Application::app()->session()->set('user/dbDriver', Application::app()->db()->driver());
+        session()->set('user/id', $userId);
+        session()->set('user/token', self::getSingleRecord(['id' => $userId])->token);
+        session()->set('user/dbDriver', db()->driver());
 
         // Only used if implementing the user activation feature
-        //Application::app()->session()->remove('user/registered'); // remove registered key so user cannot view the registered page again
+        //session()->remove('user/registered'); // remove registered key so user cannot view the registered page again
 
         return true;
     }
 
     public static function logout(): bool
     {
-        Application::app()->session()->remove('home');
-        Application::app()->session()->remove('response');
-        Application::app()->session()->remove('settings');
-        Application::app()->session()->remove('status');
-        Application::app()->session()->remove('tests');
-        Application::app()->session()->remove('user');
-        Application::app()->session()->remove('variables');
+        session()->remove('home');
+        session()->remove('response');
+        session()->remove('settings');
+        session()->remove('status');
+        session()->remove('tests');
+        session()->remove('user');
+        session()->remove('variables');
 
         return true;
     }

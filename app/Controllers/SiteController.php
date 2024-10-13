@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Core\Application;
 use App\Core\Controller;
 use App\Core\ExceptionHandler;
 use App\Core\Request;
@@ -43,8 +42,8 @@ class SiteController extends Controller
         //$TestModel = new TestModel();
 
         // Set model properties in the application
-        //Application::app()->setModel($CollectionModel);
-        //Application::app()->setModel($TestModel);
+        //app()->setModel($CollectionModel);
+        //app()->setModel($TestModel);
 
         // Check for post
         if ($request->isPost()) {
@@ -62,10 +61,10 @@ class SiteController extends Controller
     public function flashTest(): void
     {
         // Set flash message
-        Application::app()->session()->setFlash($this->data['type'], 'Testing flash message.');
+        session()->setFlash($this->data['type'], 'Testing flash message.');
 
         // Redirect to test page
-        Application::app()->response()->redirect('/test');
+        response()->redirect('/test');
     }
 
     public function error(): string
@@ -89,7 +88,7 @@ class SiteController extends Controller
         // SQL failure
         // The Application class will catch this
         //$sql = "SELECT * FROM users2 WHERE id = 1";
-        //$statement = Application::app()->db()->prepare($sql);
+        //$statement = db()->prepare($sql);
         //$statement->execute();
     }
 }

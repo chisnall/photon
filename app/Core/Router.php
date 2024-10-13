@@ -32,7 +32,7 @@ final class Router
 
         // Save referer in session - only for get methods
         if ( $method == "get") {
-            Application::app()->session()->setReferer();
+            session()->setReferer();
         }
 
         // Determine callback
@@ -40,11 +40,11 @@ final class Router
 
         if ($callback === false) {
             // We need the default controller and default not found class
-            $controllerClass = Functions::getConfig("class/exception/controller");
-            $notFoundException = Functions::getConfig("class/exception/notFound");
+            $controllerClass = getConfig("class/exception/controller");
+            $notFoundException = getConfig("class/exception/notFound");
 
             // Create controller
-            Application::app()->setProperty('controller', new $controllerClass());
+            app()->setProperty('controller', new $controllerClass());
 
             // Show error
             $exception = new $notFoundException();
@@ -61,7 +61,7 @@ final class Router
             $controller = new $callback[0]();
 
             // Update controller property in the application
-            Application::app()->setProperty('controller', $controller);
+            app()->setProperty('controller', $controller);
 
             // Set action property to the method to be run in the relevant controller
             $controller->setProperty('action', $callback[1]);
@@ -72,12 +72,12 @@ final class Router
             // Route is a view
 
             // Get controller and method for handling generic views
-            $controllerClass = Functions::getConfig("controller/genericView/controller");
-            $controllerMethod = Functions::getConfig("controller/genericView/method");
+            $controllerClass = getConfig("controller/genericView/controller");
+            $controllerMethod = getConfig("controller/genericView/method");
 
             // Create controller
             $controller = new $controllerClass();
-            Application::app()->setProperty('controller', $controller);
+            app()->setProperty('controller', $controller);
 
             // Set action and view
             $controller->setProperty('action', $controllerMethod);

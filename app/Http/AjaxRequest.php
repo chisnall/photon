@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http;
 
-use App\Core\Application;
-use App\Core\ExceptionHandler;
-use App\Core\Functions;
 use App\Core\Session;
-use App\Exception\AppException;
 use App\Models\SettingsModel;
 
-Functions::includeFile(file: '/app/Data/ajax.php');
+includeFile(file: '/app/Data/ajax.php');
 
 class AjaxRequest
 {
@@ -30,13 +26,13 @@ class AjaxRequest
     public function __construct()
     {
         // Get post data
-        $postData = Application::app()->request()->getBody(false);
+        $postData = request()->getBody(false);
 
         // Get token
         $this->token = $postData['token'] ?? null;
 
         // Confirm token matches the users token
-        if ($this->token !== Application::app()->session()->get('user/token')) {
+        if ($this->token !== session()->get('user/token')) {
             // Set status code and exit
             http_response_code(401);
             exit;
@@ -96,7 +92,7 @@ class AjaxRequest
     public function handlePost(): void
     {
         // Debug log
-        Application::app()->logger()->logDebug('ajax.log', [
+        logger()->logDebug('ajax.log', [
             "from: handlePost()",
             " key: " . $this->key . " | process: " . json_encode($this->process) . " | type: " . gettype($this->value),
             " tkn: " . $this->token . " | session: " . session_id(),
@@ -111,7 +107,7 @@ class AjaxRequest
 
         // Check if user is logged in - get user ID
         // Set user ID to 0 if not logged in - this is the guest user
-        $userId = Application::app()->session()->get('user/id');
+        $userId = session()->get('user/id');
 
         // Check key for re-ordering the request list
         if ($this->key === 'home/upper/requestsList') {
@@ -126,7 +122,7 @@ class AjaxRequest
             foreach ($collectionRecords as $requestId) {
                 // Update request
                 $sql = "UPDATE requests SET sort_order = $requestSort WHERE id = $requestId";
-                Application::app()->db()->query($sql);
+                db()->query($sql);
 
                 // Increment sort number
                 $requestSort++;
@@ -149,25 +145,25 @@ class AjaxRequest
             }
 
             // Delete file
-            Functions::deleteFile($this->value);
+            deleteFile($this->value);
         }
 
         // Check key for clear session variable
         elseif ($this->key === 'variables/clear') {
-            Application::app()->session()->remove('variables/' . $this->value);
+            session()->remove('variables/' . $this->value);
         }
 
         // Check if processing the value into individual keys/values
         elseif (is_array($this->value) && $this->process) {
             foreach ($this->value as $subKey => $subValue) {
                 // Set key
-                Application::app()->session()->set("$this->key/$subKey", $subValue);
+                session()->set("$this->key/$subKey", $subValue);
             }
         }
 
         else {
             // Set key
-            Application::app()->session()->set($this->key, $this->value);
+            session()->set($this->key, $this->value);
         }
 
         // Debug
@@ -192,14 +188,14 @@ class AjaxRequest
             $recordIdKey = RECORD_KEYS[$recordModifiedKey];
 
             // Get the record ID currently selected
-            $recordIdValue = Application::app()->session()->get($recordIdKey);
+            $recordIdValue = session()->get($recordIdKey);
 
             // Debug log
-            //Application::app()->logger()->logDebug('ajax.log', ["Session: " . $recordModifiedKey . " | key: " . $recordIdKey . " | ID: " . $recordIdValue]);
+            //logger()->logDebug('ajax.log', ["Session: " . $recordModifiedKey . " | key: " . $recordIdKey . " | ID: " . $recordIdValue]);
 
             // Set modified key if we have a record ID
-            if ($recordIdValue) Application::app()->session()->set($recordModifiedKey, true);
-            if ($recordIdValue) Application::app()->session()->set($recordModifiedKey, true);
+            if ($recordIdValue) session()->set($recordModifiedKey, true);
+            if ($recordIdValue) session()->set($recordModifiedKey, true);
         }
 
         // Check if we need to save to user setting
@@ -228,7 +224,7 @@ class AjaxRequest
         }
 
         // Load file
-        Functions::includeFile(file: $this->file, variables: $this->variables);
+        includeFile(file: $this->file, variables: $this->variables);
     }
 
     public function handleMethod(): void

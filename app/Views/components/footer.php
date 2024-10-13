@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
 use App\Functions\Output;
 ?>
 <div class="fixed bottom-0 z-50 w-full h-[41px] font-semibold
@@ -15,20 +14,20 @@ use App\Functions\Output;
             </div>
             <?php if (APP_DEBUG): ?>
             <div class="footer-item flex justify-center border-r min-w-[100px]">
-                <div class="content-center"><?= Application::app()->controller()->getProperty('page')['layout'] ?></div>
+                <div class="content-center"><?= controller()->getProperty('page')['layout'] ?></div>
             </div>
             <div class="footer-item flex justify-center border-r min-w-[100px]">
-                <div class="content-center"><?= Application::app()->controller()->getProperty('page')['view'] ?></div>
+                <div class="content-center"><?= controller()->getProperty('page')['view'] ?></div>
             </div>
             <?php endif; ?>
-            <?php if (Application::app()->session()->get('status/pendingMigrations')): ?>
+            <?php if (session()->get('status/pendingMigrations')): ?>
             <div class="footer-item flex justify-center border-r min-w-[100px] text-white bg-red-600 dark:bg-red-700">
                 <div class="content-center"><a href="/migrations">MIGRATIONS</a></div>
             </div>
             <?php endif; ?>
-            <?php if (Application::app()->getProperty('errors')): ?>
+            <?php if (app()->getProperty('errors')): ?>
             <div class="footer-item flex justify-center border-r min-w-[100px] text-white bg-red-600 dark:bg-red-700">
-                <div class="content-center">ERRORS: <?= Application::app()->getProperty('errors') ?></div>
+                <div class="content-center">ERRORS: <?= app()->getProperty('errors') ?></div>
             </div>
             <?php endif; ?>
         </div>

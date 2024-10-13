@@ -47,17 +47,17 @@ final class Application
         $this->view = new View();
 
         // Get application initiator
-        $traceInfoFile = Functions::traceInfo("start")['file'];
+        $traceInfoFile = traceInfo("start")['file'];
 
         // Init config
         $this->initConfig();
 
         // Get routes
-        Functions::includeFile(file: '/app/Routes/routes.php');
+        includeFile(file: '/app/Routes/routes.php');
 
         // Connect to database
-        $databaseDriver = Functions::getConfig("database/driver");
-        $databaseClass = Functions::getConfig("database/$databaseDriver/class");
+        $databaseDriver = getConfig("database/driver");
+        $databaseClass = getConfig("database/$databaseDriver/class");
         $this->db = $databaseClass::getInstance()->getConnection();
 
         // Return now if running from migrations script
@@ -78,7 +78,7 @@ final class Application
         }
 
         // Get the user class
-        $userClass = Functions::getConfig("class/user");
+        $userClass = getConfig("class/user");
 
         // Get primary key property
         $primaryKey = $userClass::primaryKey()['property'];

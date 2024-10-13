@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-use App\Core\Functions;
 use App\Functions\Data;
 use App\Functions\Css;
 use App\Functions\Output;
@@ -12,18 +10,18 @@ use App\Models\SettingsModel;
 use App\Models\UserModel;
 
 // Get groups data and selected collection
-$groupsData = GroupModel::getAllRecords(match: ['userId' => Application::app()->user()->id()], sort: ['groupName' => 'ASC']);
-$left_groupId = Application::app()->session()->get('tests/left/groupId');
-$left_groupName = Application::app()->session()->get('tests/left/groupName');
+$groupsData = GroupModel::getAllRecords(match: ['userId' => user()->id()], sort: ['groupName' => 'ASC']);
+$left_groupId = session()->get('tests/left/groupId');
+$left_groupName = session()->get('tests/left/groupName');
 
 // Get requests data for this user
-$sql = "SELECT requests.id, requests.id as request_id, requests.request_name, collections.id as collection_id, collections.collection_name FROM requests JOIN collections on requests.collection_id = collections.id WHERE collections.user_id = " . Application::app()->user()->id() . " ORDER BY collections.collection_name ASC, requests.request_name ASC, requests.request_method, requests.created_at";
+$sql = "SELECT requests.id, requests.id as request_id, requests.request_name, collections.id as collection_id, collections.collection_name FROM requests JOIN collections on requests.collection_id = collections.id WHERE collections.user_id = " . user()->id() . " ORDER BY collections.collection_name ASC, requests.request_name ASC, requests.request_method, requests.created_at";
 $requestsData = Data::records($sql);
 
 // Get input values from session
 // ?: covers both null and empty "" values
-$groupName = Application::app()->session()->get('tests/upper/groupName');
-$groupRequests = Application::app()->session()->get('tests/upper/groupRequests') ?? [];
+$groupName = session()->get('tests/upper/groupName');
+$groupRequests = session()->get('tests/upper/groupRequests') ?? [];
 
 // Remove orphan requests (requests that have been deleted but are still present in the group requests array)
 foreach ($groupRequests as $groupRequestKey => $groupRequestValue) {
@@ -34,18 +32,18 @@ foreach ($groupRequests as $groupRequestKey => $groupRequestValue) {
 $left_groupName !== null ? $title = "Tests: $left_groupName" : $title = 'Tests';
 
 // Get open modal
-$modalOpenName = Application::app()->request()->getBody()['modalName'] ?? null;
+$modalOpenName = request()->getBody()['modalName'] ?? null;
 
 // Get overlay class
 $modalOverlayClass = Css::getOverlayClass();
 
 // Get form error
-$groupError = Application::app()->session()->get('tests/upper/groupError');
+$groupError = session()->get('tests/upper/groupError');
 
 // Get tabs from session
-$left_selectedTab = Application::app()->session()->get('tests/left/selectedTab') ?? "tab1";
-$upper_selectedTab = Application::app()->session()->get('tests/upper/selectedTab') ?? "tab1";
-$lower_selectedTab = Application::app()->session()->get('tests/lower/selectedTab') ?? "tab1";
+$left_selectedTab = session()->get('tests/left/selectedTab') ?? "tab1";
+$upper_selectedTab = session()->get('tests/upper/selectedTab') ?? "tab1";
+$lower_selectedTab = session()->get('tests/lower/selectedTab') ?? "tab1";
 
 // Set tabs CSS classes
 $left_selectedTab == 'tab1' ? $left_selectedTab_tab1 = ' current' : $left_selectedTab_tab1 = null;
@@ -56,10 +54,10 @@ $lower_selectedTab == 'tab1' ? $lower_selectedTab_tab1 = ' current' : $lower_sel
 $lower_selectedTab == 'tab2' ? $lower_selectedTab_tab2 = ' current' : $lower_selectedTab_tab2 = null;
 
 // Get settings
-$settings_tests_leftSection = Application::app()->session()->get('tests/layout/leftSection') ?? SettingsModel::getSetting('tests/layout/leftSection');
-$settings_tests_rightSection = Application::app()->session()->get('tests/layout/rightSection') ?? SettingsModel::getSetting('tests/layout/rightSection');
-$settings_tests_topSection = Application::app()->session()->get('tests/layout/topSection') ?? SettingsModel::getSetting('tests/layout/topSection');
-$settings_tests_bottomSection = Application::app()->session()->get('tests/layout/bottomSection') ?? SettingsModel::getSetting('tests/layout/bottomSection');
+$settings_tests_leftSection = session()->get('tests/layout/leftSection') ?? SettingsModel::getSetting('tests/layout/leftSection');
+$settings_tests_rightSection = session()->get('tests/layout/rightSection') ?? SettingsModel::getSetting('tests/layout/rightSection');
+$settings_tests_topSection = session()->get('tests/layout/topSection') ?? SettingsModel::getSetting('tests/layout/topSection');
+$settings_tests_bottomSection = session()->get('tests/layout/bottomSection') ?? SettingsModel::getSetting('tests/layout/bottomSection');
 //---
 $settings_groups_stopOnResponseFail = SettingsModel::getSetting('groups/stopOnResponseFail');
 
@@ -108,7 +106,7 @@ $settings_groups_stopOnResponseFail ? $display_groups_stopOnResponseFail = 'On' 
                                 <td class="pl-2 pr-1 py-1 text-xs text-zinc-500 dark:text-zinc-400 text-right"><?= $groupModel->getProperty('id') ?></td>
                                 <td class="w-full px-1 py-1"><?= $groupModel->getProperty('groupName') ?></td>
                                 <?php if ($groupModel->getProperty('id') == $left_groupId): ?>
-                                    <td class="px-2 py-1 text-right text-[75%] text-red-600 dark:text-red-700"><i id="groupModified" class="fa-solid fa-circle<?php if (!Application::app()->session()->get('tests/upper/groupModified')) echo ' hidden' ?>"></i></td>
+                                    <td class="px-2 py-1 text-right text-[75%] text-red-600 dark:text-red-700"><i id="groupModified" class="fa-solid fa-circle<?php if (!session()->get('tests/upper/groupModified')) echo ' hidden' ?>"></i></td>
                                 <?php else: ?>
                                     <td></td>
                                 <?php endif; ?>
@@ -201,7 +199,7 @@ $settings_groups_stopOnResponseFail ? $display_groups_stopOnResponseFail = 'On' 
 
                     <input type="hidden" name="modelClassName" value="GroupModel">
                     <input type="hidden" name="id" value="<?= $left_groupId ?>">
-                    <input type="hidden" name="userId" value="<?= Application::app()->user()->id() ?>">
+                    <input type="hidden" name="userId" value="<?= user()->id() ?>">
                     <input type="hidden" name="formAction" value="">
                     <input type="hidden" name="left_selectedTab" value="<?= $left_selectedTab ?>">
                     <input type="hidden" name="upper_selectedTab" value="<?= $upper_selectedTab ?>">
@@ -346,11 +344,11 @@ $settings_groups_stopOnResponseFail ? $display_groups_stopOnResponseFail = 'On' 
                 <div id="lower-content" class="overflow-y-auto flex flex-col h-full">
 
                     <div id="tab1-content" class="tab-content<?= $lower_selectedTab_tab1 ?>">
-                        <?php Functions::includeFile(file: '/app/Views/components/testsSummary.php', variables: ['groupId' => $left_groupId]); ?>
+                        <?php includeFile(file: '/app/Views/components/testsSummary.php', variables: ['groupId' => $left_groupId]); ?>
                     </div>
 
                     <div id="tab2-content" class="tab-content<?= $lower_selectedTab_tab2 ?>">
-                        <?php Functions::includeFile(file: '/app/Views/components/testsResults.php', variables: ['groupId' => $left_groupId]); ?>
+                        <?php includeFile(file: '/app/Views/components/testsResults.php', variables: ['groupId' => $left_groupId]); ?>
                     </div>
 
                 </div>
@@ -364,11 +362,11 @@ $settings_groups_stopOnResponseFail ? $display_groups_stopOnResponseFail = 'On' 
 
 </div>
 
-<?php Functions::includeFile(file: '/app/Views/modals/groupCloneModal.php'); ?>
-<?php Functions::includeFile(file: '/app/Views/modals/groupCreateModal.php'); ?>
-<?php Functions::includeFile(file: '/app/Views/modals/groupDeleteModal.php'); ?>
-<?php Functions::includeFile(file: '/app/Views/modals/requestAddModal.php'); ?>
-<?php Functions::includeFile(file: '/app/Views/modals/testsRunModal.php'); ?>
+<?php includeFile(file: '/app/Views/modals/groupCloneModal.php'); ?>
+<?php includeFile(file: '/app/Views/modals/groupCreateModal.php'); ?>
+<?php includeFile(file: '/app/Views/modals/groupDeleteModal.php'); ?>
+<?php includeFile(file: '/app/Views/modals/requestAddModal.php'); ?>
+<?php includeFile(file: '/app/Views/modals/testsRunModal.php'); ?>
 
 <div id="modalOverlay" class="<?= $modalOverlayClass ?>"></div>
 
@@ -391,8 +389,8 @@ if (str_ends_with($settings_tests_leftSection, '%')) {
 }
 
 // Check if user has logged in
-if (Application::app()->session()->get('tests/layout/initUser')) {
-    Application::app()->session()->set("tests/layout/initUser", false);
+if (session()->get('tests/layout/initUser')) {
+    session()->set("tests/layout/initUser", false);
     echo "var initUser = true;\n";
 } else {
     echo "var initUser = false;\n";

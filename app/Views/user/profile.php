@@ -2,39 +2,37 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-
 $title = 'Profile';
 
 // Get values
-$idValue = Application::app()->model('ProfileModel')->getProperty('id');
-$firstnameValue = Application::app()->model('ProfileModel')->getProperty('firstname');
-$lastnameValue = Application::app()->model('ProfileModel')->getProperty('lastname');
-$emailValue = Application::app()->model('ProfileModel')->getProperty('email');
-$newPasswordValue = Application::app()->model('ProfileModel')->getProperty('newPassword');
-$confirmNewPasswordValue = Application::app()->model('ProfileModel')->getProperty('confirmNewPassword');
-$newPasswordDisplay = Application::app()->model('ProfileModel')->getProperty('newPasswordDisplay');
-$confirmNewPasswordDisplay = Application::app()->model('ProfileModel')->getProperty('confirmNewPasswordDisplay');
+$idValue = model('ProfileModel')->getProperty('id');
+$firstnameValue = model('ProfileModel')->getProperty('firstname');
+$lastnameValue = model('ProfileModel')->getProperty('lastname');
+$emailValue = model('ProfileModel')->getProperty('email');
+$newPasswordValue = model('ProfileModel')->getProperty('newPassword');
+$confirmNewPasswordValue = model('ProfileModel')->getProperty('confirmNewPassword');
+$newPasswordDisplay = model('ProfileModel')->getProperty('newPasswordDisplay');
+$confirmNewPasswordDisplay = model('ProfileModel')->getProperty('confirmNewPasswordDisplay');
 
 // Get errors
-$firstnameError = Application::app()->model('ProfileModel')->getError('firstname');
-$lastnameError = Application::app()->model('ProfileModel')->getError('lastname');
-$emailError = Application::app()->model('ProfileModel')->getError('email');
-$newPasswordError = Application::app()->model('ProfileModel')->getError('newPassword');
-$confirmNewPasswordError = Application::app()->model('ProfileModel')->getError('confirmNewPassword');
+$firstnameError = model('ProfileModel')->getError('firstname');
+$lastnameError = model('ProfileModel')->getError('lastname');
+$emailError = model('ProfileModel')->getError('email');
+$newPasswordError = model('ProfileModel')->getError('newPassword');
+$confirmNewPasswordError = model('ProfileModel')->getError('confirmNewPassword');
 
 // Get CSS class
-$firstnameClass = Application::app()->model('ProfileModel')->getInputClass('firstname');
-$lastnameClass = Application::app()->model('ProfileModel')->getInputClass('lastname');
-$emailClass = Application::app()->model('ProfileModel')->getInputClass('email');
-$newPasswordClass = Application::app()->model('ProfileModel')->getInputClass('newPassword');
-$confirmNewPasswordClass = Application::app()->model('ProfileModel')->getInputClass('confirmNewPassword');
+$firstnameClass = model('ProfileModel')->getInputClass('firstname');
+$lastnameClass = model('ProfileModel')->getInputClass('lastname');
+$emailClass = model('ProfileModel')->getInputClass('email');
+$newPasswordClass = model('ProfileModel')->getInputClass('newPassword');
+$confirmNewPasswordClass = model('ProfileModel')->getInputClass('confirmNewPassword');
 
 // Set CSS class on password visibility icons
-$newPasswordShowClass = Application::app()->model('ProfileModel')->getPasswordIconClass('newPasswordDisplay', 'show');
-$newPasswordHideClass = Application::app()->model('ProfileModel')->getPasswordIconClass('newPasswordDisplay', 'hide');
-$confirmNewPasswordShowClass = Application::app()->model('ProfileModel')->getPasswordIconClass('confirmNewPasswordDisplay', 'show');
-$confirmNewPasswordHideClass = Application::app()->model('ProfileModel')->getPasswordIconClass('confirmNewPasswordDisplay', 'hide');
+$newPasswordShowClass = model('ProfileModel')->getPasswordIconClass('newPasswordDisplay', 'show');
+$newPasswordHideClass = model('ProfileModel')->getPasswordIconClass('newPasswordDisplay', 'hide');
+$confirmNewPasswordShowClass = model('ProfileModel')->getPasswordIconClass('confirmNewPasswordDisplay', 'show');
+$confirmNewPasswordHideClass = model('ProfileModel')->getPasswordIconClass('confirmNewPasswordDisplay', 'hide');
 ?>
 <div class="flex h-full">
 

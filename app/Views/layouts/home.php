@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-use App\Core\Functions;
 use App\Models\SettingsModel;
 ?>
 <!doctype html>
@@ -27,9 +25,9 @@ use App\Models\SettingsModel;
 </head>
 <body class="body-text">
 
-<?php Functions::includeFile(file: '/app/Views/components/header.php'); ?>
-<?php Functions::includeFile(file: '/app/Views/components/footer.php'); ?>
-<?php if (Application::app()->session()->countFlash()) { Functions::includeFile(file: '/app/Views/components/flash.php'); } ?>
+<?php includeFile(file: '/app/Views/components/header.php'); ?>
+<?php includeFile(file: '/app/Views/components/footer.php'); ?>
+<?php if (session()->countFlash()) { includeFile(file: '/app/Views/components/flash.php'); } ?>
 
 <section id="content">
 {{content}}

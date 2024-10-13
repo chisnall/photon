@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
 use App\Functions\Output;
 use App\Models\UserModel;
 
@@ -91,7 +90,7 @@ use App\Models\UserModel;
     </div>
 </nav>
 <?php
-if (Application::app()->controller()->getProperty('page')['view'] != 'user/login') {
-    echo "<input type='hidden' id='ajaxToken' name='ajaxToken' value='" . Application::app()->session()->get('user/token') . "'>\n";
+if (controller()->getProperty('page')['view'] != 'user/login') {
+    echo "<input type='hidden' id='ajaxToken' name='ajaxToken' value='" . session()->get('user/token') . "'>\n";
 }
 ?>

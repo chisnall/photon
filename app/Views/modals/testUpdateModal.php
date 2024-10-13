@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-
-$formElements = Application::app()->model('TestModel')->formElements('update');
+$formElements = model('TestModel')->formElements('update');
 ?>
 
 <section id="testUpdateModal" class="<?= $formElements['modalClass'] ?>">
@@ -44,7 +42,7 @@ $formElements = Application::app()->model('TestModel')->formElements('update');
         </div>
 
         <input type="hidden" name="id" value="<?= $formElements['id'] ?>">
-        <input type="hidden" name="requestId" value="<?= Application::app()->session()->get('home/left/requestId') ?>">
+        <input type="hidden" name="requestId" value="<?= session()->get('home/left/requestId') ?>">
         <input type="hidden" name="modalName" value="testUpdateModal">
         <input type="hidden" name="modelClassName" value="TestModel">
         <input type="hidden" name="formAction" value="update">

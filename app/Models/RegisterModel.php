@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Core\Application;
 use App\Core\Request;
 use App\Database\SeedExampleCollection;
 use App\Exception\AppException;
@@ -79,7 +78,7 @@ class RegisterModel extends UserModel
             $sql = "SELECT id FROM users WHERE email = '" . $this->email . "'";
 
             try {
-                $userId = Application::app()->db()->query($sql)->fetchColumn();
+                $userId = db()->query($sql)->fetchColumn();
             } catch (Throwable $exception) {
                 throw new AppException(message: "Failed to register user.", previous: $exception);
             }
@@ -98,45 +97,45 @@ class RegisterModel extends UserModel
             UserModel::login($userId);
 
             // Set flash message
-            Application::app()->session()->setFlash('success', 'Your account has been registered.');
+            session()->setFlash('success', 'Your account has been registered.');
 
             // Redirect to home page
-            Application::app()->response()->redirect('/');
+            response()->redirect('/');
 
             // Alternative way that requires the user to activate
             // Need to change user to inactive when creating record above in insertRecord() method
 
             //// Save user's e-mail in the session so we can show the activate account link
             //// This would actually be implemented with an e-mail sent to the user in production system
-            //Application::app()->session()->set('user/registered', $this->email);
+            //session()->set('user/registered', $this->email);
 
             //// Redirect to registered page
-            //Application::app()->response()->redirect('/register/registered');
+            //response()->redirect('/register/registered');
         }
     }
 
     public function handleActivate(): void
     {
         // Get token
-        $token = Application::app()->controller()->data()['token'] ?? null;
+        $token = controller()->data()['token'] ?? null;
 
         // Check for token
         if ($token) {
             // Get user
             $sql = "SELECT id FROM users WHERE token = '$token'";
-            $userId = Application::app()->db()->query($sql)->fetchColumn();
+            $userId = db()->query($sql)->fetchColumn();
 
             if ( $userId) {
                 // Activate account
                 $updatedAt = date('Y-m-d H:i:s');
                 $sql = "UPDATE users SET status = 1, updated_at = '$updatedAt' WHERE id = $userId";
-                Application::app()->db()->query($sql);
+                db()->query($sql);
 
                 // Login the user
                 UserModel::login($userId);
 
                 // Redirect
-                Application::app()->response()->redirect('/register/activated');
+                response()->redirect('/register/activated');
             }
         }
     }

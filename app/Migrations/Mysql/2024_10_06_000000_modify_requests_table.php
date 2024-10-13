@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-
 return new class
 {
     public function up(): void
@@ -12,7 +10,7 @@ return new class
                 ADD COLUMN sort_order INT
                 ;";
 
-        Application::app()->db()->exec($sql);
+        db()->exec($sql);
     }
 
     public function down(): void
@@ -21,6 +19,6 @@ return new class
                 DROP COLUMN sort_order
                 ;";
 
-        Application::app()->db()->exec($sql);
+        db()->exec($sql);
     }
 };

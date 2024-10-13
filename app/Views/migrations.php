@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
 use App\Core\Database\Migrations;
 
 $title = 'Database Migrations';
 
 // Get pending migrations and update session
 $pendingMigrations = (new Migrations())->getPendingMigrations();
-Application::app()->session()->set('status/pendingMigrations', (bool)$pendingMigrations);
+session()->set('status/pendingMigrations', (bool)$pendingMigrations);
 ?>
 <h1 class="pb-4 text-3xl font-bold">Database Migrations</h1>
 

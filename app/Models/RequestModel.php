@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Core\Application;
 use App\Core\Model;
 use App\Core\Request;
 use App\Http\HttpClient;
@@ -241,7 +240,7 @@ class RequestModel extends Model
         $this->loadData($request->getBody(false));
 
         // Get additional post data that is not defined as properties
-        $postData = Application::app()->controller()->data();
+        $postData = controller()->data();
 
         // Delete - this does not require validation
         if ($this->formAction == 'delete') {
@@ -255,14 +254,14 @@ class RequestModel extends Model
             SettingsModel::deleteSetting("home/left/requestId");
 
             // Set flash with removal set to true, otherwise it will be shown again on page reload
-            Application::app()->session()->setFlash('info', 'Request has been deleted.', true);
+            session()->setFlash('info', 'Request has been deleted.', true);
 
             // Return now
             return;
         }
 
         // Save to session - request URL - the URL is processed below
-        Application::app()->session()->set('home/upper/requestUrl', $this->requestUrl);
+        session()->set('home/upper/requestUrl', $this->requestUrl);
 
         // For auth header value, remove CRLF and LF
         if ($this->requestAuthHeaderValue) {
@@ -282,7 +281,7 @@ class RequestModel extends Model
         $requestBodyFile = $_FILES['requestBodyFile'];
         if ($requestBodyFile['size'] > 0) {
             // Set uploaded body files directory
-            $uploadedBodyFilesDirectory = UPLOAD_PATH . '/' . Application::app()->user()->id();
+            $uploadedBodyFilesDirectory = UPLOAD_PATH . '/' . user()->id();
 
             // Set new file path
             $requestBodyFilePath = $uploadedBodyFilesDirectory . '/' . $requestBodyFile['name'];
@@ -354,7 +353,7 @@ class RequestModel extends Model
             // Need to obtain sort order field from the table - we cannot use a hidden field on the form
             // because the update to the table "sort_order" fields takes place without reloading the page
             $sql = "SELECT sort_order FROM requests WHERE id = " . $this->id;
-            $statement = Application::app()->db()->prepare($sql);
+            $statement = db()->prepare($sql);
             $statement->execute();
             $this->sortOrder = $statement->fetchObject()->sort_order;
         } else {
@@ -362,38 +361,38 @@ class RequestModel extends Model
 
             // Get the current max sort order value for this collection from the table and add 1
             $sql = "SELECT MAX(sort_order) as max_value FROM requests WHERE collection_id = " . $this->collectionId;
-            $statement = Application::app()->db()->prepare($sql);
+            $statement = db()->prepare($sql);
             $statement->execute();
             $this->sortOrder = $statement->fetchObject()->max_value + 1;
         }
 
         // Save to session - inputs
-        Application::app()->session()->set('home/upper/requestMethod', $this->requestMethod);
-        Application::app()->session()->set('home/upper/requestName', $this->requestName);
-        Application::app()->session()->set('home/upper/requestParamsInputs', $this->requestParamsInputs);
-        Application::app()->session()->set('home/upper/requestHeadersInputs', $this->requestHeadersInputs);
-        Application::app()->session()->set('home/upper/requestAuth', $this->requestAuth);
-        Application::app()->session()->set('home/upper/requestAuthBasicUsername', $this->requestAuthBasicUsername);
-        Application::app()->session()->set('home/upper/requestAuthBasicPassword', $this->requestAuthBasicPassword);
-        Application::app()->session()->set('home/upper/requestAuthTokenValue', $this->requestAuthTokenValue);
-        Application::app()->session()->set('home/upper/requestAuthHeaderName', $this->requestAuthHeaderName);
-        Application::app()->session()->set('home/upper/requestAuthHeaderValue', $this->requestAuthHeaderValue);
-        Application::app()->session()->set('home/upper/requestBody', $this->requestBody);
-        Application::app()->session()->set('home/upper/requestBodyTextValue', $this->requestBodyTextValue);
-        Application::app()->session()->set('home/upper/requestBodyTextType', $this->requestBodyTextType);
-        Application::app()->session()->set('home/upper/requestBodyFormInputs', $this->requestBodyFormInputs);
-        Application::app()->session()->set('home/upper/requestBodyFileExisting', $this->requestBodyFile);
-        Application::app()->session()->set('home/upper/requestVariablesInputs', $this->requestVariablesInputs);
+        session()->set('home/upper/requestMethod', $this->requestMethod);
+        session()->set('home/upper/requestName', $this->requestName);
+        session()->set('home/upper/requestParamsInputs', $this->requestParamsInputs);
+        session()->set('home/upper/requestHeadersInputs', $this->requestHeadersInputs);
+        session()->set('home/upper/requestAuth', $this->requestAuth);
+        session()->set('home/upper/requestAuthBasicUsername', $this->requestAuthBasicUsername);
+        session()->set('home/upper/requestAuthBasicPassword', $this->requestAuthBasicPassword);
+        session()->set('home/upper/requestAuthTokenValue', $this->requestAuthTokenValue);
+        session()->set('home/upper/requestAuthHeaderName', $this->requestAuthHeaderName);
+        session()->set('home/upper/requestAuthHeaderValue', $this->requestAuthHeaderValue);
+        session()->set('home/upper/requestBody', $this->requestBody);
+        session()->set('home/upper/requestBodyTextValue', $this->requestBodyTextValue);
+        session()->set('home/upper/requestBodyTextType', $this->requestBodyTextType);
+        session()->set('home/upper/requestBodyFormInputs', $this->requestBodyFormInputs);
+        session()->set('home/upper/requestBodyFileExisting', $this->requestBodyFile);
+        session()->set('home/upper/requestVariablesInputs', $this->requestVariablesInputs);
 
         // Save to session - tabs
-        Application::app()->session()->set('home/left/selectedTab', $postData['left_selectedTab']);
-        Application::app()->session()->set('home/upper/selectedTab', $postData['upper_selectedTab']);
-        Application::app()->session()->set('home/lower/selectedTab', $postData['lower_selectedTab']);
+        session()->set('home/left/selectedTab', $postData['left_selectedTab']);
+        session()->set('home/upper/selectedTab', $postData['upper_selectedTab']);
+        session()->set('home/lower/selectedTab', $postData['lower_selectedTab']);
 
         // Validate request
         if ($this->validate()) {
             // Remove request error
-            Application::app()->session()->remove('home/upper/requestError');
+            session()->remove('home/upper/requestError');
 
             // Send
             if ($this->formAction == 'send') {
@@ -419,21 +418,21 @@ class RequestModel extends Model
                     $this->updateRecord();
 
                     // Set flash with removal set to true, otherwise it will be shown again on page reload
-                    Application::app()->session()->setFlash('info', 'Request has been updated.', true);
+                    session()->setFlash('info', 'Request has been updated.', true);
                 } else {
                     // Insert record
                     $this->insertRecord();
 
                     // Register session variables
-                    Application::app()->session()->set('home/left/requestId', $this->id);
+                    session()->set('home/left/requestId', $this->id);
 
                     // Set flash with removal set to true, otherwise it will be shown again on page reload
-                    Application::app()->session()->setFlash('info', 'Request has been created.', true);
+                    session()->setFlash('info', 'Request has been created.', true);
                 }
 
                 // Register session variables
-                Application::app()->session()->set('home/left/requestName', $this->requestName);
-                Application::app()->session()->set('home/upper/requestModified', false);
+                session()->set('home/left/requestName', $this->requestName);
+                session()->set('home/upper/requestModified', false);
             }
 
             // Clone
@@ -456,29 +455,29 @@ class RequestModel extends Model
                 }
 
                 // Register session variables
-                Application::app()->session()->set('home/left/requestId', $this->id);
-                Application::app()->session()->set('home/left/requestName', $this->requestName);
-                Application::app()->session()->set('home/upper/requestModified', false);
+                session()->set('home/left/requestId', $this->id);
+                session()->set('home/left/requestName', $this->requestName);
+                session()->set('home/upper/requestModified', false);
 
                 // Remove the response from the session
-                Application::app()->session()->remove('response');
+                session()->remove('response');
 
                 // Update settings
                 SettingsModel::updateSetting('home/left/requestId', $this->id);
 
                 // Set flash with removal set to true, otherwise it will be shown again on page reload
-                Application::app()->session()->setFlash('info', 'Request has been cloned.', true);
+                session()->setFlash('info', 'Request has been cloned.', true);
             }
         } else {
             // Register session variables
-            if ($this->id) Application::app()->session()->set('home/upper/requestModified', true);
-            Application::app()->session()->set('home/upper/requestError', $this->displayError());
+            if ($this->id) session()->set('home/upper/requestModified', true);
+            session()->set('home/upper/requestError', $this->displayError());
 
             // Remove the response from the session
-            Application::app()->session()->remove('response');
+            session()->remove('response');
 
             // Set flash with removal set to true, otherwise it will be shown again on page reload
-            Application::app()->session()->setFlash('warning', 'Error: ' . $this->displayError(), true);
+            session()->setFlash('warning', 'Error: ' . $this->displayError(), true);
         }
     }
 
@@ -566,7 +565,7 @@ class RequestModel extends Model
             }
 
         // Set session
-        Application::app()->session()->set('response/testsResults', $this->testsResults);
+        session()->set('response/testsResults', $this->testsResults);
         }
     }
 
@@ -582,9 +581,9 @@ class RequestModel extends Model
         $collectionUserId = $collectionData->getProperty('userId');
 
         // Confirm user ID matches logged in user ID
-        if ($collectionUserId == Application::app()->user()->id()) {
+        if ($collectionUserId == user()->id()) {
             // Remove response session data
-            Application::app()->session()->remove('response');
+            session()->remove('response');
 
             // Confirm body file is present
             if ($requestData->getProperty('requestBodyFile') && !file_exists($requestData->getProperty('requestBodyFile'))) {
@@ -592,31 +591,31 @@ class RequestModel extends Model
             }
 
             // Register session variables
-            Application::app()->session()->set('home/left/requestId', $requestId);
-            Application::app()->session()->set('home/left/requestName', $requestName);
-            Application::app()->session()->set('home/upper/requestMethod', $requestData->getProperty('requestMethod'));
-            Application::app()->session()->set('home/upper/requestUrl', $requestData->getProperty('requestUrl'));
-            Application::app()->session()->set('home/upper/requestParamsInputs', $requestData->getProperty('requestParamsInputs'));
-            Application::app()->session()->set('home/upper/requestHeadersInputs', $requestData->getProperty('requestHeadersInputs'));
-            Application::app()->session()->set('home/upper/requestAuth', $requestData->getProperty('requestAuth'));
-            Application::app()->session()->set('home/upper/requestAuthBasicUsername', $requestData->getProperty('requestAuthBasicUsername'));
-            Application::app()->session()->set('home/upper/requestAuthBasicPassword', $requestData->getProperty('requestAuthBasicPassword'));
-            Application::app()->session()->set('home/upper/requestAuthTokenValue', $requestData->getProperty('requestAuthTokenValue'));
-            Application::app()->session()->set('home/upper/requestAuthHeaderName', $requestData->getProperty('requestAuthHeaderName'));
-            Application::app()->session()->set('home/upper/requestAuthHeaderValue', $requestData->getProperty('requestAuthHeaderValue'));
-            Application::app()->session()->set('home/upper/requestBody', $requestData->getProperty('requestBody'));
-            Application::app()->session()->set('home/upper/requestBodyTextValue', $requestData->getProperty('requestBodyTextValue'));
-            Application::app()->session()->set('home/upper/requestBodyTextType', $requestData->getProperty('requestBodyTextType'));
-            Application::app()->session()->set('home/upper/requestBodyFormInputs', $requestData->getProperty('requestBodyFormInputs'));
-            Application::app()->session()->set('home/upper/requestBodyFileExisting', $requestData->getProperty('requestBodyFile'));
-            Application::app()->session()->set('home/upper/requestVariablesInputs', $requestData->getProperty('requestVariablesInputs'));
-            Application::app()->session()->set('home/upper/requestModified', false);
+            session()->set('home/left/requestId', $requestId);
+            session()->set('home/left/requestName', $requestName);
+            session()->set('home/upper/requestMethod', $requestData->getProperty('requestMethod'));
+            session()->set('home/upper/requestUrl', $requestData->getProperty('requestUrl'));
+            session()->set('home/upper/requestParamsInputs', $requestData->getProperty('requestParamsInputs'));
+            session()->set('home/upper/requestHeadersInputs', $requestData->getProperty('requestHeadersInputs'));
+            session()->set('home/upper/requestAuth', $requestData->getProperty('requestAuth'));
+            session()->set('home/upper/requestAuthBasicUsername', $requestData->getProperty('requestAuthBasicUsername'));
+            session()->set('home/upper/requestAuthBasicPassword', $requestData->getProperty('requestAuthBasicPassword'));
+            session()->set('home/upper/requestAuthTokenValue', $requestData->getProperty('requestAuthTokenValue'));
+            session()->set('home/upper/requestAuthHeaderName', $requestData->getProperty('requestAuthHeaderName'));
+            session()->set('home/upper/requestAuthHeaderValue', $requestData->getProperty('requestAuthHeaderValue'));
+            session()->set('home/upper/requestBody', $requestData->getProperty('requestBody'));
+            session()->set('home/upper/requestBodyTextValue', $requestData->getProperty('requestBodyTextValue'));
+            session()->set('home/upper/requestBodyTextType', $requestData->getProperty('requestBodyTextType'));
+            session()->set('home/upper/requestBodyFormInputs', $requestData->getProperty('requestBodyFormInputs'));
+            session()->set('home/upper/requestBodyFileExisting', $requestData->getProperty('requestBodyFile'));
+            session()->set('home/upper/requestVariablesInputs', $requestData->getProperty('requestVariablesInputs'));
+            session()->set('home/upper/requestModified', false);
 
             // Remove request error
-            Application::app()->session()->remove('home/upper/requestError');
+            session()->remove('home/upper/requestError');
 
             // Only register the request name if it differs from the request URL
-            $requestData->getProperty('requestName') != $requestData->getProperty('requestUrl') ? Application::app()->session()->set('home/upper/requestName', $requestData->getProperty('requestName')): Application::app()->session()->set('home/upper/requestName', null);
+            $requestData->getProperty('requestName') != $requestData->getProperty('requestUrl') ? session()->set('home/upper/requestName', $requestData->getProperty('requestName')): session()->set('home/upper/requestName', null);
 
             return true;
         }
@@ -627,32 +626,32 @@ class RequestModel extends Model
     public static function clearSession(): bool
     {
         // Remove response session data
-        Application::app()->session()->remove('response');
+        session()->remove('response');
 
         // Remove session variables
-        Application::app()->session()->remove('home/left/requestId');
-        Application::app()->session()->remove('home/left/requestName');
-        Application::app()->session()->remove('home/upper/requestMethod');
-        Application::app()->session()->remove('home/upper/requestUrl');
-        Application::app()->session()->remove('home/upper/requestName');
-        Application::app()->session()->remove('home/upper/requestParamsInputs');
-        Application::app()->session()->remove('home/upper/requestHeadersInputs');
-        Application::app()->session()->remove('home/upper/requestAuth');
-        Application::app()->session()->remove('home/upper/requestAuthBasicUsername');
-        Application::app()->session()->remove('home/upper/requestAuthBasicPassword');
-        Application::app()->session()->remove('home/upper/requestAuthTokenValue');
-        Application::app()->session()->remove('home/upper/requestAuthHeaderName');
-        Application::app()->session()->remove('home/upper/requestAuthHeaderValue');
-        Application::app()->session()->remove('home/upper/requestBody');
-        Application::app()->session()->remove('home/upper/requestBodyTextValue');
-        Application::app()->session()->remove('home/upper/requestBodyTextType');
-        Application::app()->session()->remove('home/upper/requestBodyFormInputs');
-        Application::app()->session()->remove('home/upper/requestBodyFileExisting');
-        Application::app()->session()->remove('home/upper/requestVariablesInputs');
-        Application::app()->session()->remove('home/upper/requestError');
+        session()->remove('home/left/requestId');
+        session()->remove('home/left/requestName');
+        session()->remove('home/upper/requestMethod');
+        session()->remove('home/upper/requestUrl');
+        session()->remove('home/upper/requestName');
+        session()->remove('home/upper/requestParamsInputs');
+        session()->remove('home/upper/requestHeadersInputs');
+        session()->remove('home/upper/requestAuth');
+        session()->remove('home/upper/requestAuthBasicUsername');
+        session()->remove('home/upper/requestAuthBasicPassword');
+        session()->remove('home/upper/requestAuthTokenValue');
+        session()->remove('home/upper/requestAuthHeaderName');
+        session()->remove('home/upper/requestAuthHeaderValue');
+        session()->remove('home/upper/requestBody');
+        session()->remove('home/upper/requestBodyTextValue');
+        session()->remove('home/upper/requestBodyTextType');
+        session()->remove('home/upper/requestBodyFormInputs');
+        session()->remove('home/upper/requestBodyFileExisting');
+        session()->remove('home/upper/requestVariablesInputs');
+        session()->remove('home/upper/requestError');
 
         // Register session variables
-        Application::app()->session()->set('home/upper/requestModified', false);
+        session()->set('home/upper/requestModified', false);
 
         return true;
     }

@@ -6,7 +6,6 @@ namespace App\Database;
 
 use App\Core\Database\Connection;
 use App\Core\Database\Database;
-use App\Core\Functions;
 
 class MysqlDatabase extends Database
 {
@@ -14,11 +13,11 @@ class MysqlDatabase extends Database
     {
         // Get connection settings
         $dbDriver = "mysql";
-        $dbHost = Functions::getConfig("database/$dbDriver/host");
-        $dbPort = Functions::getConfig("database/$dbDriver/port", true);
-        $dbSchema = Functions::getConfig("database/$dbDriver/schema");
-        $dbUsername = Functions::getConfig("database/$dbDriver/username");
-        $dbPassword = Functions::getConfig("database/$dbDriver/password");
+        $dbHost = getConfig("database/$dbDriver/host");
+        $dbPort = getConfig("database/$dbDriver/port", true);
+        $dbSchema = getConfig("database/$dbDriver/schema");
+        $dbUsername = getConfig("database/$dbDriver/username");
+        $dbPassword = getConfig("database/$dbDriver/password");
 
         // Also specifying the charset based on this recommendation:
         // https://phpdelusions.net/pdo

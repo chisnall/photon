@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
 use App\Functions\Data;
 
 // Get requests data for this user
-$sql = "SELECT requests.id, requests.id as request_id, requests.request_name, collections.id as collection_id, collections.collection_name FROM requests JOIN collections on requests.collection_id = collections.id WHERE collections.user_id = " . Application::app()->user()->id() . " ORDER BY collections.collection_name ASC, requests.request_name ASC, requests.request_method, requests.created_at";
+$sql = "SELECT requests.id, requests.id as request_id, requests.request_name, collections.id as collection_id, collections.collection_name FROM requests JOIN collections on requests.collection_id = collections.id WHERE collections.user_id = " . user()->id() . " ORDER BY collections.collection_name ASC, requests.request_name ASC, requests.request_method, requests.created_at";
 $requestsData = Data::records($sql);
 $requestsCount = count($requestsData);
 
 // Get existing requests
-$groupRequests = Application::app()->session()->get('tests/upper/groupRequests');
+$groupRequests = session()->get('tests/upper/groupRequests');
 
 // Remove existing requests from available requests
 if ($groupRequests) {

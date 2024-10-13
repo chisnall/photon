@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-use App\Core\Functions;
 use App\Functions\Css;
 use App\Functions\Json;
 use App\Functions\Output;
@@ -14,14 +12,14 @@ use App\Models\TestModel;
 use App\Models\UserModel;
 
 // Get collections data and selected collection
-$collectionsData = CollectionModel::getAllRecords(match: ['userId' => Application::app()->user()->id()], sort: ['collectionName' => 'ASC']);
-$left_collectionId = Application::app()->session()->get('home/left/collectionId');
-$left_collectionName = Application::app()->session()->get('home/left/collectionName');
+$collectionsData = CollectionModel::getAllRecords(match: ['userId' => user()->id()], sort: ['collectionName' => 'ASC']);
+$left_collectionId = session()->get('home/left/collectionId');
+$left_collectionName = session()->get('home/left/collectionName');
 
 // Get requests data and selected request
 $left_collectionId ? $requestsData = RequestModel::getAllRecords(match: ['collectionId' => $left_collectionId], sort: ['sortOrder' => 'ASC']) : $requestsData = [];
-$left_requestId = Application::app()->session()->get('home/left/requestId');
-$left_requestName = Application::app()->session()->get('home/left/requestName');
+$left_requestId = session()->get('home/left/requestId');
+$left_requestName = session()->get('home/left/requestName');
 
 // Get collection ID of request - this may be different than the current selected collection
 $left_requestId ? $left_requestCollectionId = RequestModel::getSingleRecord(['id' => $left_requestId])->getProperty('collectionId') : $left_requestCollectionId = null;
@@ -31,40 +29,40 @@ $left_requestId ? $testsData = TestModel::getAllRecords(match: ['requestId' => $
 
 // Get input values from session
 // ?: covers both null and empty "" values
-$requestMethod = Application::app()->session()->get('home/upper/requestMethod') ?: "get";
-$requestUrl = Application::app()->session()->get('home/upper/requestUrl');
-$requestName = Application::app()->session()->get('home/upper/requestName');
-$requestParamsInputs = Application::app()->session()->get('home/upper/requestParamsInputs') ?? [];
-$requestHeadersInputs = Application::app()->session()->get('home/upper/requestHeadersInputs') ?? [];
-$requestAuth = Application::app()->session()->get('home/upper/requestAuth') ?: "none";
-$requestAuthBasicUsername = Application::app()->session()->get('home/upper/requestAuthBasicUsername') ?: null;
-$requestAuthBasicPassword = Application::app()->session()->get('home/upper/requestAuthBasicPassword') ?: null;
-$requestAuthTokenValue = Application::app()->session()->get('home/upper/requestAuthTokenValue') ?: null;
-$requestAuthHeaderName = Application::app()->session()->get('home/upper/requestAuthHeaderName') ?: null;
-$requestAuthHeaderValue = Application::app()->session()->get('home/upper/requestAuthHeaderValue') ?: null;
-$requestBody = Application::app()->session()->get('home/upper/requestBody') ?: "none";
-$requestBodyTextValue = Application::app()->session()->get('home/upper/requestBodyTextValue') ?: null;
-$requestBodyTextType = Application::app()->session()->get('home/upper/requestBodyTextType') ?: "json";
-$requestBodyFormInputs = Application::app()->session()->get('home/upper/requestBodyFormInputs') ?? [];
-$requestBodyFileExisting = Application::app()->session()->get('home/upper/requestBodyFileExisting');
-$requestVariablesInputs = Application::app()->session()->get('home/upper/requestVariablesInputs') ?? [];
+$requestMethod = session()->get('home/upper/requestMethod') ?: "get";
+$requestUrl = session()->get('home/upper/requestUrl');
+$requestName = session()->get('home/upper/requestName');
+$requestParamsInputs = session()->get('home/upper/requestParamsInputs') ?? [];
+$requestHeadersInputs = session()->get('home/upper/requestHeadersInputs') ?? [];
+$requestAuth = session()->get('home/upper/requestAuth') ?: "none";
+$requestAuthBasicUsername = session()->get('home/upper/requestAuthBasicUsername') ?: null;
+$requestAuthBasicPassword = session()->get('home/upper/requestAuthBasicPassword') ?: null;
+$requestAuthTokenValue = session()->get('home/upper/requestAuthTokenValue') ?: null;
+$requestAuthHeaderName = session()->get('home/upper/requestAuthHeaderName') ?: null;
+$requestAuthHeaderValue = session()->get('home/upper/requestAuthHeaderValue') ?: null;
+$requestBody = session()->get('home/upper/requestBody') ?: "none";
+$requestBodyTextValue = session()->get('home/upper/requestBodyTextValue') ?: null;
+$requestBodyTextType = session()->get('home/upper/requestBodyTextType') ?: "json";
+$requestBodyFormInputs = session()->get('home/upper/requestBodyFormInputs') ?? [];
+$requestBodyFileExisting = session()->get('home/upper/requestBodyFileExisting');
+$requestVariablesInputs = session()->get('home/upper/requestVariablesInputs') ?? [];
 
 // Set title
 $requestUrl !== null ? $title = strtoupper($requestMethod) . ' ' . $requestUrl : $title = 'Home';
 
 // Get open modal
-$modalOpenName = Application::app()->request()->getBody()['modalName'] ?? null;
+$modalOpenName = request()->getBody()['modalName'] ?? null;
 
 // Get overlay class
 $modalOverlayClass = Css::getOverlayClass();
 
 // Get form error
-$requestError = Application::app()->session()->get('home/upper/requestError');
+$requestError = session()->get('home/upper/requestError');
 
 // Get tabs from session
-$left_selectedTab = Application::app()->session()->get('home/left/selectedTab') ?? "tab1";
-$upper_selectedTab = Application::app()->session()->get('home/upper/selectedTab') ?? "tab1";
-$lower_selectedTab = Application::app()->session()->get('home/lower/selectedTab') ?? "tab1";
+$left_selectedTab = session()->get('home/left/selectedTab') ?? "tab1";
+$upper_selectedTab = session()->get('home/upper/selectedTab') ?? "tab1";
+$lower_selectedTab = session()->get('home/lower/selectedTab') ?? "tab1";
 
 // Set tabs CSS classes
 $left_selectedTab == 'tab1' ? $left_selectedTab_tab1 = ' current' : $left_selectedTab_tab1 = null;
@@ -99,10 +97,10 @@ $requestBody == 'file' ? $upper_selectedTab_tab4_file = ' current' : $upper_sele
 $requestBody == 'text' ? $requestBodyClass = null : $requestBodyClass = 'hidden ';
 
 // Get settings
-$settings_home_leftSection = Application::app()->session()->get('home/layout/leftSection') ?? SettingsModel::getSetting('home/layout/leftSection');
-$settings_home_rightSection = Application::app()->session()->get('home/layout/rightSection') ?? SettingsModel::getSetting('home/layout/rightSection');
-$settings_home_topSection = Application::app()->session()->get('home/layout/topSection') ?? SettingsModel::getSetting('home/layout/topSection');
-$settings_home_bottomSection = Application::app()->session()->get('home/layout/bottomSection') ?? SettingsModel::getSetting('home/layout/bottomSection');
+$settings_home_leftSection = session()->get('home/layout/leftSection') ?? SettingsModel::getSetting('home/layout/leftSection');
+$settings_home_rightSection = session()->get('home/layout/rightSection') ?? SettingsModel::getSetting('home/layout/rightSection');
+$settings_home_topSection = session()->get('home/layout/topSection') ?? SettingsModel::getSetting('home/layout/topSection');
+$settings_home_bottomSection = session()->get('home/layout/bottomSection') ?? SettingsModel::getSetting('home/layout/bottomSection');
 $settings_home_hidePasswords = SettingsModel::getSetting('home/hidePasswords');
 //---
 $settings_http_defaultScheme = SettingsModel::getSetting('http/defaultScheme');
@@ -139,11 +137,11 @@ $settings_json_quoteKeys = json_encode($settings_json_quoteKeys);
 // Get variables
 if ($left_collectionId) {
     // Get global variables
-    $settings_variables_showGlobalsHome ? $globalVariablesData = SettingsModel::variables(Application::app()->user()->id()) : $globalVariablesData = [];
+    $settings_variables_showGlobalsHome ? $globalVariablesData = SettingsModel::variables(user()->id()) : $globalVariablesData = [];
 
     // Get collection and request variables
     $collectionVariablesData = CollectionModel::variables($left_collectionId);
-    $requestVariablesData = Application::app()->session()->get("variables/$left_collectionId") ?? [];
+    $requestVariablesData = session()->get("variables/$left_collectionId") ?? [];
 
     // Merge arrays - give priority to the request variables where keys clash, followed by collection variables
     $variablesData = array_merge($globalVariablesData, $collectionVariablesData, $requestVariablesData);
@@ -203,7 +201,7 @@ $httpBodyTextTypeList = [
 ];
 
 // Get uploaded body files
-$uploadedBodyFilesDirectory = UPLOAD_PATH . '/' . Application::app()->user()->id();
+$uploadedBodyFilesDirectory = UPLOAD_PATH . '/' . user()->id();
 if (file_exists($uploadedBodyFilesDirectory)) {
     $uploadedBodyFiles = array_diff(scandir($uploadedBodyFilesDirectory), ['.', '..']);
     natcasesort($uploadedBodyFiles);
@@ -215,28 +213,28 @@ if (file_exists($uploadedBodyFilesDirectory)) {
 $clipboardTitle = "No data";
 
 // Get response data
-$responseRequestTime = Application::app()->session()->get('response/responseRequestTime');
-$responseValid = Application::app()->session()->get('response/responseValid');
-$responseException = Application::app()->session()->get('response/responseException');
-$responseExceptionClass = Application::app()->session()->get('response/responseExceptionClass');
-$responseScheme = Application::app()->session()->get('response/responseScheme');
-$responseSchemeIcon = Application::app()->session()->get('response/responseSchemeIcon');
-$responseCode = Application::app()->session()->get('response/responseCode');
-$responseType = Application::app()->session()->get('response/responseType');
-$responseStatusLine = Application::app()->session()->get('response/responseStatusLine');
-$responseStatusProtocol = Application::app()->session()->get('response/responseStatusProtocol');
-$responseStatusCode = Application::app()->session()->get('response/responseStatusCode');
-$responseStatusText = Application::app()->session()->get('response/responseStatusText');
-$responseHeaders = Application::app()->session()->get('response/responseHeaders');
-$responseBodyContent = Application::app()->session()->get('response/responseBodyContent');
-$responseBodyDecoded = Application::app()->session()->get('response/responseBodyDecoded');
-$responseBodySize = Application::app()->session()->get('response/responseBodySize');
-$responseBodySizeFormatted = Application::app()->session()->get('response/responseBodySizeFormatted');
-$responseBodyValid = Application::app()->session()->get('response/responseBodyValid');
-$responseTime = Application::app()->session()->get('response/responseTime');
-$responseTimeFormatted = Application::app()->session()->get('response/responseTimeFormatted');
-$responseErrorMessage = Application::app()->session()->get('response/responseErrorMessage');
-$testsResults = Application::app()->session()->get('response/testsResults');
+$responseRequestTime = session()->get('response/responseRequestTime');
+$responseValid = session()->get('response/responseValid');
+$responseException = session()->get('response/responseException');
+$responseExceptionClass = session()->get('response/responseExceptionClass');
+$responseScheme = session()->get('response/responseScheme');
+$responseSchemeIcon = session()->get('response/responseSchemeIcon');
+$responseCode = session()->get('response/responseCode');
+$responseType = session()->get('response/responseType');
+$responseStatusLine = session()->get('response/responseStatusLine');
+$responseStatusProtocol = session()->get('response/responseStatusProtocol');
+$responseStatusCode = session()->get('response/responseStatusCode');
+$responseStatusText = session()->get('response/responseStatusText');
+$responseHeaders = session()->get('response/responseHeaders');
+$responseBodyContent = session()->get('response/responseBodyContent');
+$responseBodyDecoded = session()->get('response/responseBodyDecoded');
+$responseBodySize = session()->get('response/responseBodySize');
+$responseBodySizeFormatted = session()->get('response/responseBodySizeFormatted');
+$responseBodyValid = session()->get('response/responseBodyValid');
+$responseTime = session()->get('response/responseTime');
+$responseTimeFormatted = session()->get('response/responseTimeFormatted');
+$responseErrorMessage = session()->get('response/responseErrorMessage');
+$testsResults = session()->get('response/testsResults');
 
 // Init variables
 $responseRequestAge = null;
@@ -376,7 +374,7 @@ if ($responseValid) {
                                     <td class="pl-1 pr-1 py-1 text-xs font-semibold dropdown-method-<?= $requestModel->getProperty('requestMethod') ?>"><?= $requestModel->requestMethodDisplay() ?></td>
                                     <td class="w-full px-1 py-1"><?= $requestModel->getProperty('requestName') ?></td>
                                     <?php if ($requestModel->getProperty('id') == $left_requestId): ?>
-                                        <td class="px-2 py-1 text-right text-[75%] text-red-600 dark:text-red-700"><i id="requestModified" class="fa-solid fa-circle<?php if (!Application::app()->session()->get('home/upper/requestModified')) echo ' hidden' ?>"></i></td>
+                                        <td class="px-2 py-1 text-right text-[75%] text-red-600 dark:text-red-700"><i id="requestModified" class="fa-solid fa-circle<?php if (!session()->get('home/upper/requestModified')) echo ' hidden' ?>"></i></td>
                                     <?php else: ?>
                                         <td></td>
                                     <?php endif; ?>
@@ -963,7 +961,7 @@ if ($responseValid) {
                                         $requestVariableName = $requestVariablesInput['name'];
                                         $requestVariableEnabled = $requestVariablesInput['enabled'];
                                         $requestVariableEnabled == 'on' ? $requestVariableEnabledCheckbox = ' checked' : $requestVariableEnabledCheckbox = null;
-                                        $requestVariableValue = Application::app()->session()->get("variables/$left_requestCollectionId/$requestVariableName")['value'] ?? '';
+                                        $requestVariableValue = session()->get("variables/$left_requestCollectionId/$requestVariableName")['value'] ?? '';
                                         $requestVariableKey = htmlspecialchars($requestVariableKey);
                                         $requestVariableName = htmlspecialchars($requestVariableName);
                                         $requestVariableValue = htmlspecialchars($requestVariableValue);
@@ -1469,13 +1467,13 @@ if ($responseValid) {
 <textarea id="lower-tab6-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab6-clipboard"></textarea>
 <textarea id="lower-tab7-clipboard" class="hidden overflow-hidden w-0 h-0 p-0 border-0 resize-none" name="lower-tab7-clipboard"></textarea>
 
-<?php Functions::includeFile(file: '/app/Views/modals/collectionCreateModal.php'); ?>
-<?php Functions::includeFile(file: '/app/Views/modals/collectionUpdateModal.php'); ?>
-<?php Functions::includeFile(file: '/app/Views/modals/collectionDeleteModal.php'); ?>
-<?php Functions::includeFile(file: '/app/Views/modals/testCreateModal.php'); ?>
-<?php Functions::includeFile(file: '/app/Views/modals/testUpdateModal.php'); ?>
-<?php Functions::includeFile(file: '/app/Views/modals/testDeleteModal.php'); ?>
-<?php Functions::includeFile(file: '/app/Views/modals/variableViewModal.php'); ?>
+<?php includeFile(file: '/app/Views/modals/collectionCreateModal.php'); ?>
+<?php includeFile(file: '/app/Views/modals/collectionUpdateModal.php'); ?>
+<?php includeFile(file: '/app/Views/modals/collectionDeleteModal.php'); ?>
+<?php includeFile(file: '/app/Views/modals/testCreateModal.php'); ?>
+<?php includeFile(file: '/app/Views/modals/testUpdateModal.php'); ?>
+<?php includeFile(file: '/app/Views/modals/testDeleteModal.php'); ?>
+<?php includeFile(file: '/app/Views/modals/variableViewModal.php'); ?>
 
 <div id="modalOverlay" class="<?= $modalOverlayClass ?>"></div>
 
@@ -1501,8 +1499,8 @@ if (str_ends_with($settings_home_leftSection, '%')) {
 }
 
 // Check if user has logged in
-if (Application::app()->session()->get('home/layout/initUser')) {
-    Application::app()->session()->set("home/layout/initUser", false);
+if (session()->get('home/layout/initUser')) {
+    session()->set("home/layout/initUser", false);
     echo "var initUser = true;\n";
 } else {
     echo "var initUser = false;\n";

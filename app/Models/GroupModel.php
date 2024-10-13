@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Core\Application;
 use App\Core\Model;
 use App\Core\Request;
 use App\Traits\FormTrait;
@@ -127,7 +126,7 @@ class GroupModel extends Model
         $this->loadData($request->getBody());
 
         // Get additional post data that is not defined as properties
-        $postData = Application::app()->controller()->data();
+        $postData = controller()->data();
 
         // Save
         if ($this->formAction == 'save') {
@@ -158,13 +157,13 @@ class GroupModel extends Model
             $this->groupRequests = $groupRequestsInputs;
 
             // Save to session - inputs
-            Application::app()->session()->set('tests/upper/groupName', $this->groupName);
-            Application::app()->session()->set('tests/upper/groupRequests', $this->groupRequests);
+            session()->set('tests/upper/groupName', $this->groupName);
+            session()->set('tests/upper/groupRequests', $this->groupRequests);
 
             // Save to session - tabs
-            Application::app()->session()->set('tests/left/selectedTab', $postData['left_selectedTab']);
-            Application::app()->session()->set('tests/upper/selectedTab', $postData['upper_selectedTab']);
-            Application::app()->session()->set('tests/lower/selectedTab', $postData['lower_selectedTab']);
+            session()->set('tests/left/selectedTab', $postData['left_selectedTab']);
+            session()->set('tests/upper/selectedTab', $postData['upper_selectedTab']);
+            session()->set('tests/lower/selectedTab', $postData['lower_selectedTab']);
         }
 
         // Clone
@@ -180,7 +179,7 @@ class GroupModel extends Model
         // Add requests
         if ($this->formAction == 'addRequests') {
             // Get existing requests
-            $groupRequests = Application::app()->session()->get('tests/upper/groupRequests');
+            $groupRequests = session()->get('tests/upper/groupRequests');
 
             // Process request IDs
             if ($this->groupRequestsAdd) {
@@ -204,7 +203,7 @@ class GroupModel extends Model
                 self::handleSession($this->id);
 
                 // Set flash message
-                Application::app()->session()->setFlash('info', 'Group has been updated.');
+                session()->setFlash('info', 'Group has been updated.');
             }
 
             if (($this->formAction == 'create' || $this->formAction == 'clone') && $this->insertRecord()) {
@@ -215,7 +214,7 @@ class GroupModel extends Model
                 SettingsModel::updateSetting('tests/left/groupId', $this->id);
 
                 // Set flash message
-                Application::app()->session()->setFlash('info', 'Group has been ' . $this->formAction . 'd.');
+                session()->setFlash('info', 'Group has been ' . $this->formAction . 'd.');
             }
 
             if ($this->formAction == 'addRequests') {
@@ -223,14 +222,14 @@ class GroupModel extends Model
                 // Only the session is updated
 
                 // Register session variables
-                Application::app()->session()->set('tests/upper/groupRequests', $this->groupRequests);
-                Application::app()->session()->set('tests/upper/groupModified', true);
+                session()->set('tests/upper/groupRequests', $this->groupRequests);
+                session()->set('tests/upper/groupModified', true);
 
                 // Set flash message
                 if (count($this->groupRequestsAdd) > 1) {
-                    Application::app()->session()->setFlash('info', 'Requests have been added.');
+                    session()->setFlash('info', 'Requests have been added.');
                 } else {
-                    Application::app()->session()->setFlash('info', 'Request has been added.');
+                    session()->setFlash('info', 'Request has been added.');
                 }
             }
 
@@ -248,19 +247,19 @@ class GroupModel extends Model
                 SettingsModel::deleteSetting("tests/left/groupId");
 
                 // Set flash with removal set to true, otherwise it will be shown again on page reload
-                Application::app()->session()->setFlash('info', 'Group has been deleted.', true);
+                session()->setFlash('info', 'Group has been deleted.', true);
             }
 
             // Redirect to tests page
-            Application::app()->response()->redirect('/tests');
+            response()->redirect('/tests');
         } else {
             if ($this->formAction == 'save') {
                 // Register session variables
-                Application::app()->session()->set('tests/upper/groupModified', true);
-                Application::app()->session()->set('tests/upper/groupError', $this->displayError());
+                session()->set('tests/upper/groupModified', true);
+                session()->set('tests/upper/groupError', $this->displayError());
 
                 // Set flash with removal set to true, otherwise it will be shown again on page reload
-                Application::app()->session()->setFlash('warning', 'Error: ' . $this->displayError(), true);
+                session()->setFlash('warning', 'Error: ' . $this->displayError(), true);
             }
         }
     }
@@ -273,16 +272,16 @@ class GroupModel extends Model
         $groupName = $groupData->getProperty('groupName');
 
         // Confirm user ID matches logged in user ID
-        if ($groupUserId == Application::app()->user()->id()) {
+        if ($groupUserId == user()->id()) {
             // Register session variables
-            Application::app()->session()->set('tests/left/groupId', $groupId);
-            Application::app()->session()->set('tests/left/groupName', $groupName);
-            Application::app()->session()->set('tests/upper/groupName', $groupName);
-            Application::app()->session()->set('tests/upper/groupRequests', $groupData->getProperty('groupRequests'));
-            Application::app()->session()->set('tests/upper/groupModified', false);
+            session()->set('tests/left/groupId', $groupId);
+            session()->set('tests/left/groupName', $groupName);
+            session()->set('tests/upper/groupName', $groupName);
+            session()->set('tests/upper/groupRequests', $groupData->getProperty('groupRequests'));
+            session()->set('tests/upper/groupModified', false);
 
             // Remove group error
-            Application::app()->session()->remove('tests/upper/groupError');
+            session()->remove('tests/upper/groupError');
 
             return true;
         }
@@ -293,14 +292,14 @@ class GroupModel extends Model
     public static function clearSession(): bool
     {
         // Remove session variables
-        Application::app()->session()->remove('tests/left/groupId');
-        Application::app()->session()->remove('tests/left/groupName');
-        Application::app()->session()->remove('tests/upper/groupName');
-        Application::app()->session()->remove('tests/upper/groupRequests');
-        Application::app()->session()->remove('tests/upper/groupError');
+        session()->remove('tests/left/groupId');
+        session()->remove('tests/left/groupName');
+        session()->remove('tests/upper/groupName');
+        session()->remove('tests/upper/groupRequests');
+        session()->remove('tests/upper/groupError');
 
         // Register session variables
-        Application::app()->session()->set('tests/upper/groupModified', false);
+        session()->set('tests/upper/groupModified', false);
 
         return true;
     }

@@ -2,42 +2,40 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-
 $title = 'Register';
 
 // Get values
-$firstnameValue = Application::app()->model('RegisterModel')->getProperty('firstname');
-$lastnameValue = Application::app()->model('RegisterModel')->getProperty('lastname');
-$emailValue = Application::app()->model('RegisterModel')->getProperty('email');
-$passwordValue = Application::app()->model('RegisterModel')->getProperty('password');
-$confirmPasswordValue = Application::app()->model('RegisterModel')->getProperty('confirmPassword');
-$passwordDisplay = Application::app()->model('RegisterModel')->getProperty('passwordDisplay');
-$confirmPasswordDisplay = Application::app()->model('RegisterModel')->getProperty('confirmPasswordDisplay');
-$createCollection = Application::app()->model('RegisterModel')->getProperty('createCollection') ?? 'on';
+$firstnameValue = model('RegisterModel')->getProperty('firstname');
+$lastnameValue = model('RegisterModel')->getProperty('lastname');
+$emailValue = model('RegisterModel')->getProperty('email');
+$passwordValue = model('RegisterModel')->getProperty('password');
+$confirmPasswordValue = model('RegisterModel')->getProperty('confirmPassword');
+$passwordDisplay = model('RegisterModel')->getProperty('passwordDisplay');
+$confirmPasswordDisplay = model('RegisterModel')->getProperty('confirmPasswordDisplay');
+$createCollection = model('RegisterModel')->getProperty('createCollection') ?? 'on';
 
 // Set checkbox checked value
 $createCollection == 'on' ? $createCollectionChecked = ' checked' : $createCollectionChecked = null;
 
 // Get errors
-$firstnameError = Application::app()->model('RegisterModel')->getError('firstname');
-$lastnameError = Application::app()->model('RegisterModel')->getError('lastname');
-$emailError = Application::app()->model('RegisterModel')->getError('email');
-$passwordError = Application::app()->model('RegisterModel')->getError('password');
-$confirmPasswordError = Application::app()->model('RegisterModel')->getError('confirmPassword');
+$firstnameError = model('RegisterModel')->getError('firstname');
+$lastnameError = model('RegisterModel')->getError('lastname');
+$emailError = model('RegisterModel')->getError('email');
+$passwordError = model('RegisterModel')->getError('password');
+$confirmPasswordError = model('RegisterModel')->getError('confirmPassword');
 
 // Get CSS class
-$firstnameClass = Application::app()->model('RegisterModel')->getInputClass('firstname');
-$lastnameClass = Application::app()->model('RegisterModel')->getInputClass('lastname');
-$emailClass = Application::app()->model('RegisterModel')->getInputClass('email');
-$passwordClass = Application::app()->model('RegisterModel')->getInputClass('password');
-$confirmPasswordClass = Application::app()->model('RegisterModel')->getInputClass('confirmPassword');
+$firstnameClass = model('RegisterModel')->getInputClass('firstname');
+$lastnameClass = model('RegisterModel')->getInputClass('lastname');
+$emailClass = model('RegisterModel')->getInputClass('email');
+$passwordClass = model('RegisterModel')->getInputClass('password');
+$confirmPasswordClass = model('RegisterModel')->getInputClass('confirmPassword');
 
 // Set CSS class on password visibility icons
-$passwordShowClass = Application::app()->model('RegisterModel')->getPasswordIconClass('passwordDisplay', 'show');
-$passwordHideClass = Application::app()->model('RegisterModel')->getPasswordIconClass('passwordDisplay', 'hide');
-$confirmPasswordShowClass = Application::app()->model('RegisterModel')->getPasswordIconClass('confirmPasswordDisplay', 'show');
-$confirmPasswordHideClass = Application::app()->model('RegisterModel')->getPasswordIconClass('confirmPasswordDisplay', 'hide');
+$passwordShowClass = model('RegisterModel')->getPasswordIconClass('passwordDisplay', 'show');
+$passwordHideClass = model('RegisterModel')->getPasswordIconClass('passwordDisplay', 'hide');
+$confirmPasswordShowClass = model('RegisterModel')->getPasswordIconClass('confirmPasswordDisplay', 'show');
+$confirmPasswordHideClass = model('RegisterModel')->getPasswordIconClass('confirmPasswordDisplay', 'hide');
 ?>
 <div class="flex h-full">
 

@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-use App\Core\Functions;
-
 // Get form elements
-$formElements = Application::app()->model('GroupModel')->formElements('addRequests');
+$formElements = model('GroupModel')->formElements('addRequests');
 
 // Get group ID - from form elements if form has been submitted, else from session on page load
-$formElements['id'] ? $groupId = $formElements['id'] : $groupId = Application::app()->session()->get('tests/left/groupId');
+$formElements['id'] ? $groupId = $formElements['id'] : $groupId = session()->get('tests/left/groupId');
 ?>
 
 <section id="requestAddModal" class="<?= $formElements['modalClass'] ?>" style="width: 700px;">
@@ -21,7 +18,7 @@ $formElements['id'] ? $groupId = $formElements['id'] : $groupId = Application::a
 
         <div class="modal-body h-[400px] overflow-y-auto">
             <div id="modalContent">
-                <?php Functions::includeFile(file: '/app/Views/components/requestAdd.php'); ?>
+                <?php includeFile(file: '/app/Views/components/requestAdd.php'); ?>
             </div>
         </div>
 

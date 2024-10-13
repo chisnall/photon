@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Core\Application;
 use App\Core\Controller;
 use App\Core\Request;
 use App\Middleware\AuthMiddleware;
@@ -27,7 +26,7 @@ class SettingsController extends Controller
         $model = new SettingsModel();
 
         // Set model property in the application
-        Application::app()->setModel($model);
+        app()->setModel($model);
 
         // Check request
         if ($request->isGet()) {
@@ -45,12 +44,12 @@ class SettingsController extends Controller
     public function defaults()
     {
         // Set defaults
-        SettingsModel::createDefaults(Application::app()->user()->id());
+        SettingsModel::createDefaults(user()->id());
 
         // Set flash message
-        Application::app()->session()->setFlash('info', 'Default settings have been loaded.');
+        session()->setFlash('info', 'Default settings have been loaded.');
 
         // Redirect to settings
-        Application::app()->response()->redirect('/settings');
+        response()->redirect('/settings');
     }
 }

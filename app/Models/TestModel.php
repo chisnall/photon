@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Core\Application;
 use App\Core\Model;
 use App\Core\Request;
 use App\Traits\FormTrait;
@@ -102,21 +101,21 @@ class TestModel extends Model
         if ($this->validate()) {
             if ($this->formAction == 'create' && $this->insertRecord()) {
                 // Set flash message
-                Application::app()->session()->setFlash('info', 'Test has been created.');
+                session()->setFlash('info', 'Test has been created.');
             }
 
             if ($this->formAction == 'update' && $this->updateRecord()) {
                 // Set flash message
-                Application::app()->session()->setFlash('info', 'Test has been updated.');
+                session()->setFlash('info', 'Test has been updated.');
             }
 
             if ($this->formAction == 'delete' && $this->deleteRecord()) {
                 // Set flash message
-                Application::app()->session()->setFlash('info', 'Test has been deleted.');
+                session()->setFlash('info', 'Test has been deleted.');
             }
 
             // Redirect to home page
-            Application::app()->response()->redirect('/');
+            response()->redirect('/');
         }
     }
 

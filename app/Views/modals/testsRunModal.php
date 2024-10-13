@@ -1,8 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Core\Application;
 ?>
 
 <section id="testsRunModal" class="modal hidden" style="width: 700px;">
@@ -25,7 +23,7 @@ use App\Core\Application;
             </div>
         </div>
 
-        <input type="hidden" name="id" value="<?= Application::app()->session()->get('tests/left/groupId') ?>">
+        <input type="hidden" name="id" value="<?= session()->get('tests/left/groupId') ?>">
         <input type="hidden" name="modalName" value="testsRunModal">
     </form>
 </section>

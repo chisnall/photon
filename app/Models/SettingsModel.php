@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Core\Application;
-use App\Core\Functions;
 use App\Core\Model;
 use App\Core\Request;
 use App\Exception\AppException;
@@ -43,7 +41,7 @@ class SettingsModel extends Model
         if (!$this->id) {
             // Get default settings and set properties
             $settingsFile = '/app/Data/settings.php';
-            $settings = Functions::includeFile(file: $settingsFile, message: "Default settings file is missing: $settingsFile");
+            $settings = includeFile(file: $settingsFile, message: "Default settings file is missing: $settingsFile");
             $this->userSettings = $settings;
             $this->globalVariables = [];
         }
@@ -112,15 +110,15 @@ class SettingsModel extends Model
     public function fetchData(): void
     {
         // Get settings
-        $settingsData = self::getSingleRecord(['userId' => Application::app()->user()->id()]);
+        $settingsData = self::getSingleRecord(['userId' => user()->id()]);
 
         // Check if record is missing - ID value won't be present
         if (!$settingsData->id) {
             // Create default settings
-            self::createDefaults(Application::app()->user()->id());
+            self::createDefaults(user()->id());
 
             // Fetch data again
-            $settingsData = self::getSingleRecord(['userId' => Application::app()->user()->id()]);
+            $settingsData = self::getSingleRecord(['userId' => user()->id()]);
         }
 
         // Get user settings
@@ -128,7 +126,7 @@ class SettingsModel extends Model
 
         // Get default settings
         $settingsFile = '/app/Data/settings.php';
-        $settingsDefaults = Functions::includeFile(file: $settingsFile, message: "Default settings file is missing: $settingsFile");
+        $settingsDefaults = includeFile(file: $settingsFile, message: "Default settings file is missing: $settingsFile");
 
         // Update model properties
         $this->id = $settingsData->getProperty('id') ?? null;
@@ -166,10 +164,10 @@ class SettingsModel extends Model
         $this->loadData($request->getBody());
 
         // Get additional post data that is not defined as properties
-        $postData = Application::app()->controller()->data();
+        $postData = controller()->data();
 
         // Save to session - tabs
-        Application::app()->session()->set('settings/selectedTab', $postData['selectedTab']);
+        session()->set('settings/selectedTab', $postData['selectedTab']);
 
         // Cast select elements to boolean
         // We need this before validation in case validation fails, so we can retain the select values on the form
@@ -206,7 +204,7 @@ class SettingsModel extends Model
         // Validate
         if ($this->validate()) {
             // Load settings array
-            $settings = Application::app()->user()->getProperty('settings');
+            $settings = user()->getProperty('settings');
 
             // Since the form fields are not present in the table, we need to build JSON data from the field labels
             $fieldLabels = $this->fieldLabels();
@@ -237,14 +235,14 @@ class SettingsModel extends Model
             // Save data
             if ($this->updateRecord()) {
                 // Set flash message
-                Application::app()->session()->setFlash('info', 'Settings have been updated.');
+                session()->setFlash('info', 'Settings have been updated.');
 
                 // Redirect to settings page
-                Application::app()->response()->redirect('/settings');
+                response()->redirect('/settings');
             }
         } else {
             // Set flash with removal set to true, otherwise it will be shown again on page reload
-            Application::app()->session()->setFlash('warning', 'Settings failed to update.', true);
+            session()->setFlash('warning', 'Settings failed to update.', true);
         }
     }
 
@@ -252,7 +250,7 @@ class SettingsModel extends Model
     {
         // Get default settings and encode
         $settingsFile = '/app/Data/settings.php';
-        $settings = Functions::includeFile(file: $settingsFile, message: "Default settings file is missing: $settingsFile");
+        $settings = includeFile(file: $settingsFile, message: "Default settings file is missing: $settingsFile");
 
         // Get existing settings
         $settingsData = self::getSingleRecord(['userId' => $userId]);
@@ -277,7 +275,7 @@ class SettingsModel extends Model
         // that will break setting keys which actually use "null" or "false" for values
 
         // Get settings if not provided
-        if (!$settings) $settings = Application::app()->user()->getProperty('settings');
+        if (!$settings) $settings = user()->getProperty('settings');
 
         // Turn key into array
         $keyArray = explode('/', $key);
@@ -313,7 +311,7 @@ class SettingsModel extends Model
             if (!$allowNull && UserModel::isLoggedIn()) {
                 // Get default settings
                 $settingsFile = '/app/Data/settings.php';
-                $settings = Functions::includeFile(file: $settingsFile, message: "Default settings file is missing: $settingsFile");
+                $settings = includeFile(file: $settingsFile, message: "Default settings file is missing: $settingsFile");
 
                 // Check setting again
                 $setting = self::checkSetting($key, $settings);
@@ -328,11 +326,11 @@ class SettingsModel extends Model
                 // Downside is that other settings are lost
 
                 //// Create defaults
-                //self::createDefaults(Application::app()->user()->id());
+                //self::createDefaults(user()->id());
 
                 //// We need to update the settings property in the the users instance
                 //// so we can obtain the setting again below
-                //Application::app()->user()->loadSettings();
+                //user()->loadSettings();
 
                 //// Get setting again
                 //$setting = self::checkSetting($key);
@@ -359,7 +357,7 @@ class SettingsModel extends Model
         $nameArray = explode('/', $name);
 
         // Get settings data
-        $settingsData = self::getSingleRecord(['userId' => Application::app()->user()->id()]);
+        $settingsData = self::getSingleRecord(['userId' => user()->id()]);
 
         // Get settings
         $settings = $settingsData->getProperty('userSettings');
@@ -386,7 +384,7 @@ class SettingsModel extends Model
         $nameArray = explode('/', $name);
 
         // Get settings data
-        $settingsData = self::getSingleRecord(['userId' => Application::app()->user()->id()]);
+        $settingsData = self::getSingleRecord(['userId' => user()->id()]);
 
         // Get user settings
         $settings = $settingsData->getProperty('userSettings');

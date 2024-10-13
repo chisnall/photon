@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Core\Application;
 use App\Core\Controller;
 use App\Core\Request;
 use App\Middleware\LoggedInMiddleware;
@@ -33,7 +32,7 @@ class LoginController extends Controller
         $model = new LoginModel();
 
         // Set model property in the application
-        Application::app()->setModel($model);
+        app()->setModel($model);
 
         // Check for post
         if ($request->isPost()) {
@@ -48,12 +47,12 @@ class LoginController extends Controller
     public function logout(): void
     {
         // Set flash message
-        Application::app()->session()->setFlash('success', 'You have logged out.');
+        session()->setFlash('success', 'You have logged out.');
 
         // Logout user
         UserModel::logout();
 
         // Redirect to homepage
-        Application::app()->response()->redirect('/');
+        response()->redirect('/');
     }
 }

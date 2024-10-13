@@ -1,8 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Core\Application;
 ?>
 <section id="collectionDeleteModal" class="modal hidden">
     <form id="collectionDelete" action="/" method="POST">
@@ -14,7 +12,7 @@ use App\Core\Application;
         <div class="modal-body">
             <div class="mb-6">
                 <div>This collection will be deleted:</div>
-                <div><?= Application::app()->session()->get('home/left/collectionName') ?></div>
+                <div><?= session()->get('home/left/collectionName') ?></div>
             </div>
             <div>
                 <div class="text-red-600 dark:text-red-700 font-bold">WARNING</div>
@@ -31,7 +29,7 @@ use App\Core\Application;
             </div>
         </div>
 
-        <input type="hidden" name="id" value="<?= Application::app()->session()->get('home/left/collectionId') ?>">
+        <input type="hidden" name="id" value="<?= session()->get('home/left/collectionId') ?>">
         <input type="hidden" name="modalName" value="collectionDeleteModal">
         <input type="hidden" name="modelClassName" value="CollectionModel">
         <input type="hidden" name="formAction" value="delete">

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http;
 
-use App\Core\Application;
-use App\Core\Functions;
 use App\Models\RequestModel;
 use App\Models\SettingsModel;
 
@@ -33,7 +31,7 @@ class HttpGroupTests
     public function runGroupTests(): void
     {
         // Get group requests from the session
-        $groupRequests = Application::app()->session()->get('tests/upper/groupRequests') ?? [];
+        $groupRequests = session()->get('tests/upper/groupRequests') ?? [];
 
         // Get settings
         $stopOnResponseFail = SettingsModel::getSetting('groups/stopOnResponseFail');
@@ -45,12 +43,12 @@ class HttpGroupTests
         file_put_contents($this->groupTestsStatus, 'running');
 
         // Delete existing files
-        Functions::deleteFile($this->groupTestsProgress);
-        Functions::deleteFile($this->groupTestsResults);
-        Functions::deleteFile($this->groupTestsStop);
+        deleteFile($this->groupTestsProgress);
+        deleteFile($this->groupTestsResults);
+        deleteFile($this->groupTestsStop);
 
         // Debug log
-        //Application::app()->logger()->logDebug('http.log', [" from: runGroupTests()", "group: " . $this->groupId, " stop: " . (int)$stopOnResponseFail]);
+        //logger()->logDebug('http.log', [" from: runGroupTests()", "group: " . $this->groupId, " stop: " . (int)$stopOnResponseFail]);
 
         // Count enabled requests first
         $groupRequestsCount = 0;
@@ -149,7 +147,7 @@ class HttpGroupTests
                         file_put_contents($this->groupTestsStatus, 'stopped');
 
                         // Delete files
-                        Functions::deleteFile($this->groupTestsStop);
+                        deleteFile($this->groupTestsStop);
 
                         // Stop method
                         return;
@@ -207,6 +205,6 @@ class HttpGroupTests
         // Do not remove the status file, it can prevent the modal from obtaining the status after the tests finish
 
         // Remove progress
-        Functions::deleteFile($this->groupTestsProgress);
+        deleteFile($this->groupTestsProgress);
     }
 }

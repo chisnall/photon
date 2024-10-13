@@ -2,7 +2,6 @@
 
 use App\Core\Application;
 use App\Core\Database\Migrations;
-use App\Core\Functions;
 
 session_save_path('/var/lib/photon/sessions');
 
@@ -64,4 +63,4 @@ try {
 
 // Cleanup session
 $sessionFile = session_save_path() . '/sess_' . session_id();
-Functions::deleteFile($sessionFile);
+deleteFile($sessionFile);

@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-
-$formElements = Application::app()->model('GroupModel')->formElements('create');
+$formElements = model('GroupModel')->formElements('create');
 ?>
 
 <section id="groupCreateModal" class="<?= $formElements['modalClass'] ?>">
@@ -31,7 +29,7 @@ $formElements = Application::app()->model('GroupModel')->formElements('create');
             </div>
         </div>
 
-        <input type="hidden" name="userId" value="<?= Application::app()->user()->id() ?>">
+        <input type="hidden" name="userId" value="<?= user()->id() ?>">
         <input type="hidden" name="modalName" value="groupCreateModal">
         <input type="hidden" name="modelClassName" value="GroupModel">
         <input type="hidden" name="formAction" value="create">

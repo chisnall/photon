@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-
-$formElements = Application::app()->model('GroupModel')->formElements('clone');
+$formElements = model('GroupModel')->formElements('clone');
 ?>
 
 <section id="groupCloneModal" class="<?= $formElements['modalClass'] ?>">
@@ -31,8 +29,8 @@ $formElements = Application::app()->model('GroupModel')->formElements('clone');
             </div>
         </div>
 
-        <input type="hidden" name="id" value="<?= Application::app()->session()->get('tests/left/groupId') ?>">
-        <input type="hidden" name="userId" value="<?= Application::app()->user()->id() ?>">
+        <input type="hidden" name="id" value="<?= session()->get('tests/left/groupId') ?>">
+        <input type="hidden" name="userId" value="<?= user()->id() ?>">
         <input type="hidden" name="modalName" value="groupCloneModal">
         <input type="hidden" name="modelClassName" value="GroupModel">
         <input type="hidden" name="formAction" value="clone">

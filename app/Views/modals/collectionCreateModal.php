@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-
-$formElements = Application::app()->model('CollectionModel')->formElements('create');
+$formElements = model('CollectionModel')->formElements('create');
 ?>
 
 <section id="collectionCreateModal" class="<?= $formElements['modalClass'] ?>">
@@ -31,7 +29,7 @@ $formElements = Application::app()->model('CollectionModel')->formElements('crea
             </div>
         </div>
 
-        <input type="hidden" name="userId" value="<?= Application::app()->user()->id() ?>">
+        <input type="hidden" name="userId" value="<?= user()->id() ?>">
         <input type="hidden" name="modalName" value="collectionCreateModal">
         <input type="hidden" name="modelClassName" value="CollectionModel">
         <input type="hidden" name="formAction" value="create">

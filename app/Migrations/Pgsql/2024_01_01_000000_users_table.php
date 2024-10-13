@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-
 return new class
 {
     public function up(): void
@@ -20,13 +18,13 @@ return new class
                 updated_at TIMESTAMP NOT NULL
                 );";
 
-        Application::app()->db()->exec($sql);
+        db()->exec($sql);
     }
 
     public function down(): void
     {
         $sql = "DROP TABLE users;";
 
-        Application::app()->db()->exec($sql);
+        db()->exec($sql);
     }
 };

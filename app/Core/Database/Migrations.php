@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Core\Database;
 
-use App\Core\Application;
-use App\Core\Functions;
 use Exception;
 
 final class Migrations
@@ -15,7 +13,7 @@ final class Migrations
     public function __construct()
     {
         // Set driver
-        $this->driver = Application::app()->db()->driver();
+        $this->driver = db()->driver();
 
         // Define migrations table and path
         define('MIGRATIONS_TABLE', '/app/Migrations/table/migrations_table.' . $this->driver . '.php');
@@ -27,10 +25,10 @@ final class Migrations
         // For SQLite, check configuration is correct first
         if ($this->driver == 'sqlite') {
             // Get database file path
-            $sqlitePath = Functions::getConfig("database/sqlite/path");
+            $sqlitePath = getConfig("database/sqlite/path");
 
             // Get web server HTTP user
-            $httpUserName = Functions::getConfig("app/httpUser");
+            $httpUserName = getConfig("app/httpUser");
             $httpUserInfo = posix_getpwnam($httpUserName);
 
             // Confirm HTTP user exists in the system
@@ -82,7 +80,7 @@ final class Migrations
                 $migrationName = pathinfo($migration, PATHINFO_FILENAME);
 
                 // Import class
-                $instance = Functions::includeFile(file: MIGRATIONS_PATH . "/$migration.php");
+                $instance = includeFile(file: MIGRATIONS_PATH . "/$migration.php");
 
                 // Run migration
                 $this->log("Applying migration $migrationName");
@@ -113,7 +111,7 @@ final class Migrations
                 $migrationName = pathinfo($migration, PATHINFO_FILENAME);
 
                 // Import class
-                $instance = Functions::includeFile(file: MIGRATIONS_PATH . "/$migration.php");
+                $instance = includeFile(file: MIGRATIONS_PATH . "/$migration.php");
 
                 // Run migration
                 $this->log("Removing migration $migrationName");
@@ -134,10 +132,10 @@ final class Migrations
     private function createMigrationsTable(): void
     {
         // Get SQL
-        $sql = Functions::includeFile(file: MIGRATIONS_TABLE);
+        $sql = includeFile(file: MIGRATIONS_TABLE);
 
         // Create table
-        Application::app()->db()->exec($sql);
+        db()->exec($sql);
     }
 
     private function getAvailableMigrations(): array
@@ -171,7 +169,7 @@ final class Migrations
     {
         $sql = "SELECT migration FROM migrations";
 
-        $statement = Application::app()->db()->prepare($sql);
+        $statement = db()->prepare($sql);
         $statement->execute();
         $data = $statement->fetchAll(Connection::FETCH_COLUMN);
 
@@ -200,7 +198,7 @@ final class Migrations
         // Insert records
         $sql = "INSERT INTO migrations (migration, created_at) VALUES $migrationsInsert";
 
-        $statement = Application::app()->db()->prepare($sql);
+        $statement = db()->prepare($sql);
         $statement->execute();
     }
 
@@ -210,7 +208,7 @@ final class Migrations
         foreach ($migrations as $migration) {
             $sql = "DELETE FROM migrations WHERE migration = '$migration'";
 
-            $statement = Application::app()->db()->prepare($sql);
+            $statement = db()->prepare($sql);
             $statement->execute();
         }
     }

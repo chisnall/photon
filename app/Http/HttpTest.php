@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http;
 
-use App\Core\Functions;
 use App\Core\Traits\GetSetProperty;
 use App\Functions\Data;
 
@@ -75,7 +74,7 @@ class HttpTest
     public function runTest(): void
     {
         // Determine test method name
-        $testMethod = Functions::dotToCamel($this->type);
+        $testMethod = dotToCamel($this->type);
 
         if (method_exists($this, $testMethod) ) {
             // Run test

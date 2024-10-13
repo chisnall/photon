@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Core\Application;
 use App\Core\Request;
 
 class ProfileModel extends UserModel
@@ -59,10 +58,10 @@ class ProfileModel extends UserModel
 
     public function fetchData(): void
     {
-        $this->id = Application::app()->user()->getProperty('id') ?? null;
-        $this->firstname = Application::app()->user()->getProperty('firstname') ?? null;
-        $this->lastname = Application::app()->user()->getProperty('lastname') ?? null;
-        $this->email = Application::app()->user()->getProperty('email') ?? null;
+        $this->id = user()->getProperty('id') ?? null;
+        $this->firstname = user()->getProperty('firstname') ?? null;
+        $this->lastname = user()->getProperty('lastname') ?? null;
+        $this->email = user()->getProperty('email') ?? null;
     }
 
     public function updateRecord(): bool
@@ -71,7 +70,7 @@ class ProfileModel extends UserModel
         // but still call the parent at the end
 
         // Get existing password
-        $this->password = Application::app()->user()->password ?? null;
+        $this->password = user()->password ?? null;
 
         // Check for new password
         if ($this->newPassword) {
@@ -94,13 +93,13 @@ class ProfileModel extends UserModel
         // Validate and save data
         if ($this->validate() && $this->updateRecord()) {
             // Set flash message
-            Application::app()->session()->setFlash('info', 'Profile has been updated.');
+            session()->setFlash('info', 'Profile has been updated.');
 
             // Redirect to profile page
-            Application::app()->response()->redirect('/profile');
+            response()->redirect('/profile');
         } else {
             // Set flash with removal set to true, otherwise it will be shown again on page reload
-            Application::app()->session()->setFlash('warning', 'Profile failed to update.', true);
+            session()->setFlash('warning', 'Profile failed to update.', true);
         }
     }
 }

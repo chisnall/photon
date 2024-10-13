@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Core\Application;
 use App\Core\Model;
 use App\Core\Request;
 use App\Traits\FormTrait;
@@ -92,7 +91,7 @@ class CollectionModel extends Model
         $this->loadData($request->getBody());
 
         // Get additional post data that is not defined as properties
-        $postData = Application::app()->controller()->data();
+        $postData = controller()->data();
 
         // Create
         if ($this->formAction == 'create') {
@@ -129,37 +128,37 @@ class CollectionModel extends Model
         if ($this->validate()) {
             if ($this->formAction == 'create' && $this->insertRecord()) {
                 // Register session variables
-                Application::app()->session()->set('home/left/collectionId', $this->id);
-                Application::app()->session()->set('home/left/collectionName', $this->collectionName);
-                Application::app()->session()->set('home/left/collectionVariables', $this->collectionVariables);
+                session()->set('home/left/collectionId', $this->id);
+                session()->set('home/left/collectionName', $this->collectionName);
+                session()->set('home/left/collectionVariables', $this->collectionVariables);
 
                 // Update settings
                 SettingsModel::updateSetting('home/left/collectionId', $this->id);
 
                 // Set flash message
-                Application::app()->session()->setFlash('info', 'Collection has been created.');
+                session()->setFlash('info', 'Collection has been created.');
             }
 
             if ($this->formAction == 'update' && $this->updateRecord()) {
                 // Register session variables
-                Application::app()->session()->set('home/left/collectionName', $this->collectionName);
-                Application::app()->session()->set('home/left/collectionVariables', $this->collectionVariables);
+                session()->set('home/left/collectionName', $this->collectionName);
+                session()->set('home/left/collectionVariables', $this->collectionVariables);
 
                 // Set flash message
-                Application::app()->session()->setFlash('info', 'Collection has been updated.');
+                session()->setFlash('info', 'Collection has been updated.');
             }
 
             if ($this->formAction == 'delete' && $this->deleteRecord()) {
                 // Check for selected request
-                if (Application::app()->session()->get('home/left/requestId')) {
+                if (session()->get('home/left/requestId')) {
                     // Check if the selected request still exists
-                    $requestData = RequestModel::getSingleRecord(['id' => Application::app()->session()->get('home/left/requestId')]);
+                    $requestData = RequestModel::getSingleRecord(['id' => session()->get('home/left/requestId')]);
                     if (!$requestData->getProperty('id')) {
                         // Request record was deleted when the collection record was deleted
 
                         // Remove session variable
-                        Application::app()->session()->remove('home/left/requestId');
-                        Application::app()->session()->remove('home/left/requestName');
+                        session()->remove('home/left/requestId');
+                        session()->remove('home/left/requestName');
 
                         // Update settings
                         SettingsModel::deleteSetting("home/left/requestId");
@@ -167,9 +166,9 @@ class CollectionModel extends Model
                 }
 
                 // Remove session variables
-                Application::app()->session()->remove('home/left/collectionId');
-                Application::app()->session()->remove('home/left/collectionName');
-                Application::app()->session()->remove('home/left/collectionVariables');
+                session()->remove('home/left/collectionId');
+                session()->remove('home/left/collectionName');
+                session()->remove('home/left/collectionVariables');
 
                 // Clear request session
                 RequestModel::clearSession();
@@ -178,11 +177,11 @@ class CollectionModel extends Model
                 SettingsModel::deleteSetting("home/left/collectionId");
 
                 // Set flash message
-                Application::app()->session()->setFlash('info', 'Collection has been deleted.');
+                session()->setFlash('info', 'Collection has been deleted.');
             }
 
             // Redirect to home page
-            Application::app()->response()->redirect('/');
+            response()->redirect('/');
         }
     }
 
@@ -195,11 +194,11 @@ class CollectionModel extends Model
         $collectionVariables = $collectionData->getProperty('collectionVariables');
 
         // Confirm user ID matches logged in user ID
-        if ($collectionUserId == Application::app()->user()->id()) {
+        if ($collectionUserId == user()->id()) {
             // Register session variables
-            Application::app()->session()->set('home/left/collectionId', $collectionId);
-            Application::app()->session()->set('home/left/collectionName', $collectionName);
-            Application::app()->session()->set('home/left/collectionVariables', $collectionVariables);
+            session()->set('home/left/collectionId', $collectionId);
+            session()->set('home/left/collectionName', $collectionName);
+            session()->set('home/left/collectionVariables', $collectionVariables);
 
             return true;
         }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Core\Application;
 use App\Core\Controller;
 use App\Core\Request;
 use App\Middleware\AuthMiddleware;
@@ -30,7 +29,7 @@ class ProfileController extends Controller
         $model = new ProfileModel();
 
         // Set model property in the application
-        Application::app()->setModel($model);
+        app()->setModel($model);
 
         // Check request
         if ($request->isGet()) {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-use App\Core\Application;
 use App\Core\Middleware;
 use App\Models\UserModel;
 
@@ -18,9 +17,9 @@ class LoggedInMiddleware extends Middleware
     {
         // Check if logged in
         if (UserModel::isLoggedIn()) {
-            if (array_key_exists(Application::app()->controller()->getProperty('action'), $this->actions)) {
+            if (array_key_exists(controller()->getProperty('action'), $this->actions)) {
                 // Get action - the method we call in the controller
-                $action = Application::app()->controller()->getProperty('action');
+                $action = controller()->getProperty('action');
 
                 // Get redirect location, type and message
                 $redirect = $this->actions[$action][0];
@@ -29,11 +28,11 @@ class LoggedInMiddleware extends Middleware
 
                 // Flash message
                 if ( $type && $message ) {
-                    Application::app()->session()->setFlash($type, $message);
+                    session()->setFlash($type, $message);
                 }
 
                 // Redirect
-                Application::app()->response()->redirect($redirect);
+                response()->redirect($redirect);
             }
         }
     }

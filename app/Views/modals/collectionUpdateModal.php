@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-
 // Get form elements
-$formElements = Application::app()->model('CollectionModel')->formElements('update');
+$formElements = model('CollectionModel')->formElements('update');
 
 // Get collection ID - from form elements if form has been submitted, else from session on page load
-$formElements['id'] ? $collectionId = $formElements['id'] : $collectionId = Application::app()->session()->get('home/left/collectionId');
+$formElements['id'] ? $collectionId = $formElements['id'] : $collectionId = session()->get('home/left/collectionId');
 
 // Get collection variables - from form elements if form has been submitted, else from session on page load
-$formElements['collectionVariablesValue'] ? $collectionVariablesInputs = $formElements['collectionVariablesValue'] : $collectionVariablesInputs = Application::app()->session()->get('home/left/collectionVariables') ?? [];
+$formElements['collectionVariablesValue'] ? $collectionVariablesInputs = $formElements['collectionVariablesValue'] : $collectionVariablesInputs = session()->get('home/left/collectionVariables') ?? [];
 ?>
 
 <section id="collectionUpdateModal" data-closefunction="closeCollectionUpdateModal" class="<?= $formElements['modalClass'] ?>">
@@ -111,7 +109,7 @@ $formElements['collectionVariablesValue'] ? $collectionVariablesInputs = $formEl
         </div>
 
         <input type="hidden" name="id" value="<?= $collectionId ?>">
-        <input type="hidden" name="userId" value="<?= Application::app()->user()->id() ?>">
+        <input type="hidden" name="userId" value="<?= user()->id() ?>">
         <input type="hidden" name="modalName" value="collectionUpdateModal">
         <input type="hidden" name="modelClassName" value="CollectionModel">
         <input type="hidden" name="formAction" value="update">

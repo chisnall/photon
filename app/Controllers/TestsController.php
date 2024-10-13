@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Core\Application;
 use App\Core\Controller;
 use App\Core\Request;
 use App\Middleware\AuthMiddleware;
@@ -31,13 +30,13 @@ class TestsController extends Controller
         $GroupModel = new GroupModel();
 
         // Set model properties in the application
-        Application::app()->setModel($GroupModel);
+        app()->setModel($GroupModel);
 
         // Check request
         if ($request->isGet()) {
 
             // Check if user has logged in
-            if (Application::app()->session()->get('tests/layout/initUser')) {
+            if (session()->get('tests/layout/initUser')) {
                 // Init user
                 // The tests view page will set the value to false
                 $this->initUser();
@@ -59,7 +58,7 @@ class TestsController extends Controller
                 }
 
                 // Redirect to tests
-                Application::app()->response()->redirect('/tests');
+                response()->redirect('/tests');
             }
 
             // Group - unselect
@@ -71,7 +70,7 @@ class TestsController extends Controller
                 }
 
                 // Redirect to tests
-                Application::app()->response()->redirect('/tests');
+                response()->redirect('/tests');
             }
 
         } elseif ($request->isPost()) {
@@ -95,9 +94,9 @@ class TestsController extends Controller
         $lower_selectedTab = SettingsModel::getSetting('tests/lower/selectedTab', true);
 
         // Set session
-        if ($left_selectedTab) Application::app()->session()->set('tests/left/selectedTab', $left_selectedTab);
-        if ($upper_selectedTab) Application::app()->session()->set('tests/upper/selectedTab', $upper_selectedTab);
-        if ($lower_selectedTab) Application::app()->session()->set('tests/lower/selectedTab', $lower_selectedTab);
+        if ($left_selectedTab) session()->set('tests/left/selectedTab', $left_selectedTab);
+        if ($upper_selectedTab) session()->set('tests/upper/selectedTab', $upper_selectedTab);
+        if ($lower_selectedTab) session()->set('tests/lower/selectedTab', $lower_selectedTab);
 
         // Group and session handlers
         if ($groupId) GroupModel::handleSession($groupId);

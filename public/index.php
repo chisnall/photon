@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Core\Application;
-use App\Core\Functions;
 
 function exceptionHandler(Throwable $exception): never {
     http_response_code(500);
@@ -38,4 +37,4 @@ require_once BASE_PATH . '/vendor/autoload.php';
 (new Application())->run();
 
 // Calculate application time
-Functions::time();
+appTime();

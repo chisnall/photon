@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Core\Application;
-
 $title = 'Settings';
 
 // Get tabs from session
-$selectedTab = Application::app()->session()->get('settings/selectedTab') ?? "tab1";
+$selectedTab = session()->get('settings/selectedTab') ?? "tab1";
 
 // Set tabs CSS classes
 $selectedTab == 'tab1' ? $selectedTab_tab1 = ' current' : $selectedTab_tab1 = null;
@@ -16,46 +14,46 @@ $selectedTab == 'tab3' ? $selectedTab_tab3 = ' current' : $selectedTab_tab3 = nu
 $selectedTab == 'tab4' ? $selectedTab_tab4 = ' current' : $selectedTab_tab4 = null;
 
 // Get values for text inputs
-$http_timeout = number_format(Application::app()->model('SettingsModel')->getProperty('http_timeout'), 1);
-$json_indent = Application::app()->model('SettingsModel')->getProperty('json_indent');
+$http_timeout = number_format(model('SettingsModel')->getProperty('http_timeout'), 1);
+$json_indent = model('SettingsModel')->getProperty('json_indent');
 
 // Create selected strings for the select inputs
-Application::app()->model('SettingsModel')->getProperty('home_hidePasswords') === true ? $home_hidePasswords_on = ' selected' : $home_hidePasswords_on = null;
-Application::app()->model('SettingsModel')->getProperty('home_hidePasswords') === false ? $home_hidePasswords_off = ' selected' : $home_hidePasswords_off = null;
-Application::app()->model('SettingsModel')->getProperty('http_defaultScheme') == 'http://' ? $http_defaultScheme_http = ' selected' : $http_defaultScheme_http = null;
-Application::app()->model('SettingsModel')->getProperty('http_defaultScheme') == 'https://' ? $http_defaultScheme_https = ' selected' : $http_defaultScheme_https = null;
-Application::app()->model('SettingsModel')->getProperty('http_version') == '1.0' ? $http_version_10 = ' selected' : $http_version_10 = null;
-Application::app()->model('SettingsModel')->getProperty('http_version') == '1.1' ? $http_version_11 = ' selected' : $http_version_11 = null;
-Application::app()->model('SettingsModel')->getProperty('http_version') == '2.0' ? $http_version_20 = ' selected' : $http_version_20 = null;
-Application::app()->model('SettingsModel')->getProperty('http_version') == 'auto' ? $http_version_auto = ' selected' : $http_version_auto = null;
-Application::app()->model('SettingsModel')->getProperty('http_accept') == 'default' ? $http_accept_default = ' selected' : $http_accept_default = null;
-Application::app()->model('SettingsModel')->getProperty('http_accept') == 'application/json' ? $http_accept_json = ' selected' : $http_accept_json = null;
-Application::app()->model('SettingsModel')->getProperty('http_sortHeaders') === true ? $http_sortHeaders_on = ' selected' : $http_sortHeaders_on = null;
-Application::app()->model('SettingsModel')->getProperty('http_sortHeaders') === false ? $http_sortHeaders_off = ' selected' : $http_sortHeaders_off = null;
-Application::app()->model('SettingsModel')->getProperty('json_lineNumbers') == 'left' ? $json_lineNumbers_left = ' selected' : $json_lineNumbers_left = null;
-Application::app()->model('SettingsModel')->getProperty('json_lineNumbers') == 'right' ? $json_lineNumbers_right = ' selected' : $json_lineNumbers_right = null;
-Application::app()->model('SettingsModel')->getProperty('json_linkUrls') === true ? $json_linkUrls_on = ' selected' : $json_linkUrls_on = null;
-Application::app()->model('SettingsModel')->getProperty('json_linkUrls') === false ? $json_linkUrls_off = ' selected' : $json_linkUrls_off = null;
-Application::app()->model('SettingsModel')->getProperty('json_trailingCommas') === true ? $json_trailingCommas_on = ' selected' : $json_trailingCommas_on = null;
-Application::app()->model('SettingsModel')->getProperty('json_trailingCommas') === false ? $json_trailingCommas_off = ' selected' : $json_trailingCommas_off = null;
-Application::app()->model('SettingsModel')->getProperty('json_quoteKeys') === true ? $json_quoteKeys_on = ' selected' : $json_quoteKeys_on = null;
-Application::app()->model('SettingsModel')->getProperty('json_quoteKeys') === false ? $json_quoteKeys_off = ' selected' : $json_quoteKeys_off = null;
-Application::app()->model('SettingsModel')->getProperty('groups_stopOnResponseFail') === true ? $groups_stopOnResponseFail_on = ' selected' : $groups_stopOnResponseFail_on = null;
-Application::app()->model('SettingsModel')->getProperty('groups_stopOnResponseFail') === false ? $groups_stopOnResponseFail_off = ' selected' : $groups_stopOnResponseFail_off = null;
-Application::app()->model('SettingsModel')->getProperty('variables_showGlobalsHome') === true ? $variables_showGlobalsHome_on = ' selected' : $variables_showGlobalsHome_on = null;
-Application::app()->model('SettingsModel')->getProperty('variables_showGlobalsHome') === false ? $variables_showGlobalsHome_off = ' selected' : $variables_showGlobalsHome_off = null;
+model('SettingsModel')->getProperty('home_hidePasswords') === true ? $home_hidePasswords_on = ' selected' : $home_hidePasswords_on = null;
+model('SettingsModel')->getProperty('home_hidePasswords') === false ? $home_hidePasswords_off = ' selected' : $home_hidePasswords_off = null;
+model('SettingsModel')->getProperty('http_defaultScheme') == 'http://' ? $http_defaultScheme_http = ' selected' : $http_defaultScheme_http = null;
+model('SettingsModel')->getProperty('http_defaultScheme') == 'https://' ? $http_defaultScheme_https = ' selected' : $http_defaultScheme_https = null;
+model('SettingsModel')->getProperty('http_version') == '1.0' ? $http_version_10 = ' selected' : $http_version_10 = null;
+model('SettingsModel')->getProperty('http_version') == '1.1' ? $http_version_11 = ' selected' : $http_version_11 = null;
+model('SettingsModel')->getProperty('http_version') == '2.0' ? $http_version_20 = ' selected' : $http_version_20 = null;
+model('SettingsModel')->getProperty('http_version') == 'auto' ? $http_version_auto = ' selected' : $http_version_auto = null;
+model('SettingsModel')->getProperty('http_accept') == 'default' ? $http_accept_default = ' selected' : $http_accept_default = null;
+model('SettingsModel')->getProperty('http_accept') == 'application/json' ? $http_accept_json = ' selected' : $http_accept_json = null;
+model('SettingsModel')->getProperty('http_sortHeaders') === true ? $http_sortHeaders_on = ' selected' : $http_sortHeaders_on = null;
+model('SettingsModel')->getProperty('http_sortHeaders') === false ? $http_sortHeaders_off = ' selected' : $http_sortHeaders_off = null;
+model('SettingsModel')->getProperty('json_lineNumbers') == 'left' ? $json_lineNumbers_left = ' selected' : $json_lineNumbers_left = null;
+model('SettingsModel')->getProperty('json_lineNumbers') == 'right' ? $json_lineNumbers_right = ' selected' : $json_lineNumbers_right = null;
+model('SettingsModel')->getProperty('json_linkUrls') === true ? $json_linkUrls_on = ' selected' : $json_linkUrls_on = null;
+model('SettingsModel')->getProperty('json_linkUrls') === false ? $json_linkUrls_off = ' selected' : $json_linkUrls_off = null;
+model('SettingsModel')->getProperty('json_trailingCommas') === true ? $json_trailingCommas_on = ' selected' : $json_trailingCommas_on = null;
+model('SettingsModel')->getProperty('json_trailingCommas') === false ? $json_trailingCommas_off = ' selected' : $json_trailingCommas_off = null;
+model('SettingsModel')->getProperty('json_quoteKeys') === true ? $json_quoteKeys_on = ' selected' : $json_quoteKeys_on = null;
+model('SettingsModel')->getProperty('json_quoteKeys') === false ? $json_quoteKeys_off = ' selected' : $json_quoteKeys_off = null;
+model('SettingsModel')->getProperty('groups_stopOnResponseFail') === true ? $groups_stopOnResponseFail_on = ' selected' : $groups_stopOnResponseFail_on = null;
+model('SettingsModel')->getProperty('groups_stopOnResponseFail') === false ? $groups_stopOnResponseFail_off = ' selected' : $groups_stopOnResponseFail_off = null;
+model('SettingsModel')->getProperty('variables_showGlobalsHome') === true ? $variables_showGlobalsHome_on = ' selected' : $variables_showGlobalsHome_on = null;
+model('SettingsModel')->getProperty('variables_showGlobalsHome') === false ? $variables_showGlobalsHome_off = ' selected' : $variables_showGlobalsHome_off = null;
 
 // Get global variables
-$globalVariablesInputs = Application::app()->model('SettingsModel')->getProperty('globalVariables');
+$globalVariablesInputs = model('SettingsModel')->getProperty('globalVariables');
 
 // Get errors
-$errors = Application::app()->model('SettingsModel')->getProperty('errors');
-$http_timeoutError = Application::app()->model('SettingsModel')->getError('http_timeout');
-$json_indentError = Application::app()->model('SettingsModel')->getError('json_indent');
+$errors = model('SettingsModel')->getProperty('errors');
+$http_timeoutError = model('SettingsModel')->getError('http_timeout');
+$json_indentError = model('SettingsModel')->getError('json_indent');
 
 // Get CSS class
-$http_timeoutClass = Application::app()->model('SettingsModel')->getInputClass('http_timeout');
-$json_indentClass = Application::app()->model('SettingsModel')->getInputClass('json_indent');
+$http_timeoutClass = model('SettingsModel')->getInputClass('http_timeout');
+$json_indentClass = model('SettingsModel')->getInputClass('json_indent');
 
 // Set tab location and field name for errors
 $errorFields = [
@@ -299,8 +297,8 @@ $errorFields = [
                 </div>
 
                 <div>
-                    <input type="hidden" name="id" value="<?= Application::app()->model('SettingsModel')->getProperty('id') ?>">
-                    <input type="hidden" name="userId" value="<?= Application::app()->model('SettingsModel')->getProperty('userId') ?>">
+                    <input type="hidden" name="id" value="<?= model('SettingsModel')->getProperty('id') ?>">
+                    <input type="hidden" name="userId" value="<?= model('SettingsModel')->getProperty('userId') ?>">
                     <input type="hidden" name="selectedTab" value="<?= $selectedTab ?>">
                 </div>
             </div>

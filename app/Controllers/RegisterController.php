@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Core\Application;
 use App\Core\Controller;
 use App\Core\Request;
 use App\Middleware\LoggedInMiddleware;
@@ -34,7 +33,7 @@ class RegisterController extends Controller
         $model = new RegisterModel();
 
         // Set model property in the application
-        Application::app()->setModel($model);
+        app()->setModel($model);
 
         // Check for post
         if ($request->isPost()) {
@@ -49,12 +48,12 @@ class RegisterController extends Controller
     public function registered(): string
     {
         // Check that the user has actually registered
-        if (Application::app()->session()->get('user/registered')) {
+        if (session()->get('user/registered')) {
             return self::render('register/registered');
         }
 
         // Redirect to homepage
-        Application::app()->response()->redirect('/');
+        response()->redirect('/');
     }
 
     public function activate(): string
@@ -77,6 +76,6 @@ class RegisterController extends Controller
         }
 
         // Redirect to homepage
-        Application::app()->response()->redirect('/');
+        response()->redirect('/');
     }
 }

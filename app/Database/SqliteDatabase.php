@@ -6,7 +6,6 @@ namespace App\Database;
 
 use App\Core\Database\Connection;
 use App\Core\Database\Database;
-use App\Core\Functions;
 use PDOException;
 
 class SqliteDatabase extends Database
@@ -15,12 +14,12 @@ class SqliteDatabase extends Database
     {
         // Get settings
         $dbDriver = "sqlite";
-        $dbPath = Functions::getConfig("database/$dbDriver/path");
+        $dbPath = getConfig("database/$dbDriver/path");
 
         // Confirm database exists
         if (!file_exists($dbPath)) {
             // Get trace file (start)
-            $traceInfoFile = Functions::traceInfo("start")['file'];
+            $traceInfoFile = traceInfo("start")['file'];
 
             // Halt if not running from migrations.php script
             if ($traceInfoFile != 'migrations.php') {

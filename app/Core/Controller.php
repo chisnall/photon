@@ -19,11 +19,11 @@ abstract class Controller
     public function __construct()
     {
         // Set the default page layout
-        $this->page['layout'] = Functions::getConfig("page/default/layout");
+        $this->page['layout'] = getConfig("page/default/layout");
         $this->page['view'] = $this->view;
 
         // Get data
-        $this->data = Application::app()->request()->getBody();
+        $this->data = request()->getBody();
     }
 
     public function render(string $view, array $params = []): string
@@ -32,7 +32,7 @@ abstract class Controller
         $this->page['view'] = $view;
 
         // Render view
-        return Application::app()->view()->renderView($view, $params);
+        return view()->renderView($view, $params);
     }
 
     public function setLayout(string $layout): void

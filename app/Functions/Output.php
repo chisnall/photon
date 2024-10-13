@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Functions;
 
-use App\Core\Application;
-use App\Core\Functions;
 use App\Exception\AppException;
 
 class Output
@@ -29,8 +27,8 @@ class Output
         ];
 
         // Get database name and version
-        $dbDriverName = Application::app()->db()->driver();
-        $dbServerVersion = Application::app()->db()->version();
+        $dbDriverName = db()->driver();
+        $dbServerVersion = db()->version();
 
         if ($dbDriverName == "mysql") {
             // Check for MariaDB
@@ -50,7 +48,7 @@ class Output
         $dbInfo = "<div>" . $dbDriverType[$dbDriverName] . " $dbServerVersion</div>";
 
         // Check for icons enabled
-        if (Functions::getConfig('page/footer/databaseIcons/show')) {
+        if (getConfig('page/footer/databaseIcons/show')) {
             // Get icon
             $output = self::icon($dbDriverIcon[$dbDriverName]);
 

@@ -38,7 +38,7 @@ final class ExceptionHandler
         $viewKey = 'page/error/framework/view';
 
         // Get layout value
-        $layoutFile = Functions::getConfig($layoutKey, true);
+        $layoutFile = getConfig($layoutKey, true);
         if (!$layoutFile) {
             throw new Exception(message: "Error layout configuration is missing: $layoutKey");
         } else {
@@ -50,7 +50,7 @@ final class ExceptionHandler
         }
 
         // Set view config key
-        $viewFile = Functions::getConfig($viewKey, true);
+        $viewFile = getConfig($viewKey, true);
         if (!$viewFile) {
             throw new Exception(message: "View layout configuration is missing: $viewKey");
         } else {
@@ -97,7 +97,7 @@ final class ExceptionHandler
         echo $layoutContent;
 
         // Log
-        Application::app()->logger()->logException($exception);
+        logger()->logException($exception);
 
         // Exit
         exit;
@@ -119,7 +119,7 @@ final class ExceptionHandler
         echo "</div>\n";
 
         // Log
-        Application::app()->logger()->logException($exception);
+        logger()->logException($exception);
 
         // Exit
         exit;
@@ -128,7 +128,7 @@ final class ExceptionHandler
     public static function ajax(Throwable $exception): never
     {
         // Log
-        Application::app()->logger()->logException($exception);
+        logger()->logException($exception);
 
         // Exit
         exit;
@@ -137,8 +137,8 @@ final class ExceptionHandler
     public static function client(string $message, Throwable $exception = null): never
     {
         // Get layout and view from config
-        $layout = Functions::getConfig("page/error/client/layout");
-        $view = Functions::getConfig("page/error/client/view");
+        $layout = getConfig("page/error/client/layout");
+        $view = getConfig("page/error/client/view");
 
         // Set default status code
         $statusCode = 500;
@@ -160,19 +160,19 @@ final class ExceptionHandler
         }
 
         // Set status code
-        Application::app()->response()->setStatusCode($statusCode);
+        response()->setStatusCode($statusCode);
 
         // Set layout
-        Application::app()->controller()->setLayout($layout);
+        controller()->setLayout($layout);
 
         // Render view
-        echo Application::app()->view()->renderView($view, ['exception' => $exception, 'code' => $statusCode, 'message' => $message, 'file' => $traceInfoFile, 'line' => $traceInfoLine]);
+        echo view()->renderView($view, ['exception' => $exception, 'code' => $statusCode, 'message' => $message, 'file' => $traceInfoFile, 'line' => $traceInfoLine]);
 
         // Update footer time
-        Functions::time();
+        appTime();
 
         // Log
-        Application::app()->logger()->logException($exception);
+        logger()->logException($exception);
 
         // Exit
         exit;
