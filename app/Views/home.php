@@ -486,6 +486,13 @@ if ($responseValid) {
 
     </div>
 
+    <script>
+        let savedScrollPositionLeftContent = localStorage.getItem('scrollPositionLeftContent');
+        if (savedScrollPositionLeftContent !== null) {
+            $("#left-content").scrollTop(parseInt(savedScrollPositionLeftContent));
+        }
+    </script>
+
     <div id="borderVertical" class="borderVertical borderVerticalHover">
         <div id="borderVerticalLeft" class="borderVerticalLeft"></div>
         <div id="borderVerticalRight" class="borderVerticalRight"></div>
@@ -1116,6 +1123,13 @@ if ($responseValid) {
                     </div>
                 </div>
 
+                <script>
+                    let savedScrollPositionUpperContent = localStorage.getItem('scrollPositionUpperContent');
+                    if (savedScrollPositionUpperContent !== null) {
+                        $("#upper-content").scrollTop(parseInt(savedScrollPositionUpperContent));
+                    }
+                </script>
+
                 <div id="upper-footer">
 
                     <div id="tab3-footer" class="ml-3 mr-5 mt-2 mb-3 tab-footer<?= $upper_selectedTab_tab3 ?>">
@@ -1439,6 +1453,13 @@ if ($responseValid) {
                 </div>
             </div>
 
+            <script>
+                let savedScrollPositionLowerContent = localStorage.getItem('scrollPositionLowerContent');
+                if (savedScrollPositionLowerContent !== null) {
+                    $("#lower-content").scrollTop(parseInt(savedScrollPositionLowerContent));
+                }
+            </script>
+
             <div id="lower-footer">
 
                 <div id="tab7-footer" class="ml-3 mr-5 mt-0 mb-5 tab-footer<?= $lower_selectedTab_tab7 ?>">
@@ -1486,6 +1507,7 @@ if ($responseValid) {
 <script src="/js/home-clipboard.js"></script>
 <script src="/js/home-dropdown.js"></script>
 <script src="/js/home-request.js"></script>
+<script src="/js/home-scroll.js"></script>
 <script src="/js/modal.js"></script>
 <script src="/js/tablednd.js"></script>
 <script src="/js/tabs.js"></script>
