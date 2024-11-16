@@ -1320,7 +1320,7 @@ if ($responseValid) {
 
                     <div id="tab3-content" class="tab-content<?= $lower_selectedTab_tab3 ?> overflow-y-hidden h-full border border-zinc-300 dark:border-zinc-650">
                         <?php if ($responseBodyContent): ?>
-                            <iframe id="browser" class="w-full h-full" src="/html"></iframe>
+                            <iframe id="browser" class="w-full h-full" src="/html/"></iframe>
                         <?php elseif ($responseErrorLong): ?>
                             <div class="w-full min-h-full p-4 font-bold text-red-600 dark:text-red-700">
                                 <div class="mb-2 text-3xl"><i class="fa-solid fa-circle-exclamation"></i></div>
