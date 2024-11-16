@@ -21,8 +21,8 @@ session_save_path('/var/lib/photon/sessions');
 
 define('APP_START', microtime(true));
 define('APP_DEBUG', false);
-define('APP_VERSION', '2024.10.1');
-define('APP_RELEASE', '2024-10-06');
+define('APP_VERSION', '2024.11.1');
+define('APP_RELEASE', '2024-11-16');
 define('APP_SUPPORT', 'https://www.chisnall.net/support');
 define('APP_DOCKER', 'https://hub.docker.com/r/chisnall/photon');
 define('APP_GITHUB', 'https://github.com/chisnall/photon');
